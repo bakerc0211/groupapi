@@ -33,7 +33,8 @@ public class ProductFactory {
   private static final String[] demographics = {
       "Men",
       "Women",
-      "Kids"
+      "Kids",
+      "Non-Binary"
   };
   private static final String[] categories = {
       "Golf",
@@ -95,12 +96,35 @@ public class ProductFactory {
   }
 
   /**
+   * Returns random category from list of categories
+   * @return - a category string
+   */
+  public static String getCategory() {
+    Random randomGenerator = new Random();
+    return categories[randomGenerator.nextInt(categories.length)];
+  }
+
+  /**
+   * Returns a random type from the list of types
+   * @return - a type string
+   */
+  public static String getType() {
+    Random randomGenerator = new Random();
+    return types[randomGenerator.nextInt(types.length)];
+  }
+
+  public static String getAdjective() {
+    Random randomGenerator = new Random();
+    return adjectives[randomGenerator.nextInt(adjectives.length)];
+  }
+
+  /**
    * Generates a random product offering id.
    *
    * @return - a product offering id
    */
   public static String getRandomProductId() {
-    return "po-" + RandomStringUtils.random(7, false, true);
+    return "gpc-" + RandomStringUtils.random(7, false, true);
   }
 
   /**
@@ -155,12 +179,29 @@ public class ProductFactory {
   public Product createRandomProduct() {
     Product product = new Product();
     String demographic = ProductFactory.getDemographic();
-    product.setCategory("Running");
-    product.setType("Short");
+    String category = ProductFactory.getCategory();
+    String type = ProductFactory.getType();
+    String adjective = ProductFactory.getAdjective();
+    String name = adjective + " " + category + " " + type;
+    String description = category + " " +  demographic + " " + adjective;
 
+    product.setName(name);
+    product.setDescription(description);
+    product.setCategory(category);
+    product.setType(type);
     product.setDemographic(demographic);
     product.setGlobalProductCode(ProductFactory.getRandomProductId());
     product.setStyleNumber(ProductFactory.getStyleCode());
+//    product.setActive(getActive());
+//    product.setPrimaryColorCode(product.getPrimaryColorCode());
+//    product.setSecondaryColorCode(product.getSecondaryColorCode());
+//    product.setReleaseDate(product.getReleaseDate());
+//    product.setBrand()
+//    product.setImageSrc()
+//    product.setMaterial()
+//    product.setPrice()
+//    product.setQuantity()
+
 
     return product;
   }
