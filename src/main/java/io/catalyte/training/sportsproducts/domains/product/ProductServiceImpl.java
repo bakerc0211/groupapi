@@ -63,4 +63,13 @@ public class ProductServiceImpl implements ProductService {
       throw new ResourceNotFound("Get by id failed, it does not exist in the database: " + id);
     }
   }
+
+  public List<String> getDistinctCategories() {
+    try {
+      return productRepository.findDistinctCategories();
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
 }

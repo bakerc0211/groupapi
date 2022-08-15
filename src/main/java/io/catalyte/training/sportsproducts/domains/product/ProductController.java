@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 
 import java.util.List;
@@ -39,6 +40,13 @@ public class ProductController {
     logger.info("Request received for getProductsById: " + id);
 
     return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+  }
+
+  @GetMapping(value = CATEGORIES_PATH)
+  public ResponseEntity<List<String>> getDistinctCategories() {
+    logger.info("Request received for getDistinctCategories");
+
+    return new ResponseEntity<>(productService.getDistinctCategories(), HttpStatus.OK);
   }
 
 }
