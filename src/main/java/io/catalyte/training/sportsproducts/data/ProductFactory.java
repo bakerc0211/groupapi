@@ -118,6 +118,35 @@ public class ProductFactory {
     return adjectives[randomGenerator.nextInt(adjectives.length)];
   }
 
+  /**\
+   * Returns a random color for primary color from colors
+   * @return - a color string
+   */
+   public static String getPrimaryColorCode() {
+    Random randomGenerator = new Random();
+    return colors[randomGenerator.nextInt(colors.length)];
+   }
+
+  /**
+   * Returns a random color that is not the same as the primary color from colors
+   * @return - a color string
+   */
+  public static String getSecondaryColorCode() {
+    Random randomGenerator = new Random();
+    String color = colors[randomGenerator.nextInt(colors.length)];
+    String primaryColor = ProductFactory.getPrimaryColorCode();
+    if (color.equals(primaryColor)){
+      color = colors[randomGenerator.nextInt(colors.length)];
+      return color;
+    }
+    return color;
+  }
+
+  public static Boolean getActive(){
+    Random randomGenerator = new Random();
+    return randomGenerator.nextBoolean();
+  }
+
   /**
    * Generates a random product offering id.
    *
@@ -192,15 +221,15 @@ public class ProductFactory {
     product.setDemographic(demographic);
     product.setGlobalProductCode(ProductFactory.getRandomProductId());
     product.setStyleNumber(ProductFactory.getStyleCode());
-//    product.setActive(getActive());
-//    product.setPrimaryColorCode(product.getPrimaryColorCode());
-//    product.setSecondaryColorCode(product.getSecondaryColorCode());
-//    product.setReleaseDate(product.getReleaseDate());
-//    product.setBrand()
-//    product.setImageSrc()
-//    product.setMaterial()
-//    product.setPrice()
-//    product.setQuantity()
+    product.setActive(ProductFactory.getActive());
+    product.setPrimaryColorCode(ProductFactory.getPrimaryColorCode());
+    product.setSecondaryColorCode(ProductFactory.getSecondaryColorCode());
+    product.setReleaseDate(String.valueOf(ProductFactory.between(LocalDate.now(), LocalDate.MAX)));
+//    product.setBrand(ProductFactory.getBrand());
+//    product.setImageSrc(ProductFactory.getImageSrc());
+//    product.setMaterial(ProductFactory.getMaterial());
+//    product.setPrice(ProductFactory.getPrice());
+//    product.setQuantity(ProductFactory.getQuantity());
 
 
     return product;
