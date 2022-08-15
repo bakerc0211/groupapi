@@ -10,4 +10,6 @@ public interface ProductService {
   List<Product> getProducts(Product product);
 
   Product getProductById(Long id);
+  Product getProductByCategory(String category);
+return ProductRepository.findByKeyword(keyword);
 }

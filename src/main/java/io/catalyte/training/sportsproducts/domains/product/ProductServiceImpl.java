@@ -63,4 +63,22 @@ public class ProductServiceImpl implements ProductService {
       throw new ResourceNotFound("Get by id failed, it does not exist in the database: " + id);
     }
   }
+
+  public Product getProductByCategory(Long category) {
+    Product product;
+
+    try {
+      product = productRepository.findById(category).orElse(null);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+
+    if (product != null) {
+      return product;
+    } else {
+      logger.info("Get by Category failed, it does not exist in the database: " + category);
+      throw new ResourceNotFound("Get by Category failed, it does not exist in the database: " + category);
+    }
+  }
 }
