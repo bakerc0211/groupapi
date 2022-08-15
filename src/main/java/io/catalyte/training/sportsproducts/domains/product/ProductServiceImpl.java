@@ -72,4 +72,13 @@ public class ProductServiceImpl implements ProductService {
       throw new ServerError(e.getMessage());
     }
   }
+
+  public List<String> getDistinctTypes() {
+    try {
+      return productRepository.findDistinctTypes();
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
 }

@@ -11,4 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 
   @Query(value = "select distinct category from product", nativeQuery = true)
   List<String> findDistinctCategories();
+
+  @Query(value = "select distinct type from product", nativeQuery = true)
+  List<String> findDistinctTypes();
 }

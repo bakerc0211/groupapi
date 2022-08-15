@@ -12,4 +12,5 @@ public interface ProductService {
   Product getProductById(Long id);
 
   List<String> getDistinctCategories();
+  List<String> getDistinctTypes();
 }

@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.product;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
+import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -47,6 +48,13 @@ public class ProductController {
     logger.info("Request received for getDistinctCategories");
 
     return new ResponseEntity<>(productService.getDistinctCategories(), HttpStatus.OK);
+  }
+
+  @GetMapping(value = TYPES_PATH)
+  public ResponseEntity<List<String>> getDistinctTypes() {
+    logger.info("Request received for getDistinctTypes");
+
+    return new ResponseEntity<>(productService.getDistinctTypes(), HttpStatus.OK);
   }
 
 }
