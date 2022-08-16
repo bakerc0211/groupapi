@@ -56,4 +56,16 @@ public class ProductServiceImplTest {
     when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
     assertThrows(ResourceNotFound.class, () -> productServiceImpl.getProductById(123L));
   }
+
+  @Test
+  public void getDistinctCategoriesReturnsProduct() {
+    Product actual = productServiceImpl.getDistinctCategories();
+    assertEquals(testProduct, actual);
+  }
+
+  @Test
+  public void getDistinctCategoriesThrowsErrorWhenNotFound() {
+    when(productRepository.findDistinctCategories().thenReturn(Optional.empty()));
+    assertThrows(ResourceNotFound.class, () -> productServiceImpl.getDistinctCategories());
+  }
 }
