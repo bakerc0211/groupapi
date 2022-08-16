@@ -3,6 +3,8 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -49,12 +51,31 @@ public class PurchaseServiceImpl implements PurchaseService {
    * @return the persisted purchase with ids
    */
   public Purchase savePurchase(Purchase newPurchase) {
-    try {
-      purchaseRepository.save(newPurchase);
-    } catch (DataAccessException e) {
-      logger.error(e.getMessage());
-      throw new ServerError(e.getMessage());
+    Set<LineItem> productsActiveCheck = newPurchase.getProducts();
+    boolean productIsActive = true;
+    List<String> inactiveProducts = new ArrayList<>();
+     for (Iterator<LineItem> productLoop = productsActiveCheck.iterator(); productLoop.hasNext(); ) {
+        LineItem currentLineItem = productLoop.next();
+      if (currentLineItem.getProduct().getActive() == null) {
+         productIsActive = false;
+         inactiveProducts.add(currentLineItem.getProduct().getName());
+       }
+
+     }
+    if (!productIsActive) {
+
     }
+      try {
+
+        purchaseRepository.save(newPurchase);
+
+
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage());
+        throw new ServerError(e.getMessage());
+      }
+
+
 
     // after the purchase is persisted and has an id, we need to handle its lineitems and persist them as well
     handleLineItems(newPurchase);
