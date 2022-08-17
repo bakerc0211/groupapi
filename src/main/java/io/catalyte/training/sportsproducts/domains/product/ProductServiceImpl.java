@@ -64,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  /**
+   * Retrieves the unique product categories from the database.
+   *
+   * @return - the product categories
+   */
   public List<String> getDistinctCategories() {
     try {
       return productRepository.findDistinctCategories();
@@ -73,6 +78,11 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  /**
+   * Retrieves the unique product types from the database.
+   *
+   * @return - the product types
+   */
   public List<String> getDistinctTypes() {
     try {
       return productRepository.findDistinctTypes();
