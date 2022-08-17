@@ -17,6 +17,8 @@ public class Product {
 
     private String name;
 
+    private String brand;
+
     private String description;
 
     private String demographic;
@@ -35,20 +37,41 @@ public class Product {
 
     private String globalProductCode;
 
+    private String imageSrc;
+
+    private String material;
+
+    private float price;
+
+    private int quantity;
+
     private Boolean active;
 
     public Product() {
     }
 
-    public Product(String name, String description,
+    public Product(String name, String brand, String description,
                    String demographic, String category,
-                   String type, String releaseDate) {
+                   String type, String releaseDate, String primaryColorCode,
+                   String secondaryColorCode, String styleNumber,
+                   String globalProductCode, String imageSrc, String material,
+                   float price, int quantity, Boolean active) {
         this.name = name;
+        this.brand = brand;
         this.description = description;
         this.demographic = demographic;
         this.category = category;
         this.type = type;
         this.releaseDate = releaseDate;
+        this.primaryColorCode = primaryColorCode;
+        this.secondaryColorCode = secondaryColorCode;
+        this.styleNumber = styleNumber;
+        this.globalProductCode = globalProductCode;
+        this.imageSrc = imageSrc;
+        this.material = material;
+        this.price = price;
+        this.quantity = quantity;
+        this.active = active;
     }
 
     public Long getId() {
@@ -65,6 +88,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getDescription() {
@@ -139,6 +170,38 @@ public class Product {
         this.globalProductCode = globalProductCode;
     }
 
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public Boolean getActive() {
         return active;
     }
@@ -159,6 +222,9 @@ public class Product {
         Product product = (Product) o;
 
         if (name != null ? !name.equals(product.name) : product.name != null) {
+            return false;
+        }
+        if (brand != null ? !brand.equals(product.brand) : product.brand != null) {
             return false;
         }
         if (description != null ? !description.equals(product.description)
@@ -195,12 +261,25 @@ public class Product {
                 : product.globalProductCode != null) {
             return false;
         }
+        if (imageSrc != null ? !imageSrc.equals(product.imageSrc) : product.imageSrc != null) {
+            return false;
+        }
+        if (material != null ? !material.equals(product.material) : product.material != null) {
+            return false;
+        }
+        if (price != product.price) {
+            return false;
+        }
+        if (quantity != product.quantity) {
+            return false;
+        }
         return active != null ? active.equals(product.active) : product.active == null;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (brand != null ? brand.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (demographic != null ? demographic.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
@@ -210,6 +289,10 @@ public class Product {
         result = 31 * result + (secondaryColorCode != null ? secondaryColorCode.hashCode() : 0);
         result = 31 * result + (styleNumber != null ? styleNumber.hashCode() : 0);
         result = 31 * result + (globalProductCode != null ? globalProductCode.hashCode() : 0);
+        result = 31 * result + (imageSrc != null ? imageSrc.hashCode() : 0);
+        result = 31 * result + (material != null ? material.hashCode() : 0);
+        result = 31 * result + Float.floatToIntBits(price);
+        result = 31 * result + quantity;
         result = 31 * result + (active != null ? active.hashCode() : 0);
         return result;
     }
@@ -219,6 +302,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
                 ", description='" + description + '\'' +
                 ", demographic='" + demographic + '\'' +
                 ", category='" + category + '\'' +
@@ -228,6 +312,10 @@ public class Product {
                 ", secondaryColorCode='" + secondaryColorCode + '\'' +
                 ", styleNumber='" + styleNumber + '\'' +
                 ", globalProductCode='" + globalProductCode + '\'' +
+                ", imageSrc='" + imageSrc + '\'' +
+                ", material='" + material + '\'' +
+                ", price='" + String.valueOf(price) + '\'' +
+                ", quantity='" + String.valueOf(quantity) + '\'' +
                 ", active='" + active + '\'' +
                 '}';
     }
