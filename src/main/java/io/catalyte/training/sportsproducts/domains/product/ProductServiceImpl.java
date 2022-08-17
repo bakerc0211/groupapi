@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
      */
     public List<Product> getProducts(Product product) {
         try {
-            return productRepository.findAll(Example.of(product));
+            return productRepository.findAll();
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
             throw new ServerError(e.getMessage());
