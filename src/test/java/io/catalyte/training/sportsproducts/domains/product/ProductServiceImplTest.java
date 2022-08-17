@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Categories;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -57,15 +58,4 @@ public class ProductServiceImplTest {
     assertThrows(ResourceNotFound.class, () -> productServiceImpl.getProductById(123L));
   }
 
-  @Test
-  public void getDistinctCategoriesReturnsProduct() {
-    Product actual = productServiceImpl.getDistinctCategories();
-    assertEquals(testProduct, actual);
-  }
-
-  @Test
-  public void getDistinctCategoriesThrowsErrorWhenNotFound() {
-    when(productRepository.findDistinctCategories().thenReturn(Optional.empty()));
-    assertThrows(ResourceNotFound.class, () -> productServiceImpl.getDistinctCategories());
-  }
 }

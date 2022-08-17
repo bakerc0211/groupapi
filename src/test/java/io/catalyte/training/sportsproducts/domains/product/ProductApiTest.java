@@ -49,8 +49,20 @@ public class ProductApiTest {
   }
 
   @Test
+  public void getDistinctCategoriesReturns404() throws Exception {
+    mockMvc.perform(get(CATEGORIES_PATH))
+        .andExpect(status().isNotFound());
+  }
+
+  @Test
   public void getDistinctTypesReturns200() throws Exception {
     mockMvc.perform(get(PRODUCTS_PATH + TYPES_PATH))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getDistinctTypesReturns404() throws Exception {
+    mockMvc.perform(get(TYPES_PATH))
+        .andExpect(status().isNotFound());
   }
 }
