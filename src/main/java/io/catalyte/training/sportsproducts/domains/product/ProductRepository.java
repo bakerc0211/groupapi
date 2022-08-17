@@ -11,7 +11,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
       + "Or p.category LIKE CONCAT('%',:query, '%')"
       + "Or p.demographic LIKE CONCAT('%',:query, '%')"
       + "Or p.price LIKE CONCAT('%',:query, '%') "
-      + "Or p.color LIKE CONCAT('%',:query, '%')"
-      + "Or p.material LIKE CONCAT('%',:query, '%')");
+      + "Or p.primaryColorCode LIKE CONCAT('%',:query, '%')"
+      + "Or p.material LIKE CONCAT('%',:query, '%')")
   List<Product> filterProducts(String query);
 }
