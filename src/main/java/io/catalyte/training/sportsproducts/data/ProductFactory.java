@@ -199,6 +199,19 @@ public class ProductFactory {
     return materials[randomGenerator.nextInt(materials.length)];
   }
 
+  private static int getQuantity() {
+    Random randomGenerator = new Random();
+    return randomGenerator.nextInt(300);
+  }
+
+  private static float getPrice() {
+    float min = (float) 0.01;
+    float max = 500.00F;
+    float range = max - min + 1;
+    float price = (float) (Math.random() * range) + min;
+    return Float.parseFloat(String.format("%.2f", price));
+  }
+
   /**
    * Generates a random product offering id.
    *
@@ -277,11 +290,11 @@ public class ProductFactory {
     product.setPrimaryColorCode(ProductFactory.getPrimaryColorCode());
     product.setSecondaryColorCode(ProductFactory.getSecondaryColorCode());
     product.setReleaseDate(String.valueOf(ProductFactory.between(LocalDate.now(), LocalDate.MAX)));
-//    product.setBrand(ProductFactory.getBrand());
-//    product.setImageSrc("https://via.placeholder.com/640x360");
-//    product.setMaterial(ProductFactory.getMaterial());
-//    product.setPrice(ProductFactory.getPrice());
-//    product.setQuantity(ProductFactory.getQuantity());
+    product.setBrand(ProductFactory.getBrand());
+    product.setImageSrc("https://via.placeholder.com/640x360");
+    product.setMaterial(ProductFactory.getMaterial());
+    product.setPrice(ProductFactory.getPrice());
+    product.setQuantity(ProductFactory.getQuantity());
 
 
     return product;
