@@ -12,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+
 /**
  * This class provides the implementation for the ProductService interface.
  */
@@ -27,6 +28,11 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+    @Override
+    public List<Product> filterProducts(String query) {
+        List<Product> products = productRepository.filterProducts(query);
+        return products;
+    }
     /**
      * Retrieves all products from the database, optionally making use of an example if it is passed.
      *
@@ -65,4 +71,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ResourceNotFound("Get by id failed, it does not exist in the database: " + id);
         }
     }
+
+
 }

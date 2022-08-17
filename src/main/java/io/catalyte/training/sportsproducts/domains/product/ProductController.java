@@ -3,7 +3,6 @@ package io.catalyte.training.sportsproducts.domains.product;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,11 +27,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Product>> getProducts(Product product) {
         logger.info("Request received for getProducts");
 
         return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
+    }
+    @GetMapping(value = "/query")
+    public ResponseEntity<List<Product>> filterProducts(@RequestParam("query") String query){
+        return ResponseEntity.ok(productService.filterProducts(query));
     }
 
     @GetMapping(value = "/{id}")
@@ -42,11 +50,5 @@ public class ProductController {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
-  @GetMapping(value = "/{category}/")
-  @ResponseStatus(value = HttpStatus.OK)
-  public ResponseEntity<Product> getProductByCategory(@PathVariable Long category) {
-    logger.info("Request received for getProductsByCategory: " + category);
-    return new ResponseEntity<>(productService.getProductByCategory(category), HttpStatus.OK);
 
-  }
 }
