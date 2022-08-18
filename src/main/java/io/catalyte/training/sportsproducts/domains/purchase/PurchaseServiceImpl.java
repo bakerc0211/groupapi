@@ -3,6 +3,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
+import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -63,6 +65,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
      }
     if (!productIsActive) {
+
+      throw new UnprocessableEntity("inactive product");
 
     }
       try {

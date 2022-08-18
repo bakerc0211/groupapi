@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.exceptions;
 
 import static io.catalyte.training.sportsproducts.constants.StringConstants.NOT_FOUND;
 import static io.catalyte.training.sportsproducts.constants.StringConstants.SERVER_ERROR;
+import static io.catalyte.training.sportsproducts.constants.StringConstants.UNPROCESSABLE_ENTITY;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionController {
 
   private final Logger logger = LogManager.getLogger();
+
+  /**
+   * @param exception response thrown
+   * @return string NOT_FOUND, date, and exception message
+   */
+  @ExceptionHandler(UnprocessableEntity.class)
+  protected ResponseEntity<ExceptionResponse> unprocessableEntity(UnprocessableEntity exception) {
+    ExceptionResponse response =
+        new ExceptionResponse(UNPROCESSABLE_ENTITY, new Date(), exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
 
   /**
    * @param exception response thrown
