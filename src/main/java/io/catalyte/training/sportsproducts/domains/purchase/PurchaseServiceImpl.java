@@ -81,7 +81,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
 
-    // after the purchase is persisted and has an id, we need to handle its lineitems and persist them as well
+    // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
     handleLineItems(newPurchase);
 
     return newPurchase;
@@ -90,7 +90,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   /**
    * This helper method retrieves product information for each line item and persists it
    *
-   * @param purchase - the purchase object to handle lineitems for
+   * @param purchase - the purchase object to handle line items for
    */
   private void handleLineItems(Purchase purchase) {
     Set<LineItem> itemsList = purchase.getProducts();
@@ -101,7 +101,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         // retrieve full product information from the database
         Product product = productService.getProductById(lineItem.getProduct().getId());
 
-        // set the product info into the lineitem
+        // set the product info into the line item
         if (product != null) {
           lineItem.setProduct(product);
         }
@@ -109,7 +109,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         // set the purchase on the line item
         lineItem.setPurchase(purchase);
 
-        // persist the populated lineitem
+        // persist the populated line item
         try {
           lineItemRepository.save(lineItem);
         } catch (DataAccessException e) {
