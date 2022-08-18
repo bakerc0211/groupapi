@@ -25,6 +25,11 @@ public class ProductServiceImpl implements ProductService {
     this.productRepository = productRepository;
   }
 
+  @Override
+  public List<Product> filterProducts(String query) {
+    List<Product> products = productRepository.filterProducts(query);
+    return products;
+  }
   /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
    *

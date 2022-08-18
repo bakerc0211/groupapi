@@ -14,4 +14,6 @@ public interface ProductService {
   List<String> getDistinctCategories();
 
   List<String> getDistinctTypes();
+
+  List<Product> filterProducts(String query);
 }
