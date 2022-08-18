@@ -85,8 +85,7 @@ public class ProductServiceImpl implements ProductService {
    */
   public List<String> getDistinctTypes() {
     try {
-      List<String> hello =  productRepository.findDistinctTypes();
-      return hello;
+      return productRepository.findDistinctTypes();
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());

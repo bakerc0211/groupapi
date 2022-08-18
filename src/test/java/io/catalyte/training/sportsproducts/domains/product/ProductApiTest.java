@@ -5,6 +5,7 @@ import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,21 +20,21 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class ProductApiTest {
 
-    @Autowired
-    private WebApplicationContext wac;
+  @Autowired
+  private WebApplicationContext wac;
 
-    private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-    @Before
-    public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
+  @Before
+  public void setUp() {
+    mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+  }
 
-    @Test
-    public void getProductsReturns200() throws Exception {
-        mockMvc.perform(get(PRODUCTS_PATH))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void getProductsReturns200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH))
+        .andExpect(status().isOk());
+  }
 
   @Test
   public void getProductByIdReturnsProductWith200() throws Exception {
