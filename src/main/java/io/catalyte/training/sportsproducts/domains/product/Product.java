@@ -11,224 +11,312 @@ import javax.persistence.Id;
 @Entity
 public class Product {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String name;
+    private String name;
 
-  private String description;
+    private String brand;
 
-  private String demographic;
+    private String description;
 
-  private String category;
+    private String demographic;
 
-  private String type;
+    private String category;
 
-  private String releaseDate;
+    private String type;
 
-  private String primaryColorCode;
+    private String releaseDate;
 
-  private String secondaryColorCode;
+    private String primaryColorCode;
 
-  private String styleNumber;
+    private String secondaryColorCode;
 
-  private String globalProductCode;
+    private String styleNumber;
 
-  private Boolean active;
+    private String globalProductCode;
 
-  public Product() {
-  }
+    private String imageSrc;
 
-  public Product(String name, String description,
-      String demographic, String category,
-      String type, String releaseDate) {
-    this.name = name;
-    this.description = description;
-    this.demographic = demographic;
-    this.category = category;
-    this.type = type;
-    this.releaseDate = releaseDate;
-  }
+    private String material;
 
-  public Long getId() {
-    return id;
-  }
+    private float price;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    private int quantity;
 
-  public String getName() {
-    return name;
-  }
+    private Boolean active;
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getDemographic() {
-    return demographic;
-  }
-
-  public void setDemographic(String demographic) {
-    this.demographic = demographic;
-  }
-
-  public String getCategory() {
-    return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public String getReleaseDate() {
-    return releaseDate;
-  }
-
-  public void setReleaseDate(String releaseDate) {
-    this.releaseDate = releaseDate;
-  }
-
-  public String getPrimaryColorCode() {
-    return primaryColorCode;
-  }
-
-  public void setPrimaryColorCode(String primaryColorCode) {
-    this.primaryColorCode = primaryColorCode;
-  }
-
-  public String getSecondaryColorCode() {
-    return secondaryColorCode;
-  }
-
-  public void setSecondaryColorCode(String secondaryColorCode) {
-    this.secondaryColorCode = secondaryColorCode;
-  }
-
-  public String getStyleNumber() {
-    return styleNumber;
-  }
-
-  public void setStyleNumber(String styleNumber) {
-    this.styleNumber = styleNumber;
-  }
-
-  public String getGlobalProductCode() {
-    return globalProductCode;
-  }
-
-  public void setGlobalProductCode(String globalProductCode) {
-    this.globalProductCode = globalProductCode;
-  }
-
-  public Boolean getActive() {
-    return active;
-  }
-
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public Product() {
     }
 
-    Product product = (Product) o;
+    public Product(String name, String brand, String description,
+                   String demographic, String category,
+                   String type, String releaseDate, String primaryColorCode,
+                   String secondaryColorCode, String styleNumber,
+                   String globalProductCode, String imageSrc, String material,
+                   float price, int quantity, Boolean active) {
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.demographic = demographic;
+        this.category = category;
+        this.type = type;
+        this.releaseDate = releaseDate;
+        this.primaryColorCode = primaryColorCode;
+        this.secondaryColorCode = secondaryColorCode;
+        this.styleNumber = styleNumber;
+        this.globalProductCode = globalProductCode;
+        this.imageSrc = imageSrc;
+        this.material = material;
+        this.price = price;
+        this.quantity = quantity;
+        this.active = active;
+    }
 
-    if (name != null ? !name.equals(product.name) : product.name != null) {
-      return false;
+    public Long getId() {
+        return id;
     }
-    if (description != null ? !description.equals(product.description)
-        : product.description != null) {
-      return false;
-    }
-    if (demographic != null ? !demographic.equals(product.demographic)
-        : product.demographic != null) {
-      return false;
-    }
-    if (category != null ? !category.equals(product.category) : product.category != null) {
-      return false;
-    }
-    if (type != null ? !type.equals(product.type) : product.type != null) {
-      return false;
-    }
-    if (releaseDate != null ? !releaseDate.equals(product.releaseDate)
-        : product.releaseDate != null) {
-      return false;
-    }
-    if (primaryColorCode != null ? !primaryColorCode.equals(product.primaryColorCode)
-        : product.primaryColorCode != null) {
-      return false;
-    }
-    if (secondaryColorCode != null ? !secondaryColorCode.equals(product.secondaryColorCode)
-        : product.secondaryColorCode != null) {
-      return false;
-    }
-    if (styleNumber != null ? !styleNumber.equals(product.styleNumber)
-        : product.styleNumber != null) {
-      return false;
-    }
-    if (globalProductCode != null ? !globalProductCode.equals(product.globalProductCode)
-        : product.globalProductCode != null) {
-      return false;
-    }
-    return active != null ? active.equals(product.active) : product.active == null;
-  }
 
-  @Override
-  public int hashCode() {
-    int result = name != null ? name.hashCode() : 0;
-    result = 31 * result + (description != null ? description.hashCode() : 0);
-    result = 31 * result + (demographic != null ? demographic.hashCode() : 0);
-    result = 31 * result + (category != null ? category.hashCode() : 0);
-    result = 31 * result + (type != null ? type.hashCode() : 0);
-    result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-    result = 31 * result + (primaryColorCode != null ? primaryColorCode.hashCode() : 0);
-    result = 31 * result + (secondaryColorCode != null ? secondaryColorCode.hashCode() : 0);
-    result = 31 * result + (styleNumber != null ? styleNumber.hashCode() : 0);
-    result = 31 * result + (globalProductCode != null ? globalProductCode.hashCode() : 0);
-    result = 31 * result + (active != null ? active.hashCode() : 0);
-    return result;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  @Override
-  public String toString() {
-    return "Product{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", description='" + description + '\'' +
-        ", demographic='" + demographic + '\'' +
-        ", category='" + category + '\'' +
-        ", type='" + type + '\'' +
-        ", releaseDate='" + releaseDate + '\'' +
-        ", primaryColorCode='" + primaryColorCode + '\'' +
-        ", secondaryColorCode='" + secondaryColorCode + '\'' +
-        ", styleNumber='" + styleNumber + '\'' +
-        ", globalProductCode='" + globalProductCode + '\'' +
-        ", active='" + active + '\'' +
-        '}';
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDemographic() {
+        return demographic;
+    }
+
+    public void setDemographic(String demographic) {
+        this.demographic = demographic;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getPrimaryColorCode() {
+        return primaryColorCode;
+    }
+
+    public void setPrimaryColorCode(String primaryColorCode) {
+        this.primaryColorCode = primaryColorCode;
+    }
+
+    public String getSecondaryColorCode() {
+        return secondaryColorCode;
+    }
+
+    public void setSecondaryColorCode(String secondaryColorCode) {
+        this.secondaryColorCode = secondaryColorCode;
+    }
+
+    public String getStyleNumber() {
+        return styleNumber;
+    }
+
+    public void setStyleNumber(String styleNumber) {
+        this.styleNumber = styleNumber;
+    }
+
+    public String getGlobalProductCode() {
+        return globalProductCode;
+    }
+
+    public void setGlobalProductCode(String globalProductCode) {
+        this.globalProductCode = globalProductCode;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Product product = (Product) o;
+
+        if (name != null ? !name.equals(product.name) : product.name != null) {
+            return false;
+        }
+        if (brand != null ? !brand.equals(product.brand) : product.brand != null) {
+            return false;
+        }
+        if (description != null ? !description.equals(product.description)
+                : product.description != null) {
+            return false;
+        }
+        if (demographic != null ? !demographic.equals(product.demographic)
+                : product.demographic != null) {
+            return false;
+        }
+        if (category != null ? !category.equals(product.category) : product.category != null) {
+            return false;
+        }
+        if (type != null ? !type.equals(product.type) : product.type != null) {
+            return false;
+        }
+        if (releaseDate != null ? !releaseDate.equals(product.releaseDate)
+                : product.releaseDate != null) {
+            return false;
+        }
+        if (primaryColorCode != null ? !primaryColorCode.equals(product.primaryColorCode)
+                : product.primaryColorCode != null) {
+            return false;
+        }
+        if (secondaryColorCode != null ? !secondaryColorCode.equals(product.secondaryColorCode)
+                : product.secondaryColorCode != null) {
+            return false;
+        }
+        if (styleNumber != null ? !styleNumber.equals(product.styleNumber)
+                : product.styleNumber != null) {
+            return false;
+        }
+        if (globalProductCode != null ? !globalProductCode.equals(product.globalProductCode)
+                : product.globalProductCode != null) {
+            return false;
+        }
+        if (imageSrc != null ? !imageSrc.equals(product.imageSrc) : product.imageSrc != null) {
+            return false;
+        }
+        if (material != null ? !material.equals(product.material) : product.material != null) {
+            return false;
+        }
+        if (price != product.price) {
+            return false;
+        }
+        if (quantity != product.quantity) {
+            return false;
+        }
+        return active != null ? active.equals(product.active) : product.active == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (brand != null ? brand.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (demographic != null ? demographic.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
+        result = 31 * result + (primaryColorCode != null ? primaryColorCode.hashCode() : 0);
+        result = 31 * result + (secondaryColorCode != null ? secondaryColorCode.hashCode() : 0);
+        result = 31 * result + (styleNumber != null ? styleNumber.hashCode() : 0);
+        result = 31 * result + (globalProductCode != null ? globalProductCode.hashCode() : 0);
+        result = 31 * result + (imageSrc != null ? imageSrc.hashCode() : 0);
+        result = 31 * result + (material != null ? material.hashCode() : 0);
+        result = 31 * result + Float.floatToIntBits(price);
+        result = 31 * result + quantity;
+        result = 31 * result + (active != null ? active.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", description='" + description + '\'' +
+                ", demographic='" + demographic + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", primaryColorCode='" + primaryColorCode + '\'' +
+                ", secondaryColorCode='" + secondaryColorCode + '\'' +
+                ", styleNumber='" + styleNumber + '\'' +
+                ", globalProductCode='" + globalProductCode + '\'' +
+                ", imageSrc='" + imageSrc + '\'' +
+                ", material='" + material + '\'' +
+                ", price='" + String.valueOf(price) + '\'' +
+                ", quantity='" + String.valueOf(quantity) + '\'' +
+                ", active='" + active + '\'' +
+                '}';
+    }
 }
