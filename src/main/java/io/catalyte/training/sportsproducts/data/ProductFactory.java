@@ -85,7 +85,7 @@ public class ProductFactory {
       "Pool Noodle"
   };
 
-  private static final String [] brands = {
+  private static final String[] brands = {
       "Nike",
       "Adidas",
       "Reebok",
@@ -98,7 +98,7 @@ public class ProductFactory {
       "Puma"
   };
 
-  private static final String [] materials = {
+  private static final String[] materials = {
       "Cotton",
       "Calico",
       "Spandex",
@@ -123,6 +123,7 @@ public class ProductFactory {
 
   /**
    * Returns random category from list of categories
+   *
    * @return - a category string
    */
   public static String getCategory() {
@@ -132,6 +133,7 @@ public class ProductFactory {
 
   /**
    * Returns a random type from the list of types
+   *
    * @return - a type string
    */
   public static String getType() {
@@ -141,6 +143,7 @@ public class ProductFactory {
 
   /**
    * Returns a random adjective from the list of adjectives
+   *
    * @return - an adjective string
    */
   public static String getAdjective() {
@@ -150,22 +153,24 @@ public class ProductFactory {
 
   /**
    * Returns a random color for primary color from the list of colors
+   *
    * @return - a color string
    */
-   public static String getPrimaryColorCode() {
+  public static String getPrimaryColorCode() {
     Random randomGenerator = new Random();
     return colors[randomGenerator.nextInt(colors.length)];
-   }
+  }
 
   /**
    * Returns a random color that is not the same as the primary color from colors
+   *
    * @return - a color string
    */
   public static String getSecondaryColorCode() {
     Random randomGenerator = new Random();
     String color = colors[randomGenerator.nextInt(colors.length)];
     String primaryColor = ProductFactory.getPrimaryColorCode();
-    if (color.equals(primaryColor)){
+    if (color.equals(primaryColor)) {
       color = colors[randomGenerator.nextInt(colors.length)];
       return color;
     }
@@ -174,15 +179,17 @@ public class ProductFactory {
 
   /**
    * Returns a random boolean for product active status
+   *
    * @return - a boolean
    */
-  public static Boolean getActive(){
+  public static Boolean getActive() {
     Random randomGenerator = new Random();
     return randomGenerator.nextBoolean();
   }
 
   /**
    * Returns a random brand from the list of brands
+   *
    * @return - a brand string
    */
   public static String getBrand() {
@@ -192,6 +199,7 @@ public class ProductFactory {
 
   /**
    * Returns a random material from the list of materials
+   *
    * @return - a material string
    */
   public static String getMaterial() {
@@ -199,16 +207,26 @@ public class ProductFactory {
     return materials[randomGenerator.nextInt(materials.length)];
   }
 
-  private static int getQuantity() {
+  /**
+   * Returns a random number between 0-300
+   *
+   * @return - a quantity integer
+   */
+  private static Integer getQuantity() {
     Random randomGenerator = new Random();
     return randomGenerator.nextInt(300);
   }
 
-  private static float getPrice() {
+  /**
+   * Returns a random price between 0.01 and 500.00
+   *
+   * @return - a price float
+   */
+  private static Float getPrice() {
     float min = (float) 0.01;
     float max = 500.00F;
-    float range = max - min + 1;
-    float price = (float) (Math.random() * range) + min;
+    float range = max - min;
+    float price = (float) (Math.random() * range);
     return Float.parseFloat(String.format("%.2f", price));
   }
 
@@ -277,7 +295,7 @@ public class ProductFactory {
     String type = ProductFactory.getType();
     String adjective = ProductFactory.getAdjective();
     String name = adjective + " " + category + " " + type;
-    String description = category + " " +  demographic + " " + adjective;
+    String description = demographic + " " + adjective + " " + category;
 
     product.setName(name);
     product.setDescription(description);
@@ -289,13 +307,13 @@ public class ProductFactory {
     product.setActive(ProductFactory.getActive());
     product.setPrimaryColorCode(ProductFactory.getPrimaryColorCode());
     product.setSecondaryColorCode(ProductFactory.getSecondaryColorCode());
-    product.setReleaseDate(String.valueOf(ProductFactory.between(LocalDate.now(), LocalDate.MAX)));
+    product.setReleaseDate(
+        String.valueOf(ProductFactory.between(LocalDate.of(2015, 1, 1), LocalDate.now())));
     product.setBrand(ProductFactory.getBrand());
     product.setImageSrc("https://via.placeholder.com/640x360");
     product.setMaterial(ProductFactory.getMaterial());
     product.setPrice(ProductFactory.getPrice());
     product.setQuantity(ProductFactory.getQuantity());
-
 
     return product;
   }
