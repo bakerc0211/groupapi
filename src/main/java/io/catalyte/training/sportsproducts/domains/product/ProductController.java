@@ -1,9 +1,10 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
+import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = PRODUCTS_PATH)
 public class ProductController {
 
-    Logger logger = LogManager.getLogger(ProductController.class);
+  Logger logger = LogManager.getLogger(ProductController.class);
 
-    @Autowired
-    private ProductService productService;
+  @Autowired
+  private ProductService productService;
 
-    @GetMapping
-    public ResponseEntity<List<Product>> getProducts(Product product) {
-        logger.info("Request received for getProducts");
+  @GetMapping
+  public ResponseEntity<List<Product>> getProducts(Product product) {
+    logger.info("Request received for getProducts");
 
-        return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
-    }
+    return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
+  }
 
-    @GetMapping(value = "/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        logger.info("Request received for getProductsById: " + id);
+  @GetMapping(value = "/{id}")
+  @ResponseStatus(value = HttpStatus.OK)
+  public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    logger.info("Request received for getProductsById: " + id);
 
-        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
-    }
+    return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+  }
+
+  @GetMapping(value = CATEGORIES_PATH)
+  public ResponseEntity<List<String>> getDistinctCategories() {
+    logger.info("Request received for getDistinctCategories");
+
+    return new ResponseEntity<>(productService.getDistinctCategories(), HttpStatus.OK);
+  }
+
+  @GetMapping(value = TYPES_PATH)
+  public ResponseEntity<List<String>> getDistinctTypes() {
+    logger.info("Request received for getDistinctTypes");
+
+    return new ResponseEntity<>(productService.getDistinctTypes(), HttpStatus.OK);
+  }
 
 }
