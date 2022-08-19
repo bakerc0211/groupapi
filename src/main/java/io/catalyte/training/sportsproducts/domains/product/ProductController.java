@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class ProductController {
     this.productService = productService;
   }
   @GetMapping(value = "/filter")
-  public ResponseEntity<List<Product>> filterProducts(@RequestParam("query") String query){
+  public ResponseEntity<List<Product>> filterProducts(@RequestParam MultiValueMap<String, String> query){
     logger.info("Request received for filterProducts");
     return ResponseEntity.ok(productService.filterProducts(query));
   }

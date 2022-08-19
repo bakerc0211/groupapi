@@ -1,6 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
 import java.util.List;
+import org.springframework.util.MultiValueMap;
 
 /**
  * This interface provides an abstraction layer for the Products Service
@@ -15,5 +16,6 @@ public interface ProductService {
 
   List<String> getDistinctTypes();
 
-  List<Product> filterProducts(String query);
+  List<Product> filterProducts(MultiValueMap<String, String> queryParams);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
 /**
  * This class provides the implementation for the ProductService interface.
@@ -26,9 +27,15 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> filterProducts(String query) {
-    List<Product> products = productRepository.filterProducts(query);
-    return products;
+  public List<Product> filterProducts(MultiValueMap<String, String> query) {
+    List<String> brand = query.get("brand");
+    List<String> category = query.get("category");
+    List<String> demographic = query.get("demographic");
+    List<String> price = query.get("price");
+    List<String> primaryColorCode = query.get("primary_color_code");
+    List<String> material = query.get("material");
+
+    return productRepository.filterProducts(brand);
   }
   /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
