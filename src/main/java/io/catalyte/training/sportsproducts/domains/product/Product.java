@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,9 +50,9 @@ public class Product {
 
     private String material;
 
-    private float price;
+    private Float price;
 
-    private int quantity;
+    private Integer quantity;
 
     private Boolean active;
 
@@ -63,7 +64,7 @@ public class Product {
                    String type, String releaseDate, String primaryColorCode,
                    String secondaryColorCode, String styleNumber,
                    String globalProductCode, String imageSrc, String material,
-                   float price, int quantity, Boolean active) {
+                   Float price, Integer quantity, Boolean active) {
         this.name = name;
         this.brand = brand;
         this.description = description;
@@ -194,19 +195,19 @@ public class Product {
         this.material = material;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -275,10 +276,10 @@ public class Product {
         if (material != null ? !material.equals(product.material) : product.material != null) {
             return false;
         }
-        if (price != product.price) {
+        if (!Objects.equals(price, product.price)) {
             return false;
         }
-        if (quantity != product.quantity) {
+        if (!Objects.equals(quantity, product.quantity)) {
             return false;
         }
         return active != null ? active.equals(product.active) : product.active == null;
