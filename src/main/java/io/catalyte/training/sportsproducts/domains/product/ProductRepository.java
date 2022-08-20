@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,14 +13,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
       + "p.brand IN :brand "
       + "OR p.category IN :category "
       + "OR p.demographic IN :demographic "
-      + "OR p.price IN :price "
+      + "OR CAST(p.price AS text) IN :price "
       + "OR p.primaryColorCode IN :primaryColorCode "
       + "OR p.material IN :material "
   )
-  List<Product> filterProducts(@Param("brand") Collection<String> brand,
+
+  List<Product> filterProducts( Collection<String> brand,
       Collection<String> demographic, Collection<String> category,
       Collection<String> price, Collection<String> primaryColorCode,
       Collection<String> material);
+
 
   @Query(value = "select distinct category from product", nativeQuery = true)
   List<String> findDistinctCategories();

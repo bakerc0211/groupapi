@@ -36,7 +36,7 @@ public class ProductController {
   @GetMapping(value = "/filter")
   public ResponseEntity<List<Product>> filterProducts(@RequestParam MultiValueMap<String, String> query){
     logger.info("Request received for filterProducts");
- 
+    logger.info(query.toString());
     return new ResponseEntity<>(productService.filterProducts(query), HttpStatus.OK);
   }
   @GetMapping

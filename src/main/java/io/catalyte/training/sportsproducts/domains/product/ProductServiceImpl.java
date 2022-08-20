@@ -35,7 +35,8 @@ public class ProductServiceImpl implements ProductService {
     List<String> primaryColorCode = query.get("primaryColorCode");
     List<String> material = query.get("material");
 
-    return productRepository.filterProducts(brand, demographic, category, price,primaryColorCode, material);
+
+    return productRepository.filterProducts(brand, demographic, category, price, primaryColorCode, material);
   }
   /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
