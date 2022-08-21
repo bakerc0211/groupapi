@@ -53,22 +53,23 @@ public class PurchaseServiceImpl implements PurchaseService {
    * @return the persisted purchase with ids
    */
   public Purchase savePurchase(Purchase newPurchase) {
+
     Set<LineItem> productsActiveCheck = newPurchase.getProducts();
-    boolean productIsActive = true;
+
     List<String> inactiveProducts = new ArrayList<>();
      for (Iterator<LineItem> productLoop = productsActiveCheck.iterator(); productLoop.hasNext(); ) {
         LineItem currentLineItem = productLoop.next();
-      if (currentLineItem.getProduct().getActive() == null) {
-         productIsActive = false;
-         inactiveProducts.add(currentLineItem.getProduct().getName());
+      if (!productService.getProductById(currentLineItem.getProduct().getId()).getActive()) {
+        inactiveProducts.add(currentLineItem.getProduct().getName());
+        throw new UnprocessableEntity( inactiveProducts + " inactive product");
+
        }
 
      }
-    if (!productIsActive) {
 
-      throw new UnprocessableEntity("inactive product");
 
-    }
+
+
       try {
 
         purchaseRepository.save(newPurchase);
