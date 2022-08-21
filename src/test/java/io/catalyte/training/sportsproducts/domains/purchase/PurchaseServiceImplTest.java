@@ -81,14 +81,18 @@ public class PurchaseServiceImplTest {
   public void setup(){
     MockitoAnnotations.initMocks(this);
     productFactory = new ProductFactory();
-    inactiveProduct.setId(2L);
-    inactiveProduct.setActive(false);
-    activeProduct.setId(1L);
+    activeProduct = productFactory.createRandomProduct();
+    inactiveProduct = productFactory.createRandomProduct();
     activeProduct.setActive(true);
+    activeProduct.setPrice(0.00F);
+   //inactiveProduct.setId(2L);
+    inactiveProduct.setActive(false);
+   // activeProduct.setId(1L);
+    //activeProduct.setActive(true);
     activeLineItem.setProduct(activeProduct);
     activeLineItem.setId(1L);
     activeLineItem.setQuantity(1);
-    activeLineItem.setPurchase(activePurchase);
+    //activeLineItem.setPurchase(activePurchase);
     inactiveLineItem.setProduct(inactiveProduct);
     inactiveLineItem.setId(2L);
     inactiveLineItem.setQuantity(1);
@@ -109,13 +113,7 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void saveActivePurchase() {
-    Product testProduct = new Product();
     Purchase testPurchase = activePurchase;
-    testProduct.setId(1L);
-    testProduct.setActive(true);
-    Set<LineItem> testLine = new HashSet<>();
-    LineItem lineTest = new LineItem(1L, testPurchase, testProduct, 1);
-    testLine.add(lineTest);
     Purchase results = purchaseServiceImpl.savePurchase(testPurchase);
 
     assertEquals(activePurchase, results);

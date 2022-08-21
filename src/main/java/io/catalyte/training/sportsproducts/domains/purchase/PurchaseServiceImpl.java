@@ -55,16 +55,20 @@ public class PurchaseServiceImpl implements PurchaseService {
   public Purchase savePurchase(Purchase newPurchase) {
 
     Set<LineItem> productsActiveCheck = newPurchase.getProducts();
+    boolean inactiveFound = false;
 
     List<String> inactiveProducts = new ArrayList<>();
      for (Iterator<LineItem> productLoop = productsActiveCheck.iterator(); productLoop.hasNext(); ) {
         LineItem currentLineItem = productLoop.next();
-      if (!productService.getProductById(currentLineItem.getProduct().getId()).getActive()) {
+      if (!currentLineItem.getProduct().getActive()) {
         inactiveProducts.add(currentLineItem.getProduct().getName());
-        throw new UnprocessableEntity( inactiveProducts + " inactive product");
+        inactiveFound = true;
 
        }
 
+     }
+     if(inactiveFound){
+       throw new UnprocessableEntity( inactiveProducts + " inactive product");
      }
 
 
