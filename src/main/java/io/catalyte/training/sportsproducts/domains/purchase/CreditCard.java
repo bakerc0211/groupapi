@@ -11,16 +11,16 @@ public class CreditCard {
   private String cardNumber;
   private String cvv;
   private String expiration;
-  private String cardholder;
+  private String cardHolder;
 
   public CreditCard() {
   }
 
-  public CreditCard(String cardNumber, String cvv, String expiration, String cardholder) {
+  public CreditCard(String cardNumber, String cvv, String expiration, String cardHolder) {
     this.cardNumber = cardNumber;
     this.cvv = cvv;
     this.expiration = expiration;
-    this.cardholder = cardholder;
+    this.cardHolder = cardHolder;
   }
 
   public String getCardNumber() {
@@ -47,12 +47,12 @@ public class CreditCard {
     this.expiration = expiration;
   }
 
-  public String getCardholder() {
-    return cardholder;
+  public String getCardHolder() {
+    return cardHolder;
   }
 
-  public void setCardholder(String cardholder) {
-    this.cardholder = cardholder;
+  public void setCardHolder(String cardHolder) {
+    this.cardHolder = cardHolder;
   }
 
   @Override
@@ -77,8 +77,8 @@ public class CreditCard {
         : that.getExpiration() != null) {
       return false;
     }
-    return getCardholder() != null ? getCardholder().equals(that.getCardholder())
-        : that.getCardholder() == null;
+    return getCardHolder() != null ? getCardHolder().equals(that.getCardHolder())
+        : that.getCardHolder() == null;
   }
 
   @Override
@@ -86,7 +86,7 @@ public class CreditCard {
     int result = getCardNumber() != null ? getCardNumber().hashCode() : 0;
     result = 31 * result + (getCvv() != null ? getCvv().hashCode() : 0);
     result = 31 * result + (getExpiration() != null ? getExpiration().hashCode() : 0);
-    result = 31 * result + (getCardholder() != null ? getCardholder().hashCode() : 0);
+    result = 31 * result + (getCardHolder() != null ? getCardHolder().hashCode() : 0);
     return result;
   }
 }
