@@ -3,6 +3,7 @@ package io.catalyte.training.sportsproducts.data;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
+import io.catalyte.training.sportsproducts.domains.purchase.CreditCard;
 import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
 import io.catalyte.training.sportsproducts.domains.user.*;
@@ -82,14 +83,35 @@ public class DemoData implements CommandLineRunner {
     BillingAddress billingAddress = new BillingAddress();
     billingAddress.setEmail("bob@ross.com");
     purchase1.setBillingAddress(billingAddress);
+    //CC should pass
+    purchase1.setCreditCard(new CreditCard(
+        "4234567812345678",
+        "123",
+        "01/25",
+        "Bob Ross"
+    ));
     purchaseRepository.save(purchase1);
 
     Purchase purchase2 = new Purchase();
     purchase2.setBillingAddress(billingAddress);
+    //Should fail due to incorrect card type
+    purchase2.setCreditCard(new CreditCard(
+        "1234567812345678",
+        "456",
+        "02/24",
+        "John Jones"
+    ));
     purchaseRepository.save(purchase2);
 
     Purchase purchase3 = new Purchase();
     purchase3.setBillingAddress(billingAddress);
+    //Should fail due to expiration date
+    purchase3.setCreditCard(new CreditCard(
+        "51234567812345678",
+        "789",
+        "01/20",
+        "Frank Jenkins"
+    ));
     purchaseRepository.save(purchase3);
 
     Purchase purchase4 = new Purchase();
