@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
 
@@ -54,37 +53,29 @@ public class PurchaseServiceImpl implements PurchaseService {
    */
   public Purchase savePurchase(Purchase newPurchase) {
 
-    Set<LineItem> productsActiveCheck = newPurchase.getProducts();
-    boolean inactiveFound = false;
+    Set<LineItem> lineItems = newPurchase.getProducts();
 
     List<String> inactiveProducts = new ArrayList<>();
-     for (Iterator<LineItem> productLoop = productsActiveCheck.iterator(); productLoop.hasNext(); ) {
-        LineItem currentLineItem = productLoop.next();
-      if (!currentLineItem.getProduct().getActive()) {
-        inactiveProducts.add(currentLineItem.getProduct().getName());
-        inactiveFound = true;
+     lineItems.forEach(lineItem -> {
+       Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
+      if(!lineProduct.getActive()) {
+        inactiveProducts.add(lineProduct.getName());
 
        }
 
-     }
-     if(inactiveFound){
+     });
+     if(inactiveProducts.size() > 0){
        throw new UnprocessableEntity( inactiveProducts + " inactive product");
      }
-
-
-
 
       try {
 
         purchaseRepository.save(newPurchase);
 
-
       } catch (DataAccessException e) {
         logger.error(e.getMessage());
         throw new ServerError(e.getMessage());
       }
-
-
 
     // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
     handleLineItems(newPurchase);
@@ -124,6 +115,5 @@ public class PurchaseServiceImpl implements PurchaseService {
       });
     }
   }
-
 }
 
