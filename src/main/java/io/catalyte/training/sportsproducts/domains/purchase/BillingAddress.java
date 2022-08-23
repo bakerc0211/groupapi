@@ -12,7 +12,7 @@ public class BillingAddress {
   private String billingStreet2;
   private String billingCity;
   private String billingState;
-  private int billingZip;
+  private String billingZip;
   private String email;
   private String phone;
 
@@ -48,11 +48,11 @@ public class BillingAddress {
     this.billingState = billingState;
   }
 
-  public int getBillingZip() {
+  public String getBillingZip() {
     return billingZip;
   }
 
-  public void setBillingZip(int billingZip) {
+  public void setBillingZip(String billingZip) {
     this.billingZip = billingZip;
   }
 
@@ -114,7 +114,7 @@ public class BillingAddress {
     result = 31 * result + (getBillingStreet2() != null ? getBillingStreet2().hashCode() : 0);
     result = 31 * result + (getBillingCity() != null ? getBillingCity().hashCode() : 0);
     result = 31 * result + (getBillingState() != null ? getBillingState().hashCode() : 0);
-    result = 31 * result + getBillingZip();
+    result = 31 * result + (getBillingZip() != null ? getBillingZip().hashCode() : 0);
     result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
     result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
     return result;
