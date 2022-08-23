@@ -74,6 +74,12 @@ public class DemoData implements CommandLineRunner {
     // Generate products
     List<Product> productList = productFactory.generateRandomProducts(numberOfProducts);
 
+    //Sets active status to test savePurchase
+    productList.get(0).setActive(true);
+    productList.get(1).setActive(true);
+    productList.get(2).setActive(false);
+    productList.get(3).setActive(false);
+
     // Persist them to the database
     logger.info("Loading " + numberOfProducts + " products...");
     productRepository.saveAll(productList);
