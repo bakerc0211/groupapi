@@ -313,6 +313,7 @@ public class ProductFactory {
     product.setImageSrc("https://via.placeholder.com/640x360");
     product.setMaterial(ProductFactory.getMaterial());
     product.setPrice(ProductFactory.getPrice());
+    product.setPrice(ProductFactory.getPrice());
     product.setQuantity(ProductFactory.getQuantity());
 
     return product;
