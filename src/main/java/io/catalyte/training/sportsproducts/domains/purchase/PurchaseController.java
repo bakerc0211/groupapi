@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PurchaseController {
 
   Logger logger = LogManager.getLogger(PurchaseController.class);
+  CreditCardValidation validator = new CreditCardValidation();
 
   private PurchaseService purchaseService;
 
@@ -31,6 +32,11 @@ public class PurchaseController {
 
   @PostMapping
   public ResponseEntity savePurchase(@RequestBody Purchase newPurchase) {
+    try {
+      validator.validCard(newPurchase);
+    } catch (Exception e) {
+      return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
     Purchase savedPurchase = purchaseService.savePurchase(newPurchase);
 
     return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);

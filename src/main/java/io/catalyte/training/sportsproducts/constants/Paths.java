@@ -9,4 +9,6 @@ public class Paths {
   public static final String CATEGORIES_PATH = "/categories";
   public static final String TYPES_PATH = "/types";
 
+  public static final String PROMOS_PATH = "/promos";
+
 }

@@ -5,7 +5,6 @@ import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -56,26 +55,26 @@ public class PurchaseServiceImpl implements PurchaseService {
     Set<LineItem> lineItems = newPurchase.getProducts();
 
     List<String> inactiveProducts = new ArrayList<>();
-     lineItems.forEach(lineItem -> {
-       Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
-      if(!lineProduct.getActive()) {
+    lineItems.forEach(lineItem -> {
+      Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
+      if (!lineProduct.getActive()) {
         inactiveProducts.add(lineProduct.getName());
 
-       }
-
-     });
-     if(inactiveProducts.size() > 0){
-       throw new UnprocessableEntity( inactiveProducts + " inactive product");
-     }
-
-      try {
-
-        purchaseRepository.save(newPurchase);
-
-      } catch (DataAccessException e) {
-        logger.error(e.getMessage());
-        throw new ServerError(e.getMessage());
       }
+
+    });
+    if (inactiveProducts.size() > 0) {
+      throw new UnprocessableEntity(inactiveProducts + " inactive product");
+    }
+
+    try {
+
+      purchaseRepository.save(newPurchase);
+
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
 
     // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
     handleLineItems(newPurchase);
