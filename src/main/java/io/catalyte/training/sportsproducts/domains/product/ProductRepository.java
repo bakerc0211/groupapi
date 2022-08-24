@@ -17,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
       + "OR CAST(p.price AS text) IN :price "
       + "OR p.primaryColorCode IN :primaryColorCode "
       + "OR p.material IN :material "
+      + "ORDER BY p.id ASC"
   )
 
   List<Product> filterProducts(
