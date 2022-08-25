@@ -4,13 +4,13 @@ import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PAT
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +30,33 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  public ProductController(ProductService productService) {
-    this.productService = productService;
+  @GetMapping("/filter")
+  public List<Product> filterProducts(@RequestParam(value="brand") String brand,
+      @RequestParam(value="category") String category
+    		)
+  {
+    HashMap<String, Object> query=new HashMap<>();
+
+
+    String sql="SELECT p FROM Product p WHERE ";
+
+    if (query!=null)
+      sql+="p.brand IN :brand ";
+    if (category!=null)
+      sql+=" AND p.category IN :category ";
+
+   return (List<Product>) query;
+
   }
-  @GetMapping(value = "/filter")
-  public ResponseEntity<List<Product>> filterProducts(@RequestParam MultiValueMap<String, String> query){
-    logger.info("Request received for filterProducts");
-    logger.info(query.toString());
-    return new ResponseEntity<>(productService.filterProducts(query), HttpStatus.OK);
-  }
+//  public ProductController(ProductService productService) {
+//    this.productService = productService;
+//  }
+//  @GetMapping(value = "/filter")
+//  public ResponseEntity<List<Product>> filterProducts(@RequestParam MultiValueMap<String, String> query){
+//    logger.info("Request received for filterProducts");
+
+//    return new ResponseEntity<>(productService.filterProducts(query), HttpStatus.OK);
+//  }
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
     logger.info("Request received for getProducts");
