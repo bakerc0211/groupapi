@@ -15,6 +15,6 @@ public interface ProductService {
 
   List<String> getDistinctTypes();
 
-//  List<Product> filterProducts(MultiValueMap<String, String> query);
+  List<Product> filterProducts();
 
 }
