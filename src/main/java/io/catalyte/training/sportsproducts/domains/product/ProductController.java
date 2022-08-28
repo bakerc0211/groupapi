@@ -31,32 +31,26 @@ public class ProductController {
   private ProductService productService;
 
   @GetMapping("/filter")
-  public List<Product> filterProducts(@RequestParam(value="brand") String brand,
-      @RequestParam(value="category") String category
+  public ResponseEntity<List<Product>> filterProduct(@RequestParam(value="brand",required = false) List<String> brand,
+      @RequestParam(value="category",required = false) List<String> category,
+      @RequestParam(value="demographic",required = false) List<String> demographic,
+      @RequestParam(value="price",required = false) List<String> price,
+      @RequestParam(value="primaryColorCode",required = false) List<String> primaryColorCode,
+      @RequestParam(value="material",required = false) List<String> material
     		)
   {
-    HashMap<String, Object> query=new HashMap<>();
+    HashMap<String, List<String>> query=new HashMap<>();
+    query.put("brand", brand);
+    query.put("category", category);
+    query.put("demographic", demographic);
+    query.put("price", price);
+    query.put("primaryColorCode", primaryColorCode);
+    query.put("material", material);
 
-
-    String sql="SELECT p FROM Product p WHERE ";
-
-    if (query!=null)
-      sql+="p.brand IN :brand ";
-    if (category!=null)
-      sql+=" AND p.category IN :category ";
-
-   return (List<Product>) query;
+    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
 
   }
-//  public ProductController(ProductService productService) {
-//    this.productService = productService;
-//  }
-//  @GetMapping(value = "/filter")
-//  public ResponseEntity<List<Product>> filterProducts(@RequestParam MultiValueMap<String, String> query){
-//    logger.info("Request received for filterProducts");
 
-//    return new ResponseEntity<>(productService.filterProducts(query), HttpStatus.OK);
-//  }
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
     logger.info("Request received for getProducts");

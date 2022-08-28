@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * This class is the main application. Running this class will start the SpringBoot server.
  */
+
 @SpringBootApplication
 public class AppRunner {
 

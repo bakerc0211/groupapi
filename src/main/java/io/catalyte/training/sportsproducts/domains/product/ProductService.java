@@ -16,6 +16,6 @@ public interface ProductService {
 
   List<String> getDistinctTypes();
 
-  List<Product> filterProducts(HashMap<String, Object> conditions);
+  List<Product> getProductsByFilter(HashMap<String, List<String>> filter);
 
 }

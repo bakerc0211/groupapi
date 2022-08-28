@@ -5,7 +5,7 @@ import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.persistence.EntityManager;
+//import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -23,53 +23,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-  private final EntityManager entityManager;
-  private final CriteriaBuilder criteriaBuilder;
   private final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
-  @PersistenceContext
   ProductRepository productRepository;
-
   @Autowired
-  public ProductServiceImpl(ProductRepository productRepository, EntityManager entityManager) {
-    this.entityManager = entityManager;
+  public ProductServiceImpl(ProductRepository productRepository) {
     this.productRepository = productRepository;
-    this.criteriaBuilder = entityManager.getCriteriaBuilder();
   }
 
-
-  public List<Product> filterProducts(HashMap<String, Object> conditions)
-  {
-
-    CriteriaQuery<Product> query= criteriaBuilder.createQuery(Product.class);
-    Root<Product> root = query.from(Product.class);
-
-    List<Predicate> predicates = new ArrayList<>();
-    conditions.forEach((field,value) ->
-    {
-      switch (field)
-      {
-        case "brand":
-          predicates.add(criteriaBuilder.equal (root.get(field),"%"+(String)value+"%"));
-          break;
-        case "category":
-          predicates.add(criteriaBuilder.like(root.get(field),"%"+(String)value+"%"));
-          break;
-      }
-    });
-
-    Predicate predicate = criteriaBuilder.and(predicates.toArray((new Predicate[0])));
-    query.select(root).where(predicate);
-    return entityManager.createQuery(query).getResultList();
+  public List<Product> getProductsByFilter(HashMap<String, List<String>> filter) {
+    try {
+      return productRepository.filterProduct(filter);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
   }
-
-
-
-
-
-
-
-
 
   /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
