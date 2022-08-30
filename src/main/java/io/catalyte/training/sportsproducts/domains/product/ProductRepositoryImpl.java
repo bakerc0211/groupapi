@@ -23,9 +23,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     List<Predicate> predicateGroups = new ArrayList<>();
     filter.forEach((field,value) ->
     {
-      value.forEach((item) -> {
-        predicates.add(criteriaBuilder.equal(root.get(field), item));
-      });
+      if (field.equals("maxPrice")){
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.get(0)));
+      } else {
+        value.forEach((item) -> {
+          predicates.add(criteriaBuilder.equal(root.get(field), item));
+        });
+      }
       predicateGroups.add(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
       predicates.clear();
