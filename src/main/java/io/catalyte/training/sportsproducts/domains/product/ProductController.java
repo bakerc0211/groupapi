@@ -30,23 +30,24 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  @GetMapping("/filter")
-  public ResponseEntity<List<Product>> filterProduct(@RequestParam(value="brand",required = false) List<String> brand,
+  @RequestMapping("/filter")
+  public ResponseEntity<List<Product>> filterProduct(
+      @RequestParam(value="brand",required = false) List<String> brand,
       @RequestParam(value="category",required = false) List<String> category,
       @RequestParam(value="demographic",required = false) List<String> demographic,
-      @RequestParam(value="price",required = false) List<String> price,
+     // @RequestParam(value="price AS text",required = false) List<String> price,
       @RequestParam(value="primaryColorCode",required = false) List<String> primaryColorCode,
       @RequestParam(value="material",required = false) List<String> material
     		)
   {
     HashMap<String, List<String>> query=new HashMap<>();
-    query.put("brand", brand);
+    query.put("brand", brand );
     query.put("category", category);
     query.put("demographic", demographic);
-    query.put("price", price);
+   // query.put("price", price);
     query.put("primaryColorCode", primaryColorCode);
     query.put("material", material);
-
+while (query.values().remove(null));
     return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
 
   }
