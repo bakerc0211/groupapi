@@ -4,6 +4,7 @@ import static io.catalyte.training.sportsproducts.constants.Paths.PROMOS_PATH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,40 +22,30 @@ public class PromoApiTest {
 
   @Autowired
   private WebApplicationContext wac;
-
   private MockMvc mockMvc;
+
+  private Promo testPromo;
+  private ObjectMapper objectMapper;
+  private PromoTestHelper promoTestHelper;
 
   @Before
   public void setUp() {
     mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+    objectMapper = new ObjectMapper();
+    promoTestHelper = new PromoTestHelper();
+    testPromo = promoTestHelper.generateValidPromoCode();
   }
-
 
   @Test
   public void postValidPromoReturns201() throws Exception {
-    String mockPromo = "{\n"
-        + "    \"title\":\"A\",\n"
-        + "    \"description\":\"something\",\n"
-        + "    \"type\":\"Flat\",\n"
-        + "    \"rate\":\"$2222222222.20\",\n"
-        + "    \"expirationDate\":\"05/10/69\"\n"
-        + "\n"
-        + "}";
-    mockMvc.perform(post(PROMOS_PATH).contentType(MediaType.APPLICATION_JSON).content((mockPromo))).
-        andExpect(status().isCreated());
+    mockMvc.perform(post(PROMOS_PATH).contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(testPromo))).andExpect(status().isCreated());
   }
 
   @Test
   public void postInvalidPromoReturns400() throws Exception {
-    String mockPromo = "{\n"
-        + "    \"title\":\"aaaaa\",\n"
-        + "    \"description\":\"something\",\n"
-        + "    \"type\":\"notAflat\",\n"
-        + "    \"rate\":\"0.20\",\n"
-        + "    \"expirationDate\":\"05/10/1969\"\n"
-        + "\n"
-        + "}";
-    mockMvc.perform(post(PROMOS_PATH).contentType(MediaType.APPLICATION_JSON).content((mockPromo))).
+    testPromo.setType("notAFlat");
+    mockMvc.perform(post(PROMOS_PATH).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testPromo))).
         andExpect(status().isBadRequest());
   }
 
