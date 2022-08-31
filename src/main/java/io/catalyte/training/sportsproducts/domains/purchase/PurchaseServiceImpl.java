@@ -59,7 +59,6 @@ public class PurchaseServiceImpl implements PurchaseService {
       Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
       if (!lineProduct.getActive()) {
         inactiveProducts.add(lineProduct.getName());
-
       }
 
     });
