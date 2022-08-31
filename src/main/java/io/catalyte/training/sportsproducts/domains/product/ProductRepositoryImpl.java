@@ -14,6 +14,8 @@ import javax.persistence.criteria.Root;
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
   @PersistenceContext
   EntityManager entityManager;
+  public Float min = 0.0f;
+  public Float max = 0.0f;
   @Override
   public List<Product> filterProduct(HashMap<String, List<String>> filter) {
     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -23,8 +25,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     List<Predicate> predicateGroups = new ArrayList<>();
     filter.forEach((field,value) ->
     {
-      if (field.equals("maxPrice")){
-        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.get(0)));
+      if (field.equals("minPrice") || (field.equals("maxPrice"))) {
+        if (field.equals("minPrice")) {
+            min = Float.valueOf(value.get(0));
+        }else {
+          min = 0.0f;
+          predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.get(0)));
+        }
+
+        if (field.equals("maxPrice")) {
+            max = Float.valueOf(value.get(0));
+        }else {
+          max = 0.0f;
+          predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), value.get(0)));
+        }
+        predicates.add(criteriaBuilder.between(root.get("price"), min, max));
+        //
+
       } else {
         value.forEach((item) -> {
           predicates.add(criteriaBuilder.equal(root.get(field), item));
