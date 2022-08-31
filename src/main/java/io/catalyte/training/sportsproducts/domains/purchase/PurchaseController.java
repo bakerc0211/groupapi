@@ -1,7 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = PURCHASES_PATH)
 public class PurchaseController {
-
   Logger logger = LogManager.getLogger(PurchaseController.class);
   CreditCardValidation validator = new CreditCardValidation();
 
@@ -38,7 +36,6 @@ public class PurchaseController {
       return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     Purchase savedPurchase = purchaseService.savePurchase(newPurchase);
-
     return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);
   }
 
