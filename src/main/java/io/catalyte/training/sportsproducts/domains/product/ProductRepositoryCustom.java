@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 interface ProductRepositoryCustom {
- List<Product> filterProduct(HashMap<String, List<String>> filter);
+
+  List<Product> filterProduct(HashMap<String, List<String>> filter);
 }
 

@@ -12,35 +12,42 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
+
   @PersistenceContext
   EntityManager entityManager;
   public Float min = 0.0f;
   public Float max = 0.0f;
+
+  /**
+   * Construct the predicates and group of predicates to be used in the query
+   *
+   * @param filter read the values of the queries
+   * @return a result list of products matching the criteria
+   */
   @Override
   public List<Product> filterProduct(HashMap<String, List<String>> filter) {
     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<Product> query= criteriaBuilder.createQuery(Product.class);
+    CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
     Root<Product> root = query.from(Product.class);
     List<Predicate> predicates = new ArrayList<>();
     List<Predicate> predicateGroups = new ArrayList<>();
-    filter.forEach((field,value) ->
+    filter.forEach((field, value) ->
     {
       if (field.equals("minPrice") || (field.equals("maxPrice"))) {
         if (field.equals("minPrice")) {
-            min = Float.valueOf(value.get(0));
-        }else {
+          min = Float.valueOf(value.get(0));
+        } else {
           min = 0.0f;
           predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), value.get(0)));
         }
 
         if (field.equals("maxPrice")) {
-            max = Float.valueOf(value.get(0));
-        }else {
+          max = Float.valueOf(value.get(0));
+        } else {
           max = 0.0f;
           predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), value.get(0)));
         }
         predicates.add(criteriaBuilder.between(root.get("price"), min, max));
-        //
 
       } else {
         value.forEach((item) -> {

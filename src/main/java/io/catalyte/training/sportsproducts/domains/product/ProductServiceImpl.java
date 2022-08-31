@@ -23,14 +23,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
+
   private final Logger logger = LogManager.getLogger(ProductServiceImpl.class);
 
   ProductRepository productRepository;
+
   @Autowired
   public ProductServiceImpl(ProductRepository productRepository) {
     this.productRepository = productRepository;
   }
 
+  /**
+   * Retrieves the group of products for the specified filter
+   *
+   * @param filter calls the queries for the specified filter
+   * @return the list of products matching the criteria
+   */
   public List<Product> getProductsByFilter(HashMap<String, List<String>> filter) {
     try {
       return productRepository.filterProduct(filter);
