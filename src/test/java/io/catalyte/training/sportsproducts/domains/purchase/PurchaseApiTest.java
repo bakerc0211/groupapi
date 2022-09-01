@@ -1,7 +1,9 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
+import static io.catalyte.training.sportsproducts.constants.Paths.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -86,5 +88,17 @@ public class PurchaseApiTest {
             .content((mockPurchase)))
         .andExpect(unprocessableEntity)
         .andExpect(expectedType);
+  }
+
+  @Test
+  public void findAllPurchasesByEmailReturns200() throws Exception {
+    mockMvc.perform(get(PURCHASES_PATH + "/blah"))
+            .andExpect(status().isOk());
+  }
+
+  @Test
+  public void findAllPurchasesNoEmailReturns404() throws Exception {
+    mockMvc.perform(get(PURCHASES_PATH ))
+            .andExpect(status().isNotFound());
   }
 }
