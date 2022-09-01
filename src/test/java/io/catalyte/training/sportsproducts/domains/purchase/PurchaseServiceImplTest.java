@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
+import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.dao.DataAccessException;
 
 @RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(PurchaseServiceImpl.class)
@@ -94,10 +96,18 @@ public class PurchaseServiceImplTest {
         () -> purchaseServiceImpl.savePurchase(inactivePurchase));
   }
   @Test
-  public void getAllPurchasesFromDataBase() {
-    when(purchaseRepository.findAll()).thenReturn(testPurchaseList);
-    List<Purchase> actual = purchaseServiceImpl.findAllPurchases();
+  public void findAllPurchaseByEmailReturnsPurchases() {
+    when(purchaseRepository.findByBillingAddressEmail("blah")).thenReturn(testPurchaseList);
+    List<Purchase> actual = purchaseServiceImpl.findAllPurchasesByEmail("blah");
     assertEquals(testPurchaseList, actual);
   }
+
+  @Test
+  public void findAllPurchasesByEmailThrowsErrorWhenServerError() {
+    when(purchaseRepository.findByBillingAddressEmail("blah")).thenThrow(new DataAccessException("...") {
+    });
+    assertThrows(ServerError.class, () -> purchaseServiceImpl.findAllPurchasesByEmail("blah"));
+  }
 }
+
 
