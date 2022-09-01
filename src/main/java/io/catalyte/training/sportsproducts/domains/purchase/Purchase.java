@@ -25,7 +25,6 @@ public class Purchase {
   private BillingAddress billingAddress;
 
   private CreditCard creditCard;
-
   public Purchase() {
     billingAddress = new BillingAddress();
     deliveryAddress = new DeliveryAddress();

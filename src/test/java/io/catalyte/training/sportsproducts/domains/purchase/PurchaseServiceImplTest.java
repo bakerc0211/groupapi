@@ -1,6 +1,5 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,8 +7,11 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
+import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,9 +23,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.dao.DataAccessException;
 
 @RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(PurchaseServiceImpl.class)
+
 public class PurchaseServiceImplTest {
 
   @InjectMocks
@@ -34,22 +38,15 @@ public class PurchaseServiceImplTest {
 
   @Mock
   private PurchaseRepository purchaseRepository;
-
   @Mock
   private ProductService productService;
 
   @Mock  private LineItemRepository lineItemRepository;
-  Purchase activePurchase = new Purchase();
-  Purchase inactivePurchase = new Purchase();
-  Product activeProduct = new Product();
-  Product inactiveProduct = new Product();
-  LineItem activeLineItem = new LineItem();
-  LineItem inactiveLineItem = new LineItem();
-  Set<LineItem> activeL = new HashSet<>();
-  Set<LineItem> inactiveL = new HashSet<>();
+  Purchase testPurchase;
+  List<Purchase> testPurchaseList = new ArrayList<>();
 
   @Before
-  public void setup() {
+  public void setUp() {
     MockitoAnnotations.initMocks(this);
     activeProduct.setId(1L);
     activeProduct.setActive(true);
@@ -72,16 +69,23 @@ public class PurchaseServiceImplTest {
     activePurchase.setProducts(activeL);
     inactivePurchase.setId(2L);
     inactivePurchase.setProducts(inactiveL);
-    }
+  }
+  Purchase activePurchase = new Purchase();
+  Purchase inactivePurchase = new Purchase();
+  Product activeProduct = new Product();
+  Product inactiveProduct = new Product();
+  LineItem activeLineItem = new LineItem();
+  LineItem inactiveLineItem = new LineItem();
+  Set<LineItem> activeL = new HashSet<>();
+  Set<LineItem> inactiveL = new HashSet<>();
 
   @Test
-  public void saveActivePurchase() {
+  public void saveActivePurchaseToDataBase() {
     when(productService.getProductById(anyLong())).thenReturn(activeProduct);
     when(lineItemRepository.save(any(LineItem.class))).thenReturn(activeLineItem);
     when(purchaseRepository.save(any(Purchase.class))).thenReturn(activePurchase);
     Purchase testPurchase = activePurchase;
     Purchase results = purchaseServiceImpl.savePurchase(testPurchase);
-
     assertEquals(activePurchase, results);
 
   }
@@ -91,4 +95,19 @@ public class PurchaseServiceImplTest {
     assertThrows(UnprocessableEntity.class,
         () -> purchaseServiceImpl.savePurchase(inactivePurchase));
   }
+  @Test
+  public void findAllPurchaseByEmailReturnsPurchases() {
+    when(purchaseRepository.findByBillingAddressEmail("blah")).thenReturn(testPurchaseList);
+    List<Purchase> actual = purchaseServiceImpl.findAllPurchasesByEmail("blah");
+    assertEquals(testPurchaseList, actual);
+  }
+
+  @Test
+  public void findAllPurchasesByEmailThrowsErrorWhenServerError() {
+    when(purchaseRepository.findByBillingAddressEmail("blah")).thenThrow(new DataAccessException("...") {
+    });
+    assertThrows(ServerError.class, () -> purchaseServiceImpl.findAllPurchasesByEmail("blah"));
+  }
 }
+
+

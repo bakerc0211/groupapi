@@ -35,9 +35,9 @@ public class PurchaseServiceImpl implements PurchaseService {
    *
    * @return
    */
-  public List<Purchase> findAllPurchases() {
+  public List<Purchase> findAllPurchasesByEmail(String email) {
     try {
-      return purchaseRepository.findAll();
+      return purchaseRepository.findByBillingAddressEmail(email);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
@@ -59,7 +59,6 @@ public class PurchaseServiceImpl implements PurchaseService {
       Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
       if (!lineProduct.getActive()) {
         inactiveProducts.add(lineProduct.getName());
-
       }
 
     });
