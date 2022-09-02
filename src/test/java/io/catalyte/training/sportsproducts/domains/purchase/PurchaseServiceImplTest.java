@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
+import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
@@ -81,20 +82,81 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void saveActivePurchaseToDataBase() {
+    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     when(productService.getProductById(anyLong())).thenReturn(activeProduct);
     when(lineItemRepository.save(any(LineItem.class))).thenReturn(activeLineItem);
-    when(purchaseRepository.save(any(Purchase.class))).thenReturn(activePurchase);
-    Purchase testPurchase = activePurchase;
-    Purchase results = purchaseServiceImpl.savePurchase(testPurchase);
-    assertEquals(activePurchase, results);
-
+    when(purchaseRepository.save(any(Purchase.class))).thenReturn(mockPurchaseObject);
+    Purchase results = purchaseServiceImpl.savePurchase(mockPurchaseObject);
+    assertEquals(mockPurchaseObject, results);
   }
+
   @Test
   public void inactivePurchaseThrowsUnprocessableEntity() {
+    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     when(productService.getProductById(anyLong())).thenReturn(inactiveProduct);
     assertThrows(UnprocessableEntity.class,
-        () -> purchaseServiceImpl.savePurchase(inactivePurchase));
+        () -> purchaseServiceImpl.savePurchase(mockPurchaseObject));
   }
+
+  @Test
+  public void invalidCardNumberThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    invalidCreditCard.setCardNumber("1234123412341234");
+    invalidPurchase.setCreditCard(invalidCreditCard);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+
+  @Test
+  public void invalidCardHolderThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    invalidCreditCard.setCardHolder("!@#%#@$^&#&$*");
+    invalidPurchase.setCreditCard(invalidCreditCard);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+
+  @Test
+  public void invalidCVVThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    invalidCreditCard.setCvv("1");
+    invalidPurchase.setCreditCard(invalidCreditCard);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+
+  @Test
+  public void invalidCreditCardExpirationThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    invalidCreditCard.setExpiration("1");
+    invalidPurchase.setCreditCard(invalidCreditCard);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+
+  @Test
+  public void pastCreditCardExpirationThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    invalidCreditCard.setExpiration("11/20");
+    invalidPurchase.setCreditCard(invalidCreditCard);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+  @Test
+  public void invalidBillingZipThrowsBadRequest() {
+    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    BillingAddress invalidBillingAddress = PurchaseTestHelper.generateValidBillingAddress();
+    invalidBillingAddress.setBillingZip("1");
+    invalidPurchase.setBillingAddress(invalidBillingAddress);
+    assertThrows(BadRequest.class,
+            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+  }
+
   @Test
   public void findAllPurchaseByEmailReturnsPurchases() {
     when(purchaseRepository.findByBillingAddressEmail("blah")).thenReturn(testPurchaseList);

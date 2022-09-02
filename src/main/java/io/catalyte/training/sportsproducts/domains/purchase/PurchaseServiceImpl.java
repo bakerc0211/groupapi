@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
+import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   ProductService productService;
   LineItemRepository lineItemRepository;
 
+  CreditCardValidation creditcardValidator = new CreditCardValidation();
   @Autowired
   public PurchaseServiceImpl(PurchaseRepository purchaseRepository, ProductService productService,
       LineItemRepository lineItemRepository) {
@@ -52,24 +54,28 @@ public class PurchaseServiceImpl implements PurchaseService {
    */
   public Purchase savePurchase(Purchase newPurchase) {
 
-    Set<LineItem> lineItems = newPurchase.getProducts();
+    try {
+      creditcardValidator.validCard(newPurchase);
+    } catch (Exception e) {
+      throw new BadRequest(e.getMessage());
+    }
 
+    Set<LineItem> lineItems = newPurchase.getProducts();
     List<String> inactiveProducts = new ArrayList<>();
+
     lineItems.forEach(lineItem -> {
       Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
       if (!lineProduct.getActive()) {
         inactiveProducts.add(lineProduct.getName());
       }
-
     });
+
     if (inactiveProducts.size() > 0) {
       throw new UnprocessableEntity(inactiveProducts + " inactive product");
     }
 
     try {
-
       purchaseRepository.save(newPurchase);
-
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
