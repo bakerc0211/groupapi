@@ -39,6 +39,7 @@ public class ProductController {
       @RequestParam(value = "minPrice", required = false) List<String> minPrice,
       @RequestParam(value = "maxPrice", required = false) List<String> maxPrice,
       @RequestParam(value = "primaryColorCode", required = false) List<String> primaryColorCode,
+      @RequestParam(value = "secondaryColorCode", required = false) List<String> secondaryColorCode,
       @RequestParam(value = "material", required = false) List<String> material
   ) {
     HashMap<String, List<String>> query = new HashMap<>();
@@ -49,6 +50,7 @@ public class ProductController {
     query.put("minPrice", minPrice);
     query.put("maxPrice", maxPrice);
     query.put("primaryColorCode", primaryColorCode);
+    query.put("secondaryColorCode", secondaryColorCode);
     query.put("material", material);
     while (query.values().remove(null))
       ;
