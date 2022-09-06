@@ -59,12 +59,10 @@ public class Product {
   public Product() {
   }
 
-  public Product(String name, String brand, String description,
-      String demographic, String category,
-      String type, String releaseDate, String primaryColorCode,
-      String secondaryColorCode, String styleNumber,
-      String globalProductCode, String imageSrc, String material,
-      Float price, Integer quantity, Boolean active) {
+  public Product(String name, String brand, String description, String demographic, String category,
+      String type, String releaseDate, String primaryColorCode, String secondaryColorCode,
+      String styleNumber, String globalProductCode, String imageSrc, String material, Float price,
+      Integer quantity, Boolean active) {
     this.name = name;
     this.brand = brand;
     this.description = description;
@@ -230,50 +228,43 @@ public class Product {
 
     Product product = (Product) o;
 
-    if (name != null ? !name.equals(product.name) : product.name != null) {
+    if (!Objects.equals(name, product.name)) {
       return false;
     }
-    if (brand != null ? !brand.equals(product.brand) : product.brand != null) {
+    if (!Objects.equals(brand, product.brand)) {
       return false;
     }
-    if (description != null ? !description.equals(product.description)
-        : product.description != null) {
+    if (!Objects.equals(description, product.description)) {
       return false;
     }
-    if (demographic != null ? !demographic.equals(product.demographic)
-        : product.demographic != null) {
+    if (!Objects.equals(demographic, product.demographic)) {
       return false;
     }
-    if (category != null ? !category.equals(product.category) : product.category != null) {
+    if (!Objects.equals(category, product.category)) {
       return false;
     }
-    if (type != null ? !type.equals(product.type) : product.type != null) {
+    if (!Objects.equals(type, product.type)) {
       return false;
     }
-    if (releaseDate != null ? !releaseDate.equals(product.releaseDate)
-        : product.releaseDate != null) {
+    if (!Objects.equals(releaseDate, product.releaseDate)) {
       return false;
     }
-    if (primaryColorCode != null ? !primaryColorCode.equals(product.primaryColorCode)
-        : product.primaryColorCode != null) {
+    if (!Objects.equals(primaryColorCode, product.primaryColorCode)) {
       return false;
     }
-    if (secondaryColorCode != null ? !secondaryColorCode.equals(product.secondaryColorCode)
-        : product.secondaryColorCode != null) {
+    if (!Objects.equals(secondaryColorCode, product.secondaryColorCode)) {
       return false;
     }
-    if (styleNumber != null ? !styleNumber.equals(product.styleNumber)
-        : product.styleNumber != null) {
+    if (!Objects.equals(styleNumber, product.styleNumber)) {
       return false;
     }
-    if (globalProductCode != null ? !globalProductCode.equals(product.globalProductCode)
-        : product.globalProductCode != null) {
+    if (!Objects.equals(globalProductCode, product.globalProductCode)) {
       return false;
     }
-    if (imageSrc != null ? !imageSrc.equals(product.imageSrc) : product.imageSrc != null) {
+    if (!Objects.equals(imageSrc, product.imageSrc)) {
       return false;
     }
-    if (material != null ? !material.equals(product.material) : product.material != null) {
+    if (!Objects.equals(material, product.material)) {
       return false;
     }
     if (!Objects.equals(price, product.price)) {
@@ -282,7 +273,7 @@ public class Product {
     if (!Objects.equals(quantity, product.quantity)) {
       return false;
     }
-    return active != null ? active.equals(product.active) : product.active == null;
+    return Objects.equals(active, product.active);
   }
 
   @Override
@@ -308,24 +299,13 @@ public class Product {
 
   @Override
   public String toString() {
-    return "Product{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", brand='" + brand + '\'' +
-        ", description='" + description + '\'' +
-        ", demographic='" + demographic + '\'' +
-        ", category='" + category + '\'' +
-        ", type='" + type + '\'' +
-        ", releaseDate='" + releaseDate + '\'' +
-        ", primaryColorCode='" + primaryColorCode + '\'' +
-        ", secondaryColorCode='" + secondaryColorCode + '\'' +
-        ", styleNumber='" + styleNumber + '\'' +
-        ", globalProductCode='" + globalProductCode + '\'' +
-        ", imageSrc='" + imageSrc + '\'' +
-        ", material='" + material + '\'' +
-        ", price='" + String.valueOf(price) + '\'' +
-        ", quantity='" + String.valueOf(quantity) + '\'' +
-        ", active='" + active + '\'' +
-        '}';
+    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", brand='" + brand + '\''
+        + ", description='" + description + '\'' + ", demographic='" + demographic + '\''
+        + ", category='" + category + '\'' + ", type='" + type + '\'' + ", releaseDate='"
+        + releaseDate + '\'' + ", primaryColorCode='" + primaryColorCode + '\''
+        + ", secondaryColorCode='" + secondaryColorCode + '\'' + ", styleNumber='" + styleNumber
+        + '\'' + ", globalProductCode='" + globalProductCode + '\'' + ", imageSrc='" + imageSrc
+        + '\'' + ", material='" + material + '\'' + ", price='" + price + '\''
+        + ", quantity='" + quantity + '\'' + ", active='" + active + '\'' + '}';
   }
 }
