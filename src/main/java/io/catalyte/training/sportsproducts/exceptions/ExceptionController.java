@@ -1,9 +1,5 @@
 package io.catalyte.training.sportsproducts.exceptions;
 
-import static io.catalyte.training.sportsproducts.constants.StringConstants.NOT_FOUND;
-import static io.catalyte.training.sportsproducts.constants.StringConstants.SERVER_ERROR;
-import static io.catalyte.training.sportsproducts.constants.StringConstants.UNPROCESSABLE_ENTITY;
-
 import java.util.Date;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import static io.catalyte.training.sportsproducts.constants.StringConstants.*;
 
 /**
  * A controller advice allows you to use exactly the same exception handling techniques but apply
@@ -27,6 +25,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionController {
 
   private final Logger logger = LogManager.getLogger();
+
+  /**
+   * @param exception response thrown
+   * @return string BAD_REQUEST, date, and exception message
+   */
+  @ExceptionHandler(BadRequest.class)
+  protected ResponseEntity<ExceptionResponse> badRequest(BadRequest exception) {
+    ExceptionResponse response =
+            new ExceptionResponse(BAD_REQUEST, new Date(), exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
 
   /**
    * @param exception response thrown

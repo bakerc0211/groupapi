@@ -6,9 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,12 +27,7 @@ public class PurchaseController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> savePurchase(@RequestBody Purchase newPurchase) {
-    try {
-      validator.validCard(newPurchase);
-    } catch (Exception e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
+  public ResponseEntity savePurchase(@RequestBody Purchase newPurchase) {
     Purchase savedPurchase = purchaseService.savePurchase(newPurchase);
     return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);
   }

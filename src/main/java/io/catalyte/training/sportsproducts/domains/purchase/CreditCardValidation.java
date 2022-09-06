@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 
 public class CreditCardValidation {
@@ -33,8 +35,8 @@ public class CreditCardValidation {
     Pattern credPattern = Pattern.compile(pattern);
     Matcher credMatcher = credPattern.matcher(credential);
     if (!credMatcher.matches()) {
-      throw new IllegalArgumentException(
-          "The cardholder name must not be empty and must have more than two characters.");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "First and last name can only contain alphabetic characters.");
     }
   }
 
