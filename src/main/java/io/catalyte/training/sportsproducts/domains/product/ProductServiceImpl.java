@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.product;
 
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
+import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +24,21 @@ public class ProductServiceImpl implements ProductService {
   @Autowired
   public ProductServiceImpl(ProductRepository productRepository) {
     this.productRepository = productRepository;
+  }
+
+  /**
+   * Retrieves the group of products for the specified filter
+   *
+   * @param filter calls the queries for the specified filter
+   * @return the list of products matching the criteria
+   */
+  public List<Product> getProductsByFilter(HashMap<String, List<String>> filter) {
+    try {
+      return productRepository.filterProduct(filter);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
   }
 
   /**
@@ -52,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     try {
       product = productRepository.findById(id).orElse(null);
     } catch (DataAccessException e) {
-      logger.error(e.getMessage());
+
       throw new ServerError(e.getMessage());
     }
 

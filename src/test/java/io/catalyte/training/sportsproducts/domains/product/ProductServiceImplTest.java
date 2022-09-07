@@ -101,4 +101,6 @@ public class ProductServiceImplTest {
     });
     assertThrows(ServerError.class, () -> productServiceImpl.getDistinctCategories());
   }
+
+
 }

@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,4 +15,7 @@ public interface ProductService {
   List<String> getDistinctCategories();
 
   List<String> getDistinctTypes();
+
+  List<Product> getProductsByFilter(HashMap<String, List<String>> filter);
+
 }

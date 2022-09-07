@@ -52,4 +52,46 @@ public class ProductApiTest {
     mockMvc.perform(get(PRODUCTS_PATH + TYPES_PATH))
         .andExpect(status().isOk());
   }
+
+  @Test
+  public void filterProductReturns200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterBrand200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?brand=Adidas"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterCategory200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?category=Weightlifting"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterDemographic200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?demographic=Non-Binary"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterPrice200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?minPrice=100&maxPrice=300"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterColor200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?primaryColorCode=%23f092b0"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterMaterial200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?material=Calico"))
+        .andExpect(status().isOk());
+  }
 }
