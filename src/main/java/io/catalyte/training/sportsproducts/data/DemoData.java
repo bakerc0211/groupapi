@@ -6,7 +6,8 @@ import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
 import io.catalyte.training.sportsproducts.domains.purchase.CreditCard;
 import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
-import io.catalyte.training.sportsproducts.domains.user.*;
+import io.catalyte.training.sportsproducts.domains.user.User;
+import io.catalyte.training.sportsproducts.domains.user.UserRepository;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -131,5 +132,4 @@ public class DemoData implements CommandLineRunner {
     purchaseRepository.save(purchase4);
 
   }
-
 }

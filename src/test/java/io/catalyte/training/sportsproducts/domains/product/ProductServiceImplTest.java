@@ -8,10 +8,10 @@ import static org.mockito.Mockito.when;
 
 import io.catalyte.training.sportsproducts.data.ProductFactory;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
+import java.util.Optional;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 
 @RunWith(MockitoJUnitRunner.class)
 @WebMvcTest(ProductServiceImpl.class)
+
 public class ProductServiceImplTest {
 
   @InjectMocks
@@ -100,4 +101,6 @@ public class ProductServiceImplTest {
     });
     assertThrows(ServerError.class, () -> productServiceImpl.getDistinctCategories());
   }
+
+
 }

@@ -5,7 +5,6 @@ import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,6 +50,48 @@ public class ProductApiTest {
   @Test
   public void getDistinctTypesReturns200() throws Exception {
     mockMvc.perform(get(PRODUCTS_PATH + TYPES_PATH))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void filterProductReturns200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterBrand200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?brand=Adidas"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterCategory200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?category=Weightlifting"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterDemographic200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?demographic=Non-Binary"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterPrice200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?minPrice=100&maxPrice=300"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterColor200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?primaryColorCode=%23f092b0"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getProductsByFilterMaterial200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?material=Calico"))
         .andExpect(status().isOk());
   }
 }
