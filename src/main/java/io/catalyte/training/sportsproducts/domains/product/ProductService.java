@@ -10,7 +10,7 @@ public interface ProductService {
 
   List<Product> getProducts(Product product);
 
-  List<Product> saveProducts(Product productToSave);
+  Product saveProduct(Product productToSave);
 
   Product getProductById(Long id);
 

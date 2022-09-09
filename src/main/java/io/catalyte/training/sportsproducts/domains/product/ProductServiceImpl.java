@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
-  public List<Product> saveProduct(Product newProduct) {
+  public Product saveProduct(Product newProduct) {
     return newProduct;
   }
 

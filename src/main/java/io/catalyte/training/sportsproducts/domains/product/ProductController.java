@@ -83,7 +83,7 @@ public class ProductController {
 
   @PostMapping
   public ResponseEntity <Product> saveProduct(@RequestBody Product product) {
-    Product newProduct = productService.saveProducts(product);
+    Product newProduct = productService.saveProduct(product);
 
     return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
   }
