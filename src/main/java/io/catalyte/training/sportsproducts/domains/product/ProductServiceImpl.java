@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   public Product saveProduct(Product newProduct) {
-    return newProduct;
+    return productRepository.save(newProduct);
   }
 
   /**
