@@ -10,6 +10,8 @@ public interface ProductService {
 
   List<Product> getProducts(Product product);
 
+  List<Product> saveProducts(Product productToSave);
+
   Product getProductById(Long id);
 
   List<String> getDistinctCategories();

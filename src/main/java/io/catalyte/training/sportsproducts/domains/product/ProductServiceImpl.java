@@ -56,6 +56,10 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  public List<Product> saveProduct(Product newProduct) {
+    return newProduct;
+  }
+
   /**
    * Retrieves the product with the provided id from the database.
    *
