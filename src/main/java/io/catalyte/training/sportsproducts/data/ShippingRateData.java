@@ -19,7 +19,7 @@ public class ShippingRateData implements CommandLineRunner {
     eRepo.saveAll(Arrays.asList(
 
         new ShippingRate("Alabama", 5.00F),
-        new ShippingRate("Alaska", 5.00F),
+        new ShippingRate("Alaska", 10.00F),
         new ShippingRate("American Samoa", 5.00F),
         new ShippingRate("Arizona", 5.00F),
         new ShippingRate("Arkansas", 5.00F),
@@ -32,7 +32,7 @@ public class ShippingRateData implements CommandLineRunner {
         new ShippingRate("Florida", 5.00F),
         new ShippingRate("Georgia", 5.00F),
         new ShippingRate("Guam", 5.00F),
-        new ShippingRate("Hawaii", 5.00F),
+        new ShippingRate("Hawaii", 10.00F),
         new ShippingRate("Idaho", 5.00F),
         new ShippingRate("Illinois", 5.00F),
         new ShippingRate("Indiana", 5.00F),
