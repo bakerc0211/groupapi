@@ -14,6 +14,6 @@ public class ShippingRate {
 
   @Id
   private String state;
-  private Float shippingCost;
+  private String shippingCost;
 
 }
