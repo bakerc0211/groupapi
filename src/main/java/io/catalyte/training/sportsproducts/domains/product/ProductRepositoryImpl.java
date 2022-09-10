@@ -3,7 +3,6 @@ package io.catalyte.training.sportsproducts.domains.product;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 public class ProductRepositoryImpl implements ProductRepositoryCustom {
+
   @PersistenceContext
   EntityManager entityManager;
   public Float min = 0.0f;
@@ -36,21 +36,23 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
       if (field.equals("minPrice") || (field.equals("maxPrice"))) {
         if (field.equals("minPrice")) {
           min = Float.valueOf(value.get(0));
-          minP=min;
+          minP = min;
         } else {
           min = 0.0f;
-          predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), Float.valueOf(value.get(0)) + 0.001F));
+          predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
+              Float.valueOf(value.get(0)) + 0.001F));
         }
         if (field.equals("maxPrice")) {
           max = Float.valueOf(value.get(0));
-          maxP=max;
+          maxP = max;
         } else {
           max = 0.0f;
-          predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), Float.valueOf(value.get(0)) - 0.001F));
+          predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
+              Float.valueOf(value.get(0)) - 0.001F));
         }
         predicates.add(criteriaBuilder.between(root.get("price"), min, max));
 
-        if (minP.compareTo(maxP) == 0){
+        if (minP.compareTo(maxP) == 0) {
           predicates.add(criteriaBuilder.equal(root.get("price"), minP));
         }
       } else {
