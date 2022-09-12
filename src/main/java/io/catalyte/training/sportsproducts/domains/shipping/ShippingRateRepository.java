@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface ShippingRateRepository extends JpaRepository<ShippingRate, Float> {
 
   @Query(value = "SELECT all from shipping", nativeQuery = true)
-  String getShippingRateByState(@Param("usState") String usState);
+  Double getShippingRateByState(@Param("usState") String usState);
 }

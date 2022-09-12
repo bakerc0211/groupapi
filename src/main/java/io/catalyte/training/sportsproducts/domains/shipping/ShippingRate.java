@@ -12,9 +12,9 @@ public class ShippingRate {
 
   @Id
   private String usState;
-  private String shippingCost;
+  private Double shippingCost;
 
-  public ShippingRate(String usState, String shippingCost) {
+  public ShippingRate(String usState, Double shippingCost) {
     this.usState = usState;
     this.shippingCost = shippingCost;
   }
@@ -27,11 +27,11 @@ public class ShippingRate {
     this.usState = usState;
   }
 
-  public String getShippingCost() {
+  public Double getShippingCost() {
     return shippingCost;
   }
 
-  public void setShippingCost(String shippingCost) {
+  public void setShippingCost(Double shippingCost) {
     this.shippingCost = shippingCost;
   }
 }

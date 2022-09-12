@@ -19,7 +19,7 @@ public class ShippingRateServiceImpl {
     this.shippingRateRepository = shippingRateRepository;
 }
 
-  public String getShippingRate(String usState) {
+  public Double getShippingRate(String usState) {
     try {
       return shippingRateRepository.getShippingRateByState(usState);
     } catch (DataAccessException e) {

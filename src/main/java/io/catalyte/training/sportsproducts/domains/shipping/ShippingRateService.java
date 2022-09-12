@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface ShippingRateService {
 
-  List<Float> getShippingRateByState();
+  Double getShippingRateByState(String usState);
 }
