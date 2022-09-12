@@ -1,7 +1,7 @@
 package io.catalyte.training.sportsproducts.data;
 
-import io.catalyte.training.sportsproducts.domains.purchase.ShippingRate;
-import io.catalyte.training.sportsproducts.domains.purchase.ShippingRateRepository;
+import io.catalyte.training.sportsproducts.domains.shipping.ShippingRate;
+import io.catalyte.training.sportsproducts.domains.shipping.ShippingRateRepository;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;

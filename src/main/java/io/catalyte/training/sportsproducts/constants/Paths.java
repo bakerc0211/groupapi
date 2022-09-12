@@ -10,5 +10,6 @@ public class Paths {
   public static final String TYPES_PATH = "/types";
   public static final String PROMOS_PATH = "/promos";
 
+  public static final String SHIPPING_PATH = "/shipping";
 
 }
