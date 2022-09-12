@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.shipping;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.SHIPPING_PATH;
 
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * The ProductController exposes endpoints for shipping related actions.
  */
 @RestController
-@RequestMapping(value = SHIPPING_PATH)
+@RequestMapping(SHIPPING_PATH)
 public class ShippingRateController {
 
   Logger logger = LogManager.getLogger(ShippingRateController.class);
@@ -25,16 +26,9 @@ public class ShippingRateController {
   private ShippingRateService shippingRateService;
 
   @GetMapping
-//  @ResponseStatus(value = HttpStatus.OK)
-//  public ResponseEntity<Double> getShippingRateByState(@PathVariable String usStateString) {
-//
-//    logger.info("Shipping Rate request received");
-//
-//    return new ResponseEntity<>(shippingRateService.getShippingRateByState(usStateString), HttpStatus.OK);
-//  }
-  public ResponseEntity<Double> getShippingRateByState(@PathVariable String usStateString) {
+  public ResponseEntity<List<String>> getShippingRateByState() {
     logger.info("Shipping rate request received");
 
-    return new ResponseEntity<>(shippingRateService.getShippingRateByState(usStateString), HttpStatus.OK);
+    return new ResponseEntity<>(shippingRateService.getShippingRateByState(), HttpStatus.OK);
   }
 }
