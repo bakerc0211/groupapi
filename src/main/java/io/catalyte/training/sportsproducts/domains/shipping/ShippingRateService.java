@@ -1,8 +1,8 @@
 package io.catalyte.training.sportsproducts.domains.shipping;
 
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+@Service
 public interface ShippingRateService {
 
   Double getShippingRateByState(String usState);
