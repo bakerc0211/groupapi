@@ -1,6 +1,8 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
+
+import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,8 @@ public class PurchaseController {
   }
 
   @GetMapping
-  public ResponseEntity<Purchase> findAllPurchasesNoEmail(){
-    return new ResponseEntity(HttpStatus.NOT_FOUND);
+  public ResponseEntity<Purchase> findAllPurchasesNoEmail() throws ResourceNotFound {
+    throw new ResourceNotFound("An email is required");
   }
 
   @GetMapping(value = "/{email}")
