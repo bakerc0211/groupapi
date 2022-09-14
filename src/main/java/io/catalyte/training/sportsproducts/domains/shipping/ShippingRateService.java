@@ -6,5 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ShippingRateService {
 
-  List<String> getShippingRateByState();
+  List<String> getShippingRate();
+
+  List<String> getShippingRateByState(String usState);
 }

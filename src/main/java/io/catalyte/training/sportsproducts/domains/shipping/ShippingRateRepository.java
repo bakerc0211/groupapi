@@ -12,5 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface ShippingRateRepository extends JpaRepository<ShippingRate, Float> {
 
   @Query(value = "select * from shipping", nativeQuery = true)
-  List<String> findShippingRateByState();
+  List<String> findShippingRate();
+
+  @Query(value = "SELECT shipping_cost FROM shipping where shipping.us_state = :usState", nativeQuery = true)
+  List<String> findShippingRateByState(@Param("usState") String usState);
 }

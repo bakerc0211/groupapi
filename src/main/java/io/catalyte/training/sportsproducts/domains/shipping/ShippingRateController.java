@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,9 +27,18 @@ public class ShippingRateController {
   private ShippingRateService shippingRateService;
 
   @GetMapping
-  public ResponseEntity<List<String>> getShippingRateByState() {
+  public ResponseEntity<List<String>> getShippingRate() {
     logger.info("Shipping rate request received");
 
-    return new ResponseEntity<>(shippingRateService.getShippingRateByState(), HttpStatus.OK);
+    return new ResponseEntity<>(shippingRateService.getShippingRate(), HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/{usStateString}")
+  @ResponseStatus(value = HttpStatus.OK)
+  public ResponseEntity<List<String>> getShippingRateByState(@PathVariable String usStateString) {
+
+    logger.info("Shipping rate request received");
+
+return new ResponseEntity(shippingRateService.getShippingRateByState(usStateString), HttpStatus.OK);
   }
 }
