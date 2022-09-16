@@ -33,12 +33,12 @@ public class ShippingRateController {
     return new ResponseEntity<>(shippingRateService.getShippingRate(), HttpStatus.OK);
   }
 
-  @GetMapping(value = "/{usStateString}")
+  @GetMapping(value = "/{usStates}")
   @ResponseStatus(value = HttpStatus.OK)
-  public ResponseEntity<List<String>> getShippingRateByState(@PathVariable String usStateString) {
+  public ResponseEntity<List<String>> getShippingRateByState(@PathVariable String usStates) {
 
     logger.info("Shipping rate request received");
 
-return new ResponseEntity(shippingRateService.getShippingRateByState(usStateString), HttpStatus.OK);
+return new ResponseEntity(shippingRateService.getShippingRateByState(usStates), HttpStatus.OK);
   }
 }
