@@ -19,6 +19,11 @@ public class ShippingRateServiceImpl implements ShippingRateService {
     this.shippingRateRepository = shippingRateRepository;
   }
 
+  /**
+   * Retrieves all shipping rates from the database
+   *
+   * @return - a list of Shipping Rates
+   */
   public List<String> getShippingRate() {
     try {
       return shippingRateRepository.findShippingRate();
@@ -28,6 +33,12 @@ public class ShippingRateServiceImpl implements ShippingRateService {
     }
   }
 
+  /**
+   * Retrieves all products from the database, optionally making use of an example if it is passed.
+   *
+   * @param usState - an example a US State to use for querying
+   * @return - shipping cost for the State
+   */
   public List<String> getShippingRateByState(String usState) {
     try {
       return shippingRateRepository.findShippingRateByState(usState);

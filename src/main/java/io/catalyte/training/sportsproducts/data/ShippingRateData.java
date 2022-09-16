@@ -8,15 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class ShippingRateData implements CommandLineRunner {
+
+  /**
+   * Builds Shipping Rates
+   *
+   * @param usState - String of State Name
+   * @Param shippingCost - String of Shipping Rate
+   * @return - a shipping rate entry in the database
+   */
 
   @Autowired
   ShippingRateRepository eRepo;
 
   @Override
   public void run(String... args) throws Exception {
-
 
     eRepo.saveAll(Arrays.asList(
 
@@ -30,7 +38,8 @@ public class ShippingRateData implements CommandLineRunner {
             new ShippingRate("Connecticut", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Delaware", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("District of Columbia", (new DecimalFormat("#,###.00").format(5.00F))),
-            new ShippingRate("Federated States of Micronesia", (new DecimalFormat("#,###.00").format(10.00F))),
+            new ShippingRate("Federated States of Micronesia",
+                (new DecimalFormat("#,###.00").format(10.00F))),
             new ShippingRate("Florida", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Georgia", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Guam", (new DecimalFormat("#,###.00").format(10.00F))),
@@ -59,7 +68,8 @@ public class ShippingRateData implements CommandLineRunner {
             new ShippingRate("New York", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("North Carolina", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("North Dakota", (new DecimalFormat("#,###.00").format(5.00F))),
-            new ShippingRate("Northern Mariana Islands", (new DecimalFormat("$#,###.00").format(10.00F))),
+            new ShippingRate("Northern Mariana Islands",
+                (new DecimalFormat("$#,###.00").format(10.00F))),
             new ShippingRate("Ohio", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Oklahoma", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Oregon", (new DecimalFormat("#,###.00").format(5.00F))),

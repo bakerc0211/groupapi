@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The ProductController exposes endpoints for shipping related actions.
+ * The ShippingRateController exposes endpoints for shipping related actions.
  */
 @RestController
 @RequestMapping(SHIPPING_PATH)

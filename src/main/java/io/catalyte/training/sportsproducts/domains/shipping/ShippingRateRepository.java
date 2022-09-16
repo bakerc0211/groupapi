@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * Shipping Rate Repository
+ */
 
 @Repository
 public interface ShippingRateRepository extends JpaRepository<ShippingRate, Float> {

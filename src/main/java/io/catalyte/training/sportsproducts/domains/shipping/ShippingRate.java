@@ -6,6 +6,9 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class represents shipping rates per US States
+ */
 @Data
 @NoArgsConstructor
 @Entity
