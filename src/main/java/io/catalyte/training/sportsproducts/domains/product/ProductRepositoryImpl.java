@@ -40,7 +40,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         } else {
           min = 0.0f;
           predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"),
-              Float.valueOf(value.get(0)) + 0.001F));
+              Float.parseFloat(value.get(0)) + 0.001F));
         }
         if (field.equals("maxPrice")) {
           max = Float.valueOf(value.get(0));
@@ -48,7 +48,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         } else {
           max = 0.0f;
           predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"),
-              Float.valueOf(value.get(0)) - 0.001F));
+              Float.parseFloat(value.get(0)) - 0.001F));
         }
         predicates.add(criteriaBuilder.between(root.get("price"), min, max));
 
