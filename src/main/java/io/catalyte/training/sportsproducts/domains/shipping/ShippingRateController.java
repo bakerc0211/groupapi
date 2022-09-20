@@ -39,6 +39,6 @@ public class ShippingRateController {
 
     logger.info("Shipping rate request received");
 
-return new ResponseEntity(shippingRateService.getShippingRateByState(usStates), HttpStatus.OK);
+return new ResponseEntity<>(shippingRateService.getShippingRateByState(usStates), HttpStatus.OK);
   }
 }
