@@ -34,26 +34,31 @@ public class ProductController {
       @RequestParam(value = "brand", required = false) List<String> brand,
       @RequestParam(value = "category", required = false) List<String> category,
       @RequestParam(value = "demographic", required = false) List<String> demographic,
+      @RequestParam(value = "type", required = false) List<String> type,
       @RequestParam(value = "price", required = false) List<String> price,
       @RequestParam(value = "minPrice", required = false) List<String> minPrice,
       @RequestParam(value = "maxPrice", required = false) List<String> maxPrice,
       @RequestParam(value = "primaryColorCode", required = false) List<String> primaryColorCode,
       @RequestParam(value = "secondaryColorCode", required = false) List<String> secondaryColorCode,
+      @RequestParam(value = "active", required = false) List<String> active,
+      @RequestParam(value = "colorCode", required = false) List<String> colorCode,
       @RequestParam(value = "material", required = false) List<String> material) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
     query.put("category", category);
     query.put("demographic", demographic);
+    query.put("type", type);
     query.put("price", price);
     query.put("minPrice", minPrice);
     query.put("maxPrice", maxPrice);
     query.put("primaryColorCode", primaryColorCode);
     query.put("secondaryColorCode", secondaryColorCode);
+    query.put("active", active);
+    query.put("colorCode", colorCode);
     query.put("material", material);
-    while (query.values().remove(null))
-      ;
-    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
+    while (query.values().remove(null));
 
+    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
   }
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
