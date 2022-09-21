@@ -91,6 +91,15 @@ public class LineItem {
     return Objects.equals(product, lineItem.product);
   }
 
+  public LineItemDTO GenerateLineItemDTO() {
+    LineItemDTO newLineItemDTO = new LineItemDTO();
+
+    newLineItemDTO.setId(id);
+    newLineItemDTO.setQuantity(quantity);
+
+    return newLineItemDTO;
+  }
+
   @Override
   public int hashCode() {
     int result = purchase != null ? purchase.hashCode() : 0;

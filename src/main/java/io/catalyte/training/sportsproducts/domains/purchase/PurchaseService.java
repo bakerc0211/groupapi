@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface PurchaseService {
 
-  Purchase savePurchase(Purchase purchaseToSave);
+  PurchaseDTO savePurchase(PurchaseDTO purchaseToSave);
 
   List<Purchase> findAllPurchasesByEmail(String email);
 

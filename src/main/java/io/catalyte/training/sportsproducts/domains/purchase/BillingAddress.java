@@ -72,6 +72,20 @@ public class BillingAddress {
     this.phone = phone;
   }
 
+  public BillingAddressDTO GenerateBillingAddressDTO() {
+    BillingAddressDTO newBillingAddressDTO = new BillingAddressDTO();
+
+    newBillingAddressDTO.setBillingStreet(billingStreet);
+    newBillingAddressDTO.setBillingStreet2(billingStreet2);
+    newBillingAddressDTO.setBillingState(billingState);
+    newBillingAddressDTO.setBillingZip(billingZip);
+    newBillingAddressDTO.setBillingCity(billingCity);
+    newBillingAddressDTO.setEmail(email);
+    newBillingAddressDTO.setPhone(phone);
+
+    return newBillingAddressDTO;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

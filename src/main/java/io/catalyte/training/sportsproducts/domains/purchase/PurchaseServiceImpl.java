@@ -49,10 +49,11 @@ public class PurchaseServiceImpl implements PurchaseService {
   /**
    * Persists a purchase to the database
    *
-   * @param newPurchase - the purchase to persist
+   * @param newPurchaseDTO - the purchase to persist
    * @return the persisted purchase with ids
    */
-  public Purchase savePurchase(Purchase newPurchase) {
+  public PurchaseDTO savePurchase(PurchaseDTO newPurchaseDTO) {
+    Purchase newPurchase = new Purchase();
 
     try {
       creditcardValidator.validCard(newPurchase);
@@ -84,7 +85,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
     handleLineItems(newPurchase);
 
-    return newPurchase;
+    return newPurchase.GeneratePurchaseDTO();
   }
 
   /**

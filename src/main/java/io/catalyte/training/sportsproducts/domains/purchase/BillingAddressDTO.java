@@ -65,4 +65,17 @@ public class BillingAddressDTO {
         this.phone = phone;
     }
 
+    public BillingAddress GenerateBillingAddress() {
+        BillingAddress newBillingAddress = new BillingAddress();
+
+        newBillingAddress.setBillingStreet(billingStreet);
+        newBillingAddress.setBillingStreet2(billingStreet2);
+        newBillingAddress.setBillingState(billingState);
+        newBillingAddress.setBillingZip(billingZip);
+        newBillingAddress.setBillingCity(billingCity);
+        newBillingAddress.setEmail(email);
+        newBillingAddress.setPhone(phone);
+
+        return newBillingAddress;
+    }
 }

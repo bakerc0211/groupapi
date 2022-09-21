@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PurchaseDTO {
@@ -59,4 +61,16 @@ public class PurchaseDTO {
         creditCard = new CreditCardDTO();
     }
 
+    public Purchase GeneratePurchase() {
+        Purchase newPurchase = new Purchase();
+
+        newPurchase.setDeliveryAddress(this.deliveryAddress.GenerateDeliveryAddress());
+        newPurchase.setBillingAddress(this.billingAddress.GenerateBillingAddress());
+
+        Set<LineItem> productList = new HashSet<LineItem>();
+        products.forEach((product) -> productList.add(product.GenerateLineItem()));
+        newPurchase.setProducts(productList);
+
+        return newPurchase;
+    }
 }

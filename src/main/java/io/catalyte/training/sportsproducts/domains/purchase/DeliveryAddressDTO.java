@@ -64,4 +64,18 @@ public class DeliveryAddressDTO {
     public void setDeliveryZip(int deliveryZip) {
         this.deliveryZip = deliveryZip;
     }
+
+    public DeliveryAddress GenerateDeliveryAddress() {
+        DeliveryAddress newDeliveryAddress = new DeliveryAddress();
+
+        newDeliveryAddress.setFirstName(firstName);
+        newDeliveryAddress.setLastName(lastName);
+        newDeliveryAddress.setDeliveryStreet(deliveryStreet);
+        newDeliveryAddress.setDeliveryStreet2(deliveryStreet2);
+        newDeliveryAddress.setDeliveryState(deliveryState);
+        newDeliveryAddress.setDeliveryZip(deliveryZip);
+        newDeliveryAddress.setDeliveryCity(deliveryCity);
+
+        return newDeliveryAddress;
+    }
 }

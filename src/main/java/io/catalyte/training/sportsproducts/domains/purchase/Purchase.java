@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,6 +70,19 @@ public class Purchase {
 
   public void setCreditCard(CreditCard creditCard) {
     this.creditCard = creditCard;
+  }
+
+  public PurchaseDTO GeneratePurchaseDTO() {
+    PurchaseDTO newPurchaseDTO = new PurchaseDTO();
+
+    newPurchaseDTO.setDeliveryAddress(this.deliveryAddress.GenerateDeliveryAddressDTO());
+    newPurchaseDTO.setBillingAddress(this.billingAddress.GenerateBillingAddressDTO());
+
+    Set<LineItemDTO> productList = new HashSet<LineItemDTO>();
+    products.forEach((product) -> productList.add(product.GenerateLineItemDTO()));
+    newPurchaseDTO.setProducts(productList);
+
+    return newPurchaseDTO;
   }
 
   @Override
