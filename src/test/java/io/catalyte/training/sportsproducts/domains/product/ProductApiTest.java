@@ -94,4 +94,20 @@ public class ProductApiTest {
     mockMvc.perform(get(PRODUCTS_PATH + "/filter?material=Calico"))
         .andExpect(status().isOk());
   }
+  @Test
+  public void getProductsByFilterType200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?type=Hat"))
+            .andExpect(status().isOk());
+  }
+  @Test
+  public void getProductsByFilterActive200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/filter?active"))
+            .andExpect(status().isOk());
+  }
+  @Test
+    public void getProductsByFilterColorCode200() throws Exception {
+      mockMvc.perform(get(PRODUCTS_PATH + "/filter?colorCode=%23ffffff"))
+              .andExpect(status().isOk());
+    }
+
 }
