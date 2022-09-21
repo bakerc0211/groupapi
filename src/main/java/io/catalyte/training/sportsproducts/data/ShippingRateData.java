@@ -69,7 +69,7 @@ public class ShippingRateData implements CommandLineRunner {
             new ShippingRate("North Carolina", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("North Dakota", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Northern Mariana Islands",
-                (new DecimalFormat("$#,###.00").format(10.00F))),
+                (new DecimalFormat("#,###.00").format(10.00F))),
             new ShippingRate("Ohio", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Oklahoma", (new DecimalFormat("#,###.00").format(5.00F))),
             new ShippingRate("Oregon", (new DecimalFormat("#,###.00").format(5.00F))),
