@@ -97,7 +97,6 @@ public class PurchaseServiceImplTest {
     assertThrows(UnprocessableEntity.class,
         () -> purchaseServiceImpl.savePurchase(mockPurchaseObject));
   }
-
   @Test
   public void invalidCardNumberThrowsBadRequest() {
     PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
@@ -171,5 +170,3 @@ public class PurchaseServiceImplTest {
     assertThrows(ServerError.class, () -> purchaseServiceImpl.findAllPurchasesByEmail("blah"));
   }
 }
-
-
