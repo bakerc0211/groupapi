@@ -57,7 +57,7 @@ public class PurchaseApiTest {
 
   @Test
   public void postInactiveProductPurchaseReturns422Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     mockPurchaseObject.setProducts(PurchaseTestHelper.generateInactiveLineItems());
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);
     mockMvc.perform(post(PURCHASES_PATH)
@@ -69,8 +69,8 @@ public class PurchaseApiTest {
 
   @Test
   public void postInvalidCreditCardPurchaseReturns400Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
-    CreditCard mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
     mockCreditCardObject.setCardNumber("1");
     mockPurchaseObject.setCreditCard(mockCreditCardObject);
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);

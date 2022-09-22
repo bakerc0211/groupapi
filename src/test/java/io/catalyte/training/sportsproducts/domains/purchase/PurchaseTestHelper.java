@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class PurchaseTestHelper {
 
-    public static DeliveryAddress generateValidDeliveryAddress() {
-        DeliveryAddress validDeliveryAddress = new DeliveryAddress();
+    public static DeliveryAddressDTO generateValidDeliveryAddress() {
+        DeliveryAddressDTO validDeliveryAddress = new DeliveryAddressDTO();
         validDeliveryAddress.setDeliveryCity("Birmingham");
         validDeliveryAddress.setDeliveryState("AL");
         validDeliveryAddress.setDeliveryZip(43690);
@@ -17,8 +17,8 @@ public class PurchaseTestHelper {
         return validDeliveryAddress;
     }
 
-    public static BillingAddress generateValidBillingAddress() {
-        BillingAddress validBillingAddress = new BillingAddress();
+    public static BillingAddressDTO generateValidBillingAddress() {
+        BillingAddressDTO validBillingAddress = new BillingAddressDTO();
         validBillingAddress.setBillingCity("Birmingham");
         validBillingAddress.setBillingState("AL");
         validBillingAddress.setBillingZip("43690");
@@ -27,8 +27,8 @@ public class PurchaseTestHelper {
         return validBillingAddress;
     }
 
-    public static CreditCard generateValidCreditCard() {
-        CreditCard validCreditCard = new CreditCard();
+    public static CreditCardDTO generateValidCreditCard() {
+        CreditCardDTO validCreditCard = new CreditCardDTO();
         validCreditCard.setCardNumber("4435678998761234");
         validCreditCard.setCvv("789");
         validCreditCard.setExpiration("11/26");
@@ -37,69 +37,33 @@ public class PurchaseTestHelper {
         return validCreditCard;
     }
 
-    public static Set<LineItem> generateValidLineItems() {
-        Set<LineItem> validLineItems = new HashSet<LineItem>();
+    public static Set<LineItemDTO> generateValidLineItems() {
+        Set<LineItemDTO> validLineItems = new HashSet<LineItemDTO>();
 
-        Product validLineProduct = new Product();
-        validLineProduct.setId(1L);
-        validLineProduct.setName("X");
-        validLineProduct.setBrand("X");
-        validLineProduct.setDescription("X");
-        validLineProduct.setCategory("X");
-        validLineProduct.setType("X");
-        validLineProduct.setReleaseDate("X");
-        validLineProduct.setPrimaryColorCode("X");
-        validLineProduct.setSecondaryColorCode("X");
-        validLineProduct.setStyleNumber("X");
-        validLineProduct.setGlobalProductCode("X");
-        validLineProduct.setImageSrc("X");
-        validLineProduct.setMaterial("X");
-        validLineProduct.setPrice(0.0f);
-        validLineProduct.setQuantity(1);
-        validLineProduct.setActive(true);
-
-        LineItem validLineItem = new LineItem();
+        LineItemDTO validLineItem = new LineItemDTO();
 
         validLineItem.setQuantity(1);
-        validLineItem.setProduct(validLineProduct);
+        validLineItem.setId(1L);
 
         validLineItems.add(validLineItem);
 
         return validLineItems;
     }
 
-    public static Set<LineItem> generateInactiveLineItems() {
-        Set<LineItem> validLineItems = new HashSet<LineItem>();
+    public static Set<LineItemDTO> generateInactiveLineItems() {
+        Set<LineItemDTO> validLineItems = new HashSet<LineItemDTO>();
 
-        Product validLineProduct = new Product();
-        validLineProduct.setId(3L);
-        validLineProduct.setName("X");
-        validLineProduct.setBrand("X");
-        validLineProduct.setDescription("X");
-        validLineProduct.setCategory("X");
-        validLineProduct.setType("X");
-        validLineProduct.setReleaseDate("X");
-        validLineProduct.setPrimaryColorCode("X");
-        validLineProduct.setSecondaryColorCode("X");
-        validLineProduct.setStyleNumber("X");
-        validLineProduct.setGlobalProductCode("X");
-        validLineProduct.setImageSrc("X");
-        validLineProduct.setMaterial("X");
-        validLineProduct.setPrice(0.0f);
-        validLineProduct.setQuantity(1);
-        validLineProduct.setActive(true);
-
-        LineItem validLineItem = new LineItem();
+        LineItemDTO validLineItem = new LineItemDTO();
 
         validLineItem.setQuantity(1);
-        validLineItem.setProduct(validLineProduct);
+        validLineItem.setId(3L);
 
         validLineItems.add(validLineItem);
 
         return validLineItems;
     }
-    public static Purchase generateValidPurchase() {
-        Purchase validPurchase = new Purchase();
+    public static PurchaseDTO generateValidPurchase() {
+        PurchaseDTO validPurchase = new PurchaseDTO();
 
         validPurchase.setDeliveryAddress(generateValidDeliveryAddress());
         validPurchase.setBillingAddress(generateValidBillingAddress());

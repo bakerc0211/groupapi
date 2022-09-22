@@ -77,6 +77,7 @@ public class Purchase {
 
     newPurchaseDTO.setDeliveryAddress(this.deliveryAddress.GenerateDeliveryAddressDTO());
     newPurchaseDTO.setBillingAddress(this.billingAddress.GenerateBillingAddressDTO());
+    newPurchaseDTO.setCreditCard(this.creditCard.GenerateCreditCardDTO());
 
     Set<LineItemDTO> productList = new HashSet<LineItemDTO>();
     products.forEach((product) -> productList.add(product.GenerateLineItemDTO()));

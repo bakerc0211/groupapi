@@ -37,4 +37,12 @@ public class LineItemDTO {
 
         return newLineItem;
     }
+
+    @Override
+    public int hashCode() {
+        int result = id.intValue();
+        result = 31 * result + quantity;
+        return result;
+    }
+
 }

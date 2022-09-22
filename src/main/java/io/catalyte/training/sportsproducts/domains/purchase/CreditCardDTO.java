@@ -37,4 +37,15 @@ public class CreditCardDTO {
     public void setCardHolder(String cardHolder) {
         this.cardHolder = cardHolder;
     }
+
+    public CreditCard GenerateCreditCard() {
+        CreditCard newCreditCard = new CreditCard();
+
+        newCreditCard.setCardHolder(cardHolder);
+        newCreditCard.setCardNumber(cardNumber);
+        newCreditCard.setExpiration(expiration);
+        newCreditCard.setCvv(cvv);
+
+        return newCreditCard;
+    }
 }

@@ -81,6 +81,17 @@ public class CreditCard {
         : that.getCardHolder() == null;
   }
 
+  public CreditCardDTO GenerateCreditCardDTO() {
+    CreditCardDTO newCreditCardDTO = new CreditCardDTO();
+
+    newCreditCardDTO.setCardHolder(cardHolder);
+    newCreditCardDTO.setCardNumber(cardNumber);
+    newCreditCardDTO.setExpiration(expiration);
+    newCreditCardDTO.setCvv(cvv);
+
+    return newCreditCardDTO;
+  }
+
   @Override
   public int hashCode() {
     int result = getCardNumber() != null ? getCardNumber().hashCode() : 0;

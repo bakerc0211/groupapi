@@ -82,17 +82,17 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void saveActivePurchaseToDataBase() {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     when(productService.getProductById(anyLong())).thenReturn(activeProduct);
     when(lineItemRepository.save(any(LineItem.class))).thenReturn(activeLineItem);
-    when(purchaseRepository.save(any(Purchase.class))).thenReturn(mockPurchaseObject);
-    Purchase results = purchaseServiceImpl.savePurchase(mockPurchaseObject);
+    when(purchaseRepository.save(any(Purchase.class))).thenReturn(mockPurchaseObject.GeneratePurchase());
+    PurchaseDTO results = purchaseServiceImpl.savePurchase(mockPurchaseObject);
     assertEquals(mockPurchaseObject, results);
   }
 
   @Test
   public void inactivePurchaseThrowsUnprocessableEntity() {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     when(productService.getProductById(anyLong())).thenReturn(inactiveProduct);
     assertThrows(UnprocessableEntity.class,
         () -> purchaseServiceImpl.savePurchase(mockPurchaseObject));
@@ -100,8 +100,8 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void invalidCardNumberThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
     invalidCreditCard.setCardNumber("1234123412341234");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
@@ -110,8 +110,8 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void invalidCardHolderThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
     invalidCreditCard.setCardHolder("!@#%#@$^&#&$*");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
@@ -120,8 +120,8 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void invalidCVVThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
     invalidCreditCard.setCvv("1");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
@@ -130,8 +130,8 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void invalidCreditCardExpirationThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
     invalidCreditCard.setExpiration("1");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
@@ -140,8 +140,8 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void pastCreditCardExpirationThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    CreditCard invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO invalidCreditCard = PurchaseTestHelper.generateValidCreditCard();
     invalidCreditCard.setExpiration("11/20");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
@@ -149,8 +149,8 @@ public class PurchaseServiceImplTest {
   }
   @Test
   public void invalidBillingZipThrowsBadRequest() {
-    Purchase invalidPurchase = PurchaseTestHelper.generateValidPurchase();
-    BillingAddress invalidBillingAddress = PurchaseTestHelper.generateValidBillingAddress();
+    PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
+    BillingAddressDTO invalidBillingAddress = PurchaseTestHelper.generateValidBillingAddress();
     invalidBillingAddress.setBillingZip("1");
     invalidPurchase.setBillingAddress(invalidBillingAddress);
     assertThrows(BadRequest.class,
