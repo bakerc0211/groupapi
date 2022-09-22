@@ -85,4 +85,17 @@ public class DeliveryAddress {
 
     return newDeliveryAddressDTO;
   }
+
+  @Override
+  public String toString() {
+    return "DeliveryAddress{" +
+            "deliveryStreet='" + deliveryStreet + '\'' +
+            ", deliveryStreet2='" + deliveryStreet2 + '\'' +
+            ", deliveryCity='" + deliveryCity + '\'' +
+            ", deliveryState='" + deliveryState + '\'' +
+            ", deliveryZip=" + deliveryZip +
+            ", firstName='" + firstName + '\'' +
+            ", lastName=" + lastName +
+            '}';
+  }
 }

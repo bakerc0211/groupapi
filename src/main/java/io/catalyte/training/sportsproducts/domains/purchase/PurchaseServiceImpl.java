@@ -5,6 +5,8 @@ import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -37,9 +39,12 @@ public class PurchaseServiceImpl implements PurchaseService {
    *
    * @return
    */
-  public List<Purchase> findAllPurchasesByEmail(String email) {
+  public List<PurchaseDTO> findAllPurchasesByEmail(String email) {
     try {
-      return purchaseRepository.findByBillingAddressEmail(email);
+      List<Purchase> results = purchaseRepository.findByBillingAddressEmail(email);
+      List<PurchaseDTO> resultsDTO = new ArrayList<PurchaseDTO>();
+      results.forEach((p) -> resultsDTO.add(p.GeneratePurchaseDTO()));
+      return resultsDTO;
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
@@ -53,7 +58,7 @@ public class PurchaseServiceImpl implements PurchaseService {
    * @return the persisted purchase with ids
    */
   public PurchaseDTO savePurchase(PurchaseDTO newPurchaseDTO) {
-    Purchase newPurchase = new Purchase();
+    Purchase newPurchase = newPurchaseDTO.GeneratePurchase();
 
     try {
       creditcardValidator.validCard(newPurchase);
@@ -61,7 +66,7 @@ public class PurchaseServiceImpl implements PurchaseService {
       throw new BadRequest(e.getMessage());
     }
 
-    Set<LineItem> lineItems = newPurchase.getProducts();
+    List<LineItem> lineItems = newPurchase.getProducts();
     List<String> inactiveProducts = new ArrayList<>();
 
     lineItems.forEach(lineItem -> {
@@ -83,7 +88,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
-    handleLineItems(newPurchase);
+    //handleLineItems(newPurchase);
 
     return newPurchase.GeneratePurchaseDTO();
   }
@@ -94,7 +99,7 @@ public class PurchaseServiceImpl implements PurchaseService {
    * @param purchase - the purchase object to handle line items for
    */
   private void handleLineItems(Purchase purchase) {
-    Set<LineItem> itemsList = purchase.getProducts();
+    List<LineItem> itemsList = purchase.getProducts();
 
     if (itemsList != null) {
       itemsList.forEach(lineItem -> {

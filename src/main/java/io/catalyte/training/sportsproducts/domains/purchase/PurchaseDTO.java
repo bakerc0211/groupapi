@@ -1,13 +1,15 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class PurchaseDTO {
     private Long id;
 
-    private Set<LineItemDTO> products;
+    private List<LineItemDTO> products;
 
     private DeliveryAddressDTO deliveryAddress;
 
@@ -23,11 +25,11 @@ public class PurchaseDTO {
         this.id = id;
     }
 
-    public Set<LineItemDTO> getProducts() {
+    public List<LineItemDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<LineItemDTO> products) {
+    public void setProducts(List<LineItemDTO> products) {
         this.products = products;
     }
 
@@ -68,10 +70,20 @@ public class PurchaseDTO {
         newPurchase.setBillingAddress(this.billingAddress.GenerateBillingAddress());
         newPurchase.setCreditCard(this.creditCard.GenerateCreditCard());
 
-        Set<LineItem> productList = new HashSet<LineItem>();
+        List<LineItem> productList = new ArrayList<LineItem>();
         products.forEach((product) -> productList.add(product.GenerateLineItem()));
         newPurchase.setProducts(productList);
 
         return newPurchase;
+    }
+
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "id=" + id +
+                ", deliveryAddress=" + deliveryAddress +
+                ", billingAddress=" + billingAddress +
+                ", creditCard=" + creditCard +
+                '}';
     }
 }

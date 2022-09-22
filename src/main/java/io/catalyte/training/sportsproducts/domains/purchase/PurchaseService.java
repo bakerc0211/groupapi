@@ -6,6 +6,6 @@ public interface PurchaseService {
 
   PurchaseDTO savePurchase(PurchaseDTO purchaseToSave);
 
-  List<Purchase> findAllPurchasesByEmail(String email);
+  List<PurchaseDTO> findAllPurchasesByEmail(String email);
 
 }

@@ -1,12 +1,11 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.util.concurrent.CopyOnWriteArraySet;
+import javax.persistence.*;
 
 /**
  * Describes a purchase object that holds the information for a transaction
@@ -18,8 +17,8 @@ public class Purchase {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @OneToMany(mappedBy = "purchase")
-  private Set<LineItem> products;
+  @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+  private List<LineItem> products;
 
   private DeliveryAddress deliveryAddress;
 
@@ -40,11 +39,11 @@ public class Purchase {
     this.id = id;
   }
 
-  public Set<LineItem> getProducts() {
+  public List<LineItem> getProducts() {
     return products;
   }
 
-  public void setProducts(Set<LineItem> products) {
+  public void setProducts(List<LineItem> products) {
     this.products = products;
   }
 
@@ -75,11 +74,13 @@ public class Purchase {
   public PurchaseDTO GeneratePurchaseDTO() {
     PurchaseDTO newPurchaseDTO = new PurchaseDTO();
 
+    newPurchaseDTO.setId(id);
+
     newPurchaseDTO.setDeliveryAddress(this.deliveryAddress.GenerateDeliveryAddressDTO());
     newPurchaseDTO.setBillingAddress(this.billingAddress.GenerateBillingAddressDTO());
     newPurchaseDTO.setCreditCard(this.creditCard.GenerateCreditCardDTO());
 
-    Set<LineItemDTO> productList = new HashSet<LineItemDTO>();
+    List<LineItemDTO> productList = new ArrayList<LineItemDTO>();
     products.forEach((product) -> productList.add(product.GenerateLineItemDTO()));
     newPurchaseDTO.setProducts(productList);
 

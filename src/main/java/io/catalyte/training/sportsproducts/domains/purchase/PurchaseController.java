@@ -29,9 +29,9 @@ public class PurchaseController {
   }
 
   @PostMapping
-  public ResponseEntity savePurchase(@RequestBody PurchaseDTO newPurchase) {
+  public ResponseEntity<PurchaseDTO> savePurchase(@RequestBody PurchaseDTO newPurchase) {
     PurchaseDTO savedPurchase = purchaseService.savePurchase(newPurchase);
-    return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);
+    return new ResponseEntity<PurchaseDTO>(savedPurchase, HttpStatus.CREATED);
   }
 
   @GetMapping
@@ -40,8 +40,8 @@ public class PurchaseController {
   }
 
   @GetMapping(value = "/{email}")
-  public ResponseEntity<List<Purchase>> findAllPurchasesByEmail(@PathVariable String email) {
+  public ResponseEntity<List<PurchaseDTO>> findAllPurchasesByEmail(@PathVariable String email) {
     logger.info("Request received for findAllPurchasesByEmail");
-    return new ResponseEntity<>(purchaseService.findAllPurchasesByEmail(email), HttpStatus.OK);
+    return new ResponseEntity<List<PurchaseDTO>>(purchaseService.findAllPurchasesByEmail(email), HttpStatus.OK);
   }
 }

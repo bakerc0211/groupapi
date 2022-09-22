@@ -78,4 +78,17 @@ public class BillingAddressDTO {
 
         return newBillingAddress;
     }
+
+    @Override
+    public String toString() {
+        return "BillingAddress{" +
+                "billingStreet='" + billingStreet + '\'' +
+                ", billingStreet2='" + billingStreet2 + '\'' +
+                ", billingCity='" + billingCity + '\'' +
+                ", billingState='" + billingState + '\'' +
+                ", billingZip=" + billingZip +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

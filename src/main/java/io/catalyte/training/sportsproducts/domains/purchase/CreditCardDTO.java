@@ -48,4 +48,14 @@ public class CreditCardDTO {
 
         return newCreditCard;
     }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "cardHolder='" + cardHolder + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", expiration='" + expiration + '\'' +
+                ", cvv='" + cvv + '\'' +
+                '}';
+    }
 }

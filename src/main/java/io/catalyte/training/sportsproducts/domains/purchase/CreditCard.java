@@ -100,4 +100,14 @@ public class CreditCard {
     result = 31 * result + (getCardHolder() != null ? getCardHolder().hashCode() : 0);
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "CreditCard{" +
+            "cardHolder='" + cardHolder + '\'' +
+            ", cardNumber='" + cardNumber + '\'' +
+            ", expiration='" + expiration + '\'' +
+            ", cvv='" + cvv + '\'' +
+            '}';
+  }
 }

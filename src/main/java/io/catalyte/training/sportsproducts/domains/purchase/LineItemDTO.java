@@ -32,7 +32,9 @@ public class LineItemDTO {
     public LineItem GenerateLineItem() {
         LineItem newLineItem = new LineItem();
 
-        newLineItem.setId(id);
+        Product newProduct = new Product();
+        newProduct.setId(id);
+        newLineItem.setProduct(newProduct);
         newLineItem.setQuantity(quantity);
 
         return newLineItem;
@@ -45,4 +47,11 @@ public class LineItemDTO {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "LineItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

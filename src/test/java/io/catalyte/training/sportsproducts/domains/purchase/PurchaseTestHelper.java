@@ -37,8 +37,8 @@ public class PurchaseTestHelper {
         return validCreditCard;
     }
 
-    public static Set<LineItemDTO> generateValidLineItems() {
-        Set<LineItemDTO> validLineItems = new HashSet<LineItemDTO>();
+    public static List<LineItemDTO> generateValidLineItems() {
+        List<LineItemDTO> validLineItems = new ArrayList<LineItemDTO>();
 
         LineItemDTO validLineItem = new LineItemDTO();
 
@@ -50,8 +50,8 @@ public class PurchaseTestHelper {
         return validLineItems;
     }
 
-    public static Set<LineItemDTO> generateInactiveLineItems() {
-        Set<LineItemDTO> validLineItems = new HashSet<LineItemDTO>();
+    public static List<LineItemDTO> generateInactiveLineItems() {
+        List<LineItemDTO> validLineItems = new ArrayList<LineItemDTO>();
 
         LineItemDTO validLineItem = new LineItemDTO();
 
