@@ -26,9 +26,10 @@ public class PurchaseServiceImpl implements PurchaseService {
   LineItemRepository lineItemRepository;
 
   CreditCardValidation creditcardValidator = new CreditCardValidation();
+
   @Autowired
   public PurchaseServiceImpl(PurchaseRepository purchaseRepository, ProductService productService,
-      LineItemRepository lineItemRepository) {
+                             LineItemRepository lineItemRepository) {
     this.purchaseRepository = purchaseRepository;
     this.productService = productService;
     this.lineItemRepository = lineItemRepository;
@@ -81,49 +82,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     try {
-      purchaseRepository.save(newPurchase);
+      newPurchase = purchaseRepository.save(newPurchase);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
     }
 
-    // after the purchase is persisted and has an id, we need to handle its line items and persist them as well
-    //handleLineItems(newPurchase);
-
     return newPurchase.GeneratePurchaseDTO();
   }
-
-  /**
-   * This helper method retrieves product information for each line item and persists it
-   *
-   * @param purchase - the purchase object to handle line items for
-   */
-  private void handleLineItems(Purchase purchase) {
-    List<LineItem> itemsList = purchase.getProducts();
-
-    if (itemsList != null) {
-      itemsList.forEach(lineItem -> {
-
-        // retrieve full product information from the database
-        Product product = productService.getProductById(lineItem.getProduct().getId());
-
-        // set the product info into the line item
-        if (product != null) {
-          lineItem.setProduct(product);
-        }
-
-        // set the purchase on the line item
-        lineItem.setPurchase(purchase);
-
-        // persist the populated line item
-        try {
-          lineItemRepository.save(lineItem);
-        } catch (DataAccessException e) {
-          logger.error(e.getMessage());
-          throw new ServerError(e.getMessage());
-        }
-      });
-    }
-  }
 }
-

@@ -1,7 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -77,17 +76,18 @@ public class PurchaseServiceImplTest {
   Product inactiveProduct = new Product();
   LineItem activeLineItem = new LineItem();
   LineItem inactiveLineItem = new LineItem();
-  Set<LineItem> activeL = new HashSet<>();
-  Set<LineItem> inactiveL = new HashSet<>();
+  List<LineItem> activeL = new ArrayList<>();
+  List<LineItem> inactiveL = new ArrayList<>();
 
   @Test
   public void saveActivePurchaseToDataBase() {
     PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    Purchase mockPurchaseReturn = PurchaseTestHelper.generateValidPurchase().GeneratePurchase();
+    mockPurchaseReturn.setId(1L);
     when(productService.getProductById(anyLong())).thenReturn(activeProduct);
-    when(lineItemRepository.save(any(LineItem.class))).thenReturn(activeLineItem);
-    when(purchaseRepository.save(any(Purchase.class))).thenReturn(mockPurchaseObject.GeneratePurchase());
+    when(purchaseRepository.save(any(Purchase.class))).thenReturn(mockPurchaseReturn);
     PurchaseDTO results = purchaseServiceImpl.savePurchase(mockPurchaseObject);
-    assertEquals(mockPurchaseObject, results);
+    assertNotEquals(results.getId(), null);
   }
 
   @Test
@@ -160,7 +160,7 @@ public class PurchaseServiceImplTest {
   @Test
   public void findAllPurchaseByEmailReturnsPurchases() {
     when(purchaseRepository.findByBillingAddressEmail("blah")).thenReturn(testPurchaseList);
-    List<Purchase> actual = purchaseServiceImpl.findAllPurchasesByEmail("blah");
+    List<PurchaseDTO> actual = purchaseServiceImpl.findAllPurchasesByEmail("blah");
     assertEquals(testPurchaseList, actual);
   }
 

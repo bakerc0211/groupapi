@@ -2,7 +2,9 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 
 import io.catalyte.training.sportsproducts.domains.product.Product;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PurchaseTestHelper {
