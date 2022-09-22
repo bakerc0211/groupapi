@@ -3,7 +3,6 @@ package io.catalyte.training.sportsproducts.domains.product;
 import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
-
 import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,26 +33,31 @@ public class ProductController {
       @RequestParam(value = "brand", required = false) List<String> brand,
       @RequestParam(value = "category", required = false) List<String> category,
       @RequestParam(value = "demographic", required = false) List<String> demographic,
+      @RequestParam(value = "type", required = false) List<String> type,
       @RequestParam(value = "price", required = false) List<String> price,
       @RequestParam(value = "minPrice", required = false) List<String> minPrice,
       @RequestParam(value = "maxPrice", required = false) List<String> maxPrice,
       @RequestParam(value = "primaryColorCode", required = false) List<String> primaryColorCode,
       @RequestParam(value = "secondaryColorCode", required = false) List<String> secondaryColorCode,
+      @RequestParam(value = "active", required = false) List<String> active,
+      @RequestParam(value = "colorCode", required = false) List<String> colorCode,
       @RequestParam(value = "material", required = false) List<String> material) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
     query.put("category", category);
     query.put("demographic", demographic);
+    query.put("type", type);
     query.put("price", price);
     query.put("minPrice", minPrice);
     query.put("maxPrice", maxPrice);
     query.put("primaryColorCode", primaryColorCode);
     query.put("secondaryColorCode", secondaryColorCode);
+    query.put("active", active);
+    query.put("colorCode", colorCode);
     query.put("material", material);
-    while (query.values().remove(null))
-      ;
-    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
+    while (query.values().remove(null));
 
+    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
   }
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
@@ -77,5 +83,12 @@ public class ProductController {
     logger.info("Request received for getDistinctTypes");
 
     return new ResponseEntity<>(productService.getDistinctTypes(), HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity <Product> saveProduct(@RequestBody Product product) {
+    Product newProduct = productService.saveProduct(product);
+    logger.info("Request received for PostProduct");
+    return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
   }
 }

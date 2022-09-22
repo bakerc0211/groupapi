@@ -56,6 +56,10 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  public Product saveProduct(Product newProduct) {
+    return productRepository.save(newProduct);
+  }
+
   /**
    * Retrieves the product with the provided id from the database.
    *
