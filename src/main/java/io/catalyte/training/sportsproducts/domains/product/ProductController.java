@@ -5,9 +5,12 @@ import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,10 +63,9 @@ public class ProductController {
     return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
   }
   @GetMapping
-  public ResponseEntity<List<Product>> getProducts(Product product) {
+  public ResponseEntity<Page<Product>> getProducts(Product product, Pageable page) {
     logger.info("Request received for getProducts");
-
-    return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
+    return new ResponseEntity<>(productService.getProducts(product, page), HttpStatus.OK);
   }
   @GetMapping(value = "/{id}")
   @ResponseStatus(value = HttpStatus.OK)
