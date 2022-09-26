@@ -1,12 +1,24 @@
-package io.catalyte.training.sportsproducts.domains.purchase;
+package io.catalyte.training.sportsproducts.domains.purchase.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.catalyte.training.sportsproducts.domains.purchase.DeliveryAddress;
+
+/**
+ * DTO representing a DeliveryAddress
+ */
 public class DeliveryAddressDTO {
+    @JsonProperty(required = true)
     private String firstName;
+    @JsonProperty(required = true)
     private String lastName;
+    @JsonProperty(required = true)
     private String deliveryStreet;
     private String deliveryStreet2;
+    @JsonProperty(required = true)
     private String deliveryCity;
+    @JsonProperty(required = true)
     private String deliveryState;
+    @JsonProperty(required = true)
     private int deliveryZip;
 
     public String getFirstName() {
@@ -65,6 +77,10 @@ public class DeliveryAddressDTO {
         this.deliveryZip = deliveryZip;
     }
 
+    /**
+     * Generate a DeliveryAddress object from DTO
+     * @return The DeliveryAddress object
+     */
     public DeliveryAddress GenerateDeliveryAddress() {
         DeliveryAddress newDeliveryAddress = new DeliveryAddress();
 

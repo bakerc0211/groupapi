@@ -2,14 +2,14 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
 import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +41,18 @@ public class PurchaseServiceImpl implements PurchaseService {
    * @return
    */
   public List<PurchaseDTO> findAllPurchasesByEmail(String email) {
+    List<Purchase> results = null;
+
     try {
-      List<Purchase> results = purchaseRepository.findByBillingAddressEmail(email);
-      List<PurchaseDTO> resultsDTO = new ArrayList<PurchaseDTO>();
-      results.forEach((p) -> resultsDTO.add(p.GeneratePurchaseDTO()));
-      return resultsDTO;
+      results = purchaseRepository.findByBillingAddressEmail(email);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
     }
+    
+    List<PurchaseDTO> resultsDTO = new ArrayList<PurchaseDTO>();
+    results.forEach((p) -> resultsDTO.add(p.GeneratePurchaseDTO()));
+    return resultsDTO;
   }
 
   /**

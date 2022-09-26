@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.CreditCardDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -81,6 +83,10 @@ public class CreditCard {
         : that.getCardHolder() == null;
   }
 
+  /**
+   * Generate a CreditCardDTO object
+   * @return The CreditCardDTO object
+   */
   public CreditCardDTO GenerateCreditCardDTO() {
     CreditCardDTO newCreditCardDTO = new CreditCardDTO();
 

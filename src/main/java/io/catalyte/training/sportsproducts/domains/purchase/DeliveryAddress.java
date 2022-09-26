@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.DeliveryAddressDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -72,6 +74,10 @@ public class DeliveryAddress {
     this.deliveryZip = deliveryZip;
   }
 
+  /**
+   * Generate a DeliveryAddressDTO object
+   * @return The DeliveryAddressDTO object
+   */
   public DeliveryAddressDTO GenerateDeliveryAddressDTO() {
     DeliveryAddressDTO newDeliveryAddressDTO = new DeliveryAddressDTO();
 

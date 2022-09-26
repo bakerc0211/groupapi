@@ -1,11 +1,14 @@
-package io.catalyte.training.sportsproducts.domains.purchase;
+package io.catalyte.training.sportsproducts.domains.purchase.dto;
+
+import io.catalyte.training.sportsproducts.domains.purchase.LineItem;
+import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
+/**
+ * DTO representing a purchase
+ */
 public class PurchaseDTO {
     private Long id;
 
@@ -63,6 +66,10 @@ public class PurchaseDTO {
         creditCard = new CreditCardDTO();
     }
 
+    /**
+     * Generate a Purchase object from DTO
+     * @return The Purchase object
+     */
     public Purchase GeneratePurchase() {
         Purchase newPurchase = new Purchase();
 

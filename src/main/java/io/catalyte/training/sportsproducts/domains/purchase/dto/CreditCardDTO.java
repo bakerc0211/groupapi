@@ -1,5 +1,10 @@
-package io.catalyte.training.sportsproducts.domains.purchase;
+package io.catalyte.training.sportsproducts.domains.purchase.dto;
 
+import io.catalyte.training.sportsproducts.domains.purchase.CreditCard;
+
+/**
+ * DTO representing a CreditCard
+ */
 public class CreditCardDTO {
     private String cardNumber;
     private String cvv;
@@ -38,6 +43,10 @@ public class CreditCardDTO {
         this.cardHolder = cardHolder;
     }
 
+    /**
+     * Generate a CreditCard object from DTO
+     * @return The CreditCard Object
+     */
     public CreditCard GenerateCreditCard() {
         CreditCard newCreditCard = new CreditCard();
 

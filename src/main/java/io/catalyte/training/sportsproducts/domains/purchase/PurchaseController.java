@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

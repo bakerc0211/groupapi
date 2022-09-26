@@ -1,5 +1,10 @@
-package io.catalyte.training.sportsproducts.domains.purchase;
+package io.catalyte.training.sportsproducts.domains.purchase.dto;
 
+import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
+
+/**
+ * DTO representing a BillingAddress
+ */
 public class BillingAddressDTO {
     private String billingStreet;
     private String billingStreet2;
@@ -65,6 +70,10 @@ public class BillingAddressDTO {
         this.phone = phone;
     }
 
+    /**
+     * Generate BillingAddress object from DTO
+     * @return The BillingAddress object
+     */
     public BillingAddress GenerateBillingAddress() {
         BillingAddress newBillingAddress = new BillingAddress();
 

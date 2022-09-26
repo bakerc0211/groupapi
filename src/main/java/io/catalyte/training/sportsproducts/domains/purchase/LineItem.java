@@ -1,7 +1,8 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.catalyte.training.sportsproducts.domains.product.Product;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
+
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -85,6 +86,10 @@ public class LineItem {
     return Objects.equals(product, lineItem.product);
   }
 
+  /**
+   * Generate a LineItemDTO object
+   * @return The LineItemDTO object
+   */
   public LineItemDTO GenerateLineItemDTO() {
     LineItemDTO newLineItemDTO = new LineItemDTO();
 

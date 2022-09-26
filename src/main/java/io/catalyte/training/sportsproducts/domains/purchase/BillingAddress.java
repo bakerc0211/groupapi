@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.BillingAddressDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -72,6 +74,10 @@ public class BillingAddress {
     this.phone = phone;
   }
 
+  /**
+   * Generate a BillingAddressDTO object
+   * @return The BillingAddressDTO object
+   */
   public BillingAddressDTO GenerateBillingAddressDTO() {
     BillingAddressDTO newBillingAddressDTO = new BillingAddressDTO();
 
