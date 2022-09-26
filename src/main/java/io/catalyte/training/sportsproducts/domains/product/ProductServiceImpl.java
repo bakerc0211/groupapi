@@ -42,6 +42,30 @@ public class ProductServiceImpl implements ProductService {
   }
 
   /**
+   * Deletes the product with the provided id from the database
+   *
+   * @param id the id of the product to be deleted
+   */
+  @Override
+  public void deleteProductById(Long id) {
+    Product product;
+
+    try {
+      product = productRepository.findById(id).orElse(null);
+    } catch (DataAccessException e) {
+
+      throw new ServerError(e.getMessage());
+    }
+
+    if (product != null) {
+      productRepository.deleteProduct(product.getId());
+    } else {
+      logger.info("Delete by id failed, it does not exist in the database: " + id);
+      throw new ResourceNotFound("Delete by id failed, it does not exist in the database: " + id);
+    }
+  }
+
+  /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
    *
    * @param product - an example product to use for querying
