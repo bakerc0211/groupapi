@@ -127,6 +127,42 @@ public class DemoData implements CommandLineRunner {
     User user = new User("amir@amir.com", "Customer", "Amir", "Sharapov");
     userRepository.save(user);
 
+    User user1 = new User("hmayer@catalyte.io", "Customer", "Harry", "Mayer");
+    userRepository.save(user1);
+
+    User user2 = new User("mnolte@catalyte.io", "Customer", "Matthew", "Nolte");
+    userRepository.save(user2);
+
+    User user3 = new User("chuddles@catalyte.io", "Customer", "Chase", "Huddles");
+    userRepository.save(user3);
+
+    User user4 = new User("khelvey@catalyte.io", "Customer", "Kaleb", "Helvey");
+    userRepository.save(user4);
+
+    User user5 = new User("nsiso@catalyte.io", "Customer", "Nushy", "Gonzalez Siso");
+    userRepository.save(user5);
+
+    User user6 = new User("lvenegas@catalyte.io", "Customer", "Leslie", "Venegas");
+    userRepository.save(user6);
+
+    User user7 = new User("cbaker@catalyte.io", "Customer", "Cameron", "Baker");
+    userRepository.save(user7);
+
+    User user8 = new User("lowilliams@catalyte.io", "Customer", "Loretta", "Williams");
+    userRepository.save(user8);
+
+    User user9 = new User("cburden@catalyte.io", "Customer", "Colton", "Burden");
+    userRepository.save(user9);
+
+    User user10 = new User("aclay@catalyte.io", "Customer", "Alexander", "Clay");
+    userRepository.save(user10);
+
+    User user11 = new User("scasavant@catalyte.io", "Customer", "Samuel", "Casavant");
+    userRepository.save(user11);
+
+    User user12 = new User("kmacgregor@catalyte.io", "Customer", "Kyle", "MacGregor");
+    userRepository.save(user12);
+
     purchase4.setBillingAddress(billingAddress);
 
     purchaseRepository.save(purchase4);

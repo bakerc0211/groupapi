@@ -82,6 +82,7 @@ public class User {
         ", role='" + role + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +
+        ", last time ='" + lastName + '\'' +
         '}';
   }
 }
