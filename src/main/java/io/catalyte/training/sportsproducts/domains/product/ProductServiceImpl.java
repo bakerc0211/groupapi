@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -47,11 +46,19 @@ public class ProductServiceImpl implements ProductService {
   /**
    * Retrieves all products from the database, optionally making use of an example if it is passed.
    *
-   * @param product    - an example product to use for querying
-   * @param page       - the page number for pagination
+   * @param product - an example product to use for querying
    * @return - a list of paginated products matching the example, or all products if no example was passed
    */
-  public Page<Product> getProducts(Product product, Pageable page) {
+  public List<Product> getProducts(Product product) {
+    try {
+      return productRepository.findAll(Example.of(product));
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
+
+  public Page<Product> getPaginatedProducts(Product product, Pageable page) {
     try {
       return productRepository.findAll(Example.of(product), page);
     } catch (DataAccessException e) {

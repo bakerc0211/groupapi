@@ -3,11 +3,14 @@ package io.catalyte.training.sportsproducts.domains.product;
 import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,10 +66,16 @@ public class ProductController {
     return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
   }
   @GetMapping
-  public ResponseEntity<Page<Product>> getProducts(Product product, Pageable page) {
+  public ResponseEntity<List<Product>> getProducts(Product product) {
     logger.info("Request received for getProducts");
-    return new ResponseEntity<>(productService.getProducts(product, page), HttpStatus.OK);
+    return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
   }
+  @GetMapping("/page")
+  public ResponseEntity<Page<Product>> getPaginatedProducts(Product product, Pageable page) {
+    logger.info("Request received for getPaginatedProducts");
+    return new ResponseEntity<>(productService.getPaginatedProducts(product, page), HttpStatus.OK);
+  }
+
   @GetMapping(value = "/{id}")
   @ResponseStatus(value = HttpStatus.OK)
   public ResponseEntity<Product> getProductById(@PathVariable Long id) {

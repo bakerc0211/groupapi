@@ -11,7 +11,9 @@ import java.util.List;
  */
 public interface ProductService {
 
-  Page<Product> getProducts(Product product, Pageable page);
+  List<Product> getProducts(Product product);
+
+  Page<Product> getPaginatedProducts(Product product, Pageable page);
 
   Product saveProduct(Product productToSave);
 
