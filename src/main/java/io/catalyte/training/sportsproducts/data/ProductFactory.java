@@ -335,7 +335,7 @@ public class ProductFactory {
           "https://media.gettyimages.com/photos/portrait-of-young-female-runner-picture-id682702552?k=20&m=682702552&s=612x612&w=0&h=6W59JNxbHCbh3bDqURuc2UIf1bfEftJcJkACFqX7n2I=");
     } else if (product.getType() == "Wristband" && Integer.parseInt(typeDifferentiator) % 2 == 0) {
       product.setImageSrc(
-          "https://img.freepik.com/free-photo/joyful-young-pretty-sporty-girl-wearing-headband-wristbands-doing-yes-gesture_141793-115272.jpg?w=900&t=st=1664085396~exp=1664085996~hmac=eee6384f5e64a5a79a4b04128dbd420ef2554656fcbf1190cbef31c87adf225f");
+          "https://cdn.pixabay.com/photo/2018/10/14/18/20/swing-stick-3747100_960_720.jpg");
     } else if (product.getType() == "Wristband" && Integer.parseInt(typeDifferentiator) % 2 == 1) {
       product.setImageSrc(
           "https://cdn.pixabay.com/photo/2018/05/21/09/55/tennis-3417791_960_720.jpg");
