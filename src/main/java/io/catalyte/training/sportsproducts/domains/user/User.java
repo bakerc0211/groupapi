@@ -16,22 +16,25 @@ public class User {
   String role;
   String firstName;
   String lastName;
+  String lastActive;
 
   public User() {}
 
-  public User(Long id, String email, String role, String firstName, String lastName) {
+  public User(Long id, String email, String role, String firstName, String lastName, String lastActive) {
     this.id = id;
     this.email = email;
     this.role = role;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.lastActive = lastActive;
   }
 
-  public User(String email, String role, String firstName, String lastName) {
+  public User(String email, String role, String firstName, String lastName, String lastActive) {
     this.email = email;
     this.role = role;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.lastActive = lastActive;
   }
 
   public Long getId() {
@@ -74,6 +77,10 @@ public class User {
     this.lastName = lastName;
   }
 
+  public String getLastActive() {return lastActive;}
+
+  public void setLastActive(String lastActive) {this.lastActive = lastActive;}
+
   @Override
   public String toString() {
     return "User{" +
@@ -82,7 +89,7 @@ public class User {
         ", role='" + role + '\'' +
         ", firstName='" + firstName + '\'' +
         ", lastName='" + lastName + '\'' +
-        ", last time ='" + lastName + '\'' +
+        ", last active ='" + lastActive + '\'' +
         '}';
   }
 }
