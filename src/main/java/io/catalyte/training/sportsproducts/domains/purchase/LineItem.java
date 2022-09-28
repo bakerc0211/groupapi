@@ -1,13 +1,10 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.catalyte.training.sportsproducts.domains.product.Product;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
+
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Describes one line item of a purchase transaction
@@ -20,11 +17,9 @@ public class LineItem {
   private Long id;
 
   @ManyToOne
-  @JsonIgnoreProperties("products")
   private Purchase purchase;
 
-  @ManyToOne
-  @JsonIgnoreProperties("products")
+  @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
   private Product product;
 
   private int quantity;
@@ -89,6 +84,19 @@ public class LineItem {
       return false;
     }
     return Objects.equals(product, lineItem.product);
+  }
+
+  /**
+   * Generate a LineItemDTO object
+   * @return The LineItemDTO object
+   */
+  public LineItemDTO GenerateLineItemDTO() {
+    LineItemDTO newLineItemDTO = new LineItemDTO();
+
+    newLineItemDTO.setId(product.getId());
+    newLineItemDTO.setQuantity(quantity);
+
+    return newLineItemDTO;
   }
 
   @Override
