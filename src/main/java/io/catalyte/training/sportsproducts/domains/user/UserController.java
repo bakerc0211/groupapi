@@ -60,6 +60,24 @@ public class UserController {
   }
 
   /**
+   * Controller method for updating the user
+   *
+   * @param email          Email of the user to update
+   * @param user        User to update
+   * @param bearerToken String value in the Authorization property of the header
+   * @return User - Updated user
+   */
+  @PutMapping(path = "/{email}")
+  public ResponseEntity<User> updateUserByEmail(
+      @PathVariable String email,
+      @RequestBody User user,
+      @RequestHeader("Authorization") String bearerToken
+  ) {
+    logger.info("Request received for updateUser");
+    return new ResponseEntity<>(userService.updateUserByEmail(bearerToken, email, user), HttpStatus.OK);
+  }
+
+  /**
    * Controller method for getting a user by email
    *
    * @param email Email to get user by
