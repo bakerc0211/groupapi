@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.CreditCardDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +58,7 @@ public class PurchaseApiTest {
 
   @Test
   public void postInactiveProductPurchaseReturns422Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     mockPurchaseObject.setProducts(PurchaseTestHelper.generateInactiveLineItems());
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);
     mockMvc.perform(post(PURCHASES_PATH)
@@ -68,8 +70,8 @@ public class PurchaseApiTest {
 
   @Test
   public void postInvalidCreditCardPurchaseReturns400Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
-    CreditCard mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
     mockCreditCardObject.setCardNumber("1");
     mockPurchaseObject.setCreditCard(mockCreditCardObject);
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);
