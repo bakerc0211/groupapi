@@ -1,9 +1,13 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import io.catalyte.training.sportsproducts.domains.purchase.PurchaseController;
+import io.catalyte.training.sportsproducts.domains.purchase.PurchaseServiceImpl;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.RejectedExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +62,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     if (product != null) {
-      productRepository.deleteProduct(product.getId());
+      if (!Objects.requireNonNull(
+          PurchaseController.findProductsPurchasedById(product.getId()).getBody()).isEmpty()) {
+        logger.info(
+            "Delete by id failed, it is part of a previous purchase and cannot be deleted: " + id);
+        throw new ServerError(
+            "Delete by id failed, it is part of a previous purchase and cannot be deleted: " + id);
+      } else {
+        productRepository.deleteProduct(product.getId());
+      }
     } else {
       logger.info("Delete by id failed, it does not exist in the database: " + id);
       throw new ResourceNotFound("Delete by id failed, it does not exist in the database: " + id);
@@ -92,6 +104,7 @@ public class ProductServiceImpl implements ProductService {
    */
   public Product getProductById(Long id) {
     Product product;
+    String a[] = {};
 
     try {
       product = productRepository.findById(id).orElse(null);

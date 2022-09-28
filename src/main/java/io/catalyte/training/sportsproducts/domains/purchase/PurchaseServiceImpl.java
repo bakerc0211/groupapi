@@ -46,6 +46,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
   }
 
+  public List<LineItem> findProductsPurchasedById(Long product_id) {
+    try {
+      return lineItemRepository.findProductsPurchased(product_id);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
+
   /**
    * Persists a purchase to the database
    *

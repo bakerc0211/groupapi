@@ -95,8 +95,8 @@ public class ProductController {
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(value = HttpStatus.OK)
   public ResponseEntity<Long> deleteProductById(@PathVariable Long id) {
-    logger.info("Request received for deleteProductById: " + id);
     productService.deleteProductById(id);
+    logger.info("Request received for deleteProductById: " + id);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }

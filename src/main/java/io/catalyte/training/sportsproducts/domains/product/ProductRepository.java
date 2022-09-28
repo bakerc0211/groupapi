@@ -19,6 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Product
 
   @Modifying
   @Transactional
-  @Query(value = "Delete from product Where id = :id And id Not in (Select product_id From line_item)", nativeQuery = true)
+  @Query(value = "Delete from product Where id = :id", nativeQuery = true)
   void deleteProduct(@Param("id") Long id);
 }
