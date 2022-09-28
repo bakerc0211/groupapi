@@ -13,7 +13,8 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class ProductFactory {
 
-  private static final String[] colors = {"#000000", // white
+  private static final String[] colors = {
+      "#000000", // white
       "#ffffff", // black
       "#39add1", // light blue
       "#3079ab", // dark blue
