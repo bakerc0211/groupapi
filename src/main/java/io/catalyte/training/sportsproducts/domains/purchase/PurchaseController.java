@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 
 import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,9 +30,9 @@ public class PurchaseController {
   }
 
   @PostMapping
-  public ResponseEntity savePurchase(@RequestBody Purchase newPurchase) {
-    Purchase savedPurchase = purchaseService.savePurchase(newPurchase);
-    return new ResponseEntity<>(savedPurchase, HttpStatus.CREATED);
+  public ResponseEntity<PurchaseDTO> savePurchase(@RequestBody PurchaseDTO newPurchase) {
+    PurchaseDTO savedPurchase = purchaseService.savePurchase(newPurchase);
+    return new ResponseEntity<PurchaseDTO>(savedPurchase, HttpStatus.CREATED);
   }
 
   @GetMapping
@@ -40,8 +41,8 @@ public class PurchaseController {
   }
 
   @GetMapping(value = "/{email}")
-  public ResponseEntity<List<Purchase>> findAllPurchasesByEmail(@PathVariable String email) {
+  public ResponseEntity<List<PurchaseDTO>> findAllPurchasesByEmail(@PathVariable String email) {
     logger.info("Request received for findAllPurchasesByEmail");
-    return new ResponseEntity<>(purchaseService.findAllPurchasesByEmail(email), HttpStatus.OK);
+    return new ResponseEntity<List<PurchaseDTO>>(purchaseService.findAllPurchasesByEmail(email), HttpStatus.OK);
   }
 }
