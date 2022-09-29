@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
     User existingUser;
 
     try {
-      existingUser = userRepository.findEmailToUpdate(email);
+      existingUser = userRepository.findByEmail(email);
     } catch (DataAccessException dae) {
       logger.error(dae.getMessage());
       throw new ServerError(dae.getMessage());
