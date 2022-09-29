@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
     if (existingUser == null) {
       logger.error("User with email: " + email + " does not exist");
-      throw new ResourceNotFound("User with id: " + email + " does not exist");
+      throw new ResourceNotFound("User with email: " + email + " does not exist");
     }
 
     // TEMPORARY LOGIC TO PREVENT USER FROM UPDATING THEIR ROLE
