@@ -29,7 +29,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
   @Autowired
   public PurchaseServiceImpl(PurchaseRepository purchaseRepository, ProductService productService,
-                             LineItemRepository lineItemRepository) {
+      LineItemRepository lineItemRepository) {
     this.purchaseRepository = purchaseRepository;
     this.productService = productService;
     this.lineItemRepository = lineItemRepository;
@@ -49,7 +49,7 @@ public class PurchaseServiceImpl implements PurchaseService {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
     }
-    
+
     List<PurchaseDTO> resultsDTO = new ArrayList<PurchaseDTO>();
     results.forEach((p) -> resultsDTO.add(p.GeneratePurchaseDTO()));
     return resultsDTO;
@@ -58,6 +58,16 @@ public class PurchaseServiceImpl implements PurchaseService {
   public List<LineItem> findProductsPurchasedById(Long product_id) {
     try {
       return lineItemRepository.findProductsPurchased(product_id);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
+
+  @Override
+  public List<LineItem> findProductsPurchased() {
+    try {
+      return lineItemRepository.findAll();
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());

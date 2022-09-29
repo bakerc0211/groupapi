@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = PURCHASES_PATH)
 public class PurchaseController {
+
   static Logger logger = LogManager.getLogger(PurchaseController.class);
   CreditCardValidation validator = new CreditCardValidation();
 
@@ -43,12 +44,22 @@ public class PurchaseController {
   @GetMapping(value = "/{email}")
   public ResponseEntity<List<PurchaseDTO>> findAllPurchasesByEmail(@PathVariable String email) {
     logger.info("Request received for findAllPurchasesByEmail");
-    return new ResponseEntity<List<PurchaseDTO>>(purchaseService.findAllPurchasesByEmail(email), HttpStatus.OK);
+    return new ResponseEntity<List<PurchaseDTO>>(purchaseService.findAllPurchasesByEmail(email),
+        HttpStatus.OK);
   }
+
+  @GetMapping(value = "/products")
+  public static ResponseEntity<List<LineItem>> findProductsPurchased() {
+    logger.info("Request received for findProductsPurchased");
+    return new ResponseEntity<>(purchaseService.findProductsPurchased(),
+        HttpStatus.OK);
+  }
+
   @GetMapping(value = "/product_id/{product_id}")
   public static ResponseEntity<List<LineItem>> findProductsPurchasedById(
       @PathVariable Long product_id) {
     logger.info("Request received for findProductsPurchasedById: " + product_id);
-    return new ResponseEntity<>(purchaseService.findProductsPurchasedById(product_id), HttpStatus.OK);
+    return new ResponseEntity<>(purchaseService.findProductsPurchasedById(product_id),
+        HttpStatus.OK);
   }
 }

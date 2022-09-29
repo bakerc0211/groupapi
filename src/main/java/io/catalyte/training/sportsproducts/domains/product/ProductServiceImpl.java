@@ -104,7 +104,6 @@ public class ProductServiceImpl implements ProductService {
    */
   public Product getProductById(Long id) {
     Product product;
-    String a[] = {};
 
     try {
       product = productRepository.findById(id).orElse(null);

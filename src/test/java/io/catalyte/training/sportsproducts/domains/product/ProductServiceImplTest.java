@@ -103,12 +103,6 @@ public class ProductServiceImplTest {
   }
 
   @Test
-  public void deleteProductByIdDeletesProduct() {
-    productServiceImpl.deleteProductById(14L);
-    when(productRepository.findById(anyLong())).thenReturn(empty());
-    assertThrows(ResourceNotFound.class, () -> productServiceImpl.deleteProductById(14L));
-  }
-  @Test
   public void deleteProductByIdThrowsErrorWhenNotFound() {
     when(productRepository.findById(anyLong())).thenReturn(empty());
     assertThrows(ResourceNotFound.class, () -> productServiceImpl.deleteProductById(1050L));

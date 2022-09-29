@@ -10,4 +10,6 @@ public interface PurchaseService {
 
   List<PurchaseDTO> findAllPurchasesByEmail(String email);
   List<LineItem> findProductsPurchasedById(Long product_id);
+
+  List<LineItem> findProductsPurchased();
 }
