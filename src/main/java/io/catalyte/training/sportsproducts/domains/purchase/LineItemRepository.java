@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface LineItemRepository extends JpaRepository<LineItem, Long> {
   @Query(value = "Select * From line_item Where product_id = :product_id ", nativeQuery = true)
   List<LineItem> findProductsPurchased(@Param("product_id") Long product_id);
+
+  @Query(value = "SELECT product_id FROM line_item", nativeQuery = true)
+  Object[] getProductsOnlyInPurchases();
 }

@@ -49,7 +49,7 @@ public class PurchaseController {
   }
 
   @GetMapping(value = "/products")
-  public static ResponseEntity<List<LineItem>> findProductsPurchased() {
+  public static ResponseEntity<Object[]> findProductsPurchased( ) {
     logger.info("Request received for findProductsPurchased");
     return new ResponseEntity<>(purchaseService.findProductsPurchased(),
         HttpStatus.OK);

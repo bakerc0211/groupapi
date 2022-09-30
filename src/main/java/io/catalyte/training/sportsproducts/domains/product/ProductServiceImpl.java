@@ -1,13 +1,11 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseController;
-import io.catalyte.training.sportsproducts.domains.purchase.PurchaseServiceImpl;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.RejectedExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,26 @@ public class ProductServiceImpl implements ProductService {
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
+    }
+  }
+
+  @Override
+  public Product changeProductActiveStatusById(Long id) {
+    Product product;
+    Boolean active;
+    try {
+      product = productRepository.findById(id).orElse(null);
+    } catch (DataAccessException e) {
+
+      throw new ServerError(e.getMessage());
+    }
+    if (product != null) {
+      active = product.getActive();
+      product.setActive(!active);
+      return productRepository.save(product);
+    } else {
+      logger.info("Get by id failed, it does not exist in the database: " + id);
+      throw new ResourceNotFound("Get by id failed, it does not exist in the database: " + id);
     }
   }
 

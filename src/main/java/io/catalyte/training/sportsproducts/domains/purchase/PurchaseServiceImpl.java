@@ -8,6 +8,7 @@ import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -64,10 +65,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
   }
 
-  @Override
-  public List<LineItem> findProductsPurchased() {
+  public Object[] findProductsPurchased() {
     try {
-      return lineItemRepository.findAll();
+      return lineItemRepository.getProductsOnlyInPurchases();
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());

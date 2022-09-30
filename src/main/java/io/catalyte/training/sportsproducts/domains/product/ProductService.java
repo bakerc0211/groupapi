@@ -22,4 +22,5 @@ public interface ProductService {
 
   List<Product> getProductsByFilter(HashMap<String, List<String>> filter);
 
+  Product changeProductActiveStatusById(Long id);
 }
