@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Rest controller for the user entity
  */
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = USERS_PATH)
 public class UserController {
