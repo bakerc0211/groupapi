@@ -4,10 +4,16 @@ import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
 import io.catalyte.training.sportsproducts.domains.purchase.CreditCard;
+import io.catalyte.training.sportsproducts.domains.purchase.LineItem;
 import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
+import io.catalyte.training.sportsproducts.domains.purchase.Review;
+import io.catalyte.training.sportsproducts.domains.purchase.ReviewRepository;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
 import io.catalyte.training.sportsproducts.domains.user.User;
 import io.catalyte.training.sportsproducts.domains.user.UserRepository;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,6 +41,9 @@ public class DemoData implements CommandLineRunner {
 
   @Autowired
   private PurchaseRepository purchaseRepository;
+
+  @Autowired
+  private ReviewRepository reviewRepository;
 
   @Autowired
   private Environment env;
@@ -130,6 +139,23 @@ public class DemoData implements CommandLineRunner {
     purchase4.setBillingAddress(billingAddress);
 
     purchaseRepository.save(purchase4);
+
+
+    LineItem lineItems = new LineItem();
+    lineItems.setProduct(productList.get(0));
+    Review review1 = new Review();
+    review1.setProducts(Collections.singletonList(lineItems));
+    review1.setReviewRating(5.0);
+
+    reviewRepository.save(review1);
+
+    LineItem lineItem = new LineItem();
+    lineItem.setProduct(productList.get(1));
+    Review review2 = new Review();
+    review2.setProducts(Collections.singletonList(lineItem));
+    review2.setReviewRating(5.0);
+
+    reviewRepository.save(review2);
 
   }
 }

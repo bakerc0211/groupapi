@@ -3,6 +3,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 import static io.catalyte.training.sportsproducts.constants.Paths.PURCHASES_PATH;
 
 import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +37,12 @@ public class PurchaseController {
     return new ResponseEntity<PurchaseDTO>(savedPurchase, HttpStatus.CREATED);
   }
 
+  @PostMapping(value = "/productReview")
+  public ResponseEntity<ReviewDTO> saveReview(@RequestBody ReviewDTO newReview) {
+    ReviewDTO savedReview = purchaseService.saveReview(newReview);
+    return new ResponseEntity<ReviewDTO>(savedReview, HttpStatus.CREATED);
+  }
+
   @GetMapping
   public ResponseEntity<Purchase> findAllPurchasesNoEmail() throws ResourceNotFound {
     throw new ResourceNotFound("An email is required");
@@ -49,7 +56,7 @@ public class PurchaseController {
   }
 
   @GetMapping(value = "/products")
-  public static ResponseEntity<Object[]> findProductsPurchased( ) {
+  public static ResponseEntity<Object[]> findProductsPurchased() {
     logger.info("Request received for findProductsPurchased");
     return new ResponseEntity<>(purchaseService.findProductsPurchased(),
         HttpStatus.OK);

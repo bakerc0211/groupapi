@@ -3,6 +3,7 @@ package io.catalyte.training.sportsproducts.domains.purchase;
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
 import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
@@ -25,15 +26,17 @@ public class PurchaseServiceImpl implements PurchaseService {
   PurchaseRepository purchaseRepository;
   ProductService productService;
   LineItemRepository lineItemRepository;
+  ReviewRepository reviewRepository;
 
   CreditCardValidation creditcardValidator = new CreditCardValidation();
 
   @Autowired
   public PurchaseServiceImpl(PurchaseRepository purchaseRepository, ProductService productService,
-      LineItemRepository lineItemRepository) {
+      LineItemRepository lineItemRepository, ReviewRepository reviewRepository) {
     this.purchaseRepository = purchaseRepository;
     this.productService = productService;
     this.lineItemRepository = lineItemRepository;
+    this.reviewRepository = reviewRepository;
   }
 
   /**
@@ -111,5 +114,33 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     return newPurchase.GeneratePurchaseDTO();
+  }
+
+  @Override
+  public ReviewDTO saveReview(ReviewDTO newReviewDTO) {
+    Review newReview = newReviewDTO.GenerateReview();
+
+    List<LineItem> lineItems = newReview.getProducts();
+    List<String> inactiveProducts = new ArrayList<>();
+
+    lineItems.forEach(lineItem -> {
+      Product lineProduct = productService.getProductById(lineItem.getProduct().getId());
+      if (!lineProduct.getActive()) {
+        inactiveProducts.add(lineProduct.getName());
+      }
+    });
+
+    if (inactiveProducts.size() > 0) {
+      throw new UnprocessableEntity(inactiveProducts + " inactive product");
+    }
+
+    try {
+      newReview = reviewRepository.save(newReview);
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+
+    return newReview.GenerateReviewDTO();
   }
 }
