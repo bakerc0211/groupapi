@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserService {
   /**
    * Updates user given valid credentials
    *
-   * @param bearerToken String value in the Authorization property of the header
-   * @param email         Email of the user to update
+   * @param bearerToken        String value in the Authorization property of the header
+   * @param email              Email of the user to update
    * @param updatedUserByEmail User to update
    * @return User - Updated user
    */

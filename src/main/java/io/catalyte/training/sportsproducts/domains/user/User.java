@@ -1,6 +1,10 @@
 package io.catalyte.training.sportsproducts.domains.user;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * User entity in database
