@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
    * Retrieves all products from the database, optionally making use of an example if it is passed.
    *
    * @param product - an example product to use for querying
-   * @return - a list of paginated products matching the example, or all products if no example was passed
+   * @return - a list of products matching the example, or all products if no example was passed
    */
   public List<Product> getProducts(Product product) {
     try {
@@ -58,6 +58,13 @@ public class ProductServiceImpl implements ProductService {
     }
   }
 
+  /**
+   * Retrieves all products from the database and paginates them
+   *
+   * @param product - an example product to use for querying
+   * @param page - page for pagination
+   * @return - an object of pagination data including products
+   */
   public Page<Product> getPaginatedProducts(Product product, Pageable page) {
     try {
       return productRepository.findAll(Example.of(product), page);

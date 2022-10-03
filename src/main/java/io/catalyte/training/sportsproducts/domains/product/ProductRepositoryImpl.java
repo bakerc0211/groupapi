@@ -11,7 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-public class ProductRepositoryImpl implements ProductRepositoryCustom {
+public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
   @PersistenceContext
   EntityManager entityManager;

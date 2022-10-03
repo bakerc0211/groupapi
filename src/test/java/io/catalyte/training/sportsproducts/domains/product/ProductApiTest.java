@@ -36,6 +36,12 @@ public class ProductApiTest {
   }
 
   @Test
+  public void getPaginatedProductsReturns200() throws Exception {
+    mockMvc.perform(get(PRODUCTS_PATH + "/page"))
+            .andExpect(status().isOk());
+  }
+
+  @Test
   public void getProductByIdReturnsProductWith200() throws Exception {
     mockMvc.perform(get(PRODUCTS_PATH + "/1"))
         .andExpect(status().isOk());

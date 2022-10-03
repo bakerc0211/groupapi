@@ -4,13 +4,12 @@ import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PAT
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +46,8 @@ public class ProductController {
       @RequestParam(value = "secondaryColorCode", required = false) List<String> secondaryColorCode,
       @RequestParam(value = "active", required = false) List<String> active,
       @RequestParam(value = "colorCode", required = false) List<String> colorCode,
-      @RequestParam(value = "material", required = false) List<String> material) {
+      @RequestParam(value = "material", required = false) List<String> material,
+      Pageable page) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
     query.put("category", category);
