@@ -10,11 +10,8 @@ import io.catalyte.training.sportsproducts.domains.purchase.Purchase;
 import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.Review;
 import io.catalyte.training.sportsproducts.domains.purchase.ReviewRepository;
-import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
-import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
 import io.catalyte.training.sportsproducts.domains.user.User;
 import io.catalyte.training.sportsproducts.domains.user.UserRepository;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -223,7 +220,7 @@ public class DemoData implements CommandLineRunner {
     reviewRepository.save(review5);
 
     LineItem lineItems = new LineItem();
-    lineItems.setProduct(productList.get(0));
+    lineItems.setProduct(productList.get(3));
     lineItems.setQuantity(3);
     Review review1 = new Review();
     review1.setProducts(Collections.singletonList(lineItems));

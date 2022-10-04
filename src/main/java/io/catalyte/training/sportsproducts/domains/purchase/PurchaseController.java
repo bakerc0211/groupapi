@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping(value = PURCHASES_PATH)
 public class PurchaseController {
 
-  static Logger logger = LogManager.getLogger(PurchaseController.class);
+  Logger logger = LogManager.getLogger(PurchaseController.class);
   CreditCardValidation validator = new CreditCardValidation();
 
-  private static PurchaseService purchaseService;
+  private PurchaseService purchaseService;
 
   @Autowired
   public PurchaseController(PurchaseService purchaseService) {
@@ -56,14 +56,14 @@ public class PurchaseController {
   }
 
   @GetMapping(value = "/products")
-  public static ResponseEntity<Object[]> findProductsPurchased() {
+  public ResponseEntity<Object[]> findProductsPurchased() {
     logger.info("Request received for findProductsPurchased");
     return new ResponseEntity<>(purchaseService.findProductsPurchased(),
         HttpStatus.OK);
   }
 
   @GetMapping(value = "/reviews")
-  public static ResponseEntity<Object[]> findProductsWithReviews() {
+  public ResponseEntity<Object[]> findProductsWithReviews() {
     logger.info("Request received for findProductsWithReviews");
     return new ResponseEntity<>(purchaseService.findProductsWithReviews(),
         HttpStatus.OK);

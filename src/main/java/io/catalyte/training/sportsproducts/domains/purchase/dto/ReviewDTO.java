@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DTO representing a line item
+ * DTO representing a review
  */
 public class ReviewDTO {
 
@@ -39,9 +39,9 @@ public class ReviewDTO {
   }
 
   /**
-   * Generate a LineItem object from DTO
+   * Generate a Review object from DTO
    *
-   * @return The LineItem object
+   * @return The Review object
    */
   public Review GenerateReview() {
     Review newReview = new Review();

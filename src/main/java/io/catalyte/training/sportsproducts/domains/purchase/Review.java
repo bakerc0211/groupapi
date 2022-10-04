@@ -1,10 +1,10 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-    import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
-    import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
-    import java.util.ArrayList;
-    import java.util.List;
-    import javax.persistence.*;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 @Entity
 public class Review {
@@ -44,9 +44,9 @@ public class Review {
   }
 
   /**
-   * Generate a LineItemDTO object
+   * Generate a ReviewDTO object
    *
-   * @return The LineItemDTO object
+   * @return The ReviewDTO object
    */
   public ReviewDTO GenerateReviewDTO() {
     ReviewDTO newReviewDTO = new ReviewDTO();
