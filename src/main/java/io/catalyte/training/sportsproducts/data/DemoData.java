@@ -93,6 +93,7 @@ public class DemoData implements CommandLineRunner {
     productList.get(3).setActive(false);
     productList.get(4).setActive(true);
     productList.get(5).setActive(true);
+    productList.get(6).setActive(true);
 
     // Persist them to the database
     logger.info("Loading " + numberOfProducts + " products...");
@@ -159,6 +160,22 @@ public class DemoData implements CommandLineRunner {
     ));
     purchase5.setProducts(Collections.singletonList(lineItemsPurchase));
     purchaseRepository.save(purchase5);
+
+    Purchase purchase6 = new Purchase();
+    BillingAddress billingAddress6 = new BillingAddress();
+    LineItem lineItemsPurchase6 = new LineItem();
+    lineItemsPurchase6.setProduct(productList.get(6));
+    lineItemsPurchase6.setQuantity(4);
+    billingAddress6.setEmail("bob@ross.com");
+    purchase6.setBillingAddress(billingAddress);
+    purchase6.setCreditCard(new CreditCard(
+        "4234567812345678",
+        "123",
+        "01/25",
+        "Bob Ross"
+    ));
+    purchase6.setProducts(Collections.singletonList(lineItemsPurchase6));
+    purchaseRepository.save(purchase6);
 
     LineItem lineItem5 = new LineItem();
     lineItem5.setProduct(productList.get(5));
