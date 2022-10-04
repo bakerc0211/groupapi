@@ -14,6 +14,7 @@ import io.catalyte.training.sportsproducts.exceptions.BadRequest;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -177,22 +178,13 @@ public class PurchaseServiceImplTest {
         });
     assertThrows(ServerError.class, () -> purchaseServiceImpl.findAllPurchasesByEmail("blah"));
   }
-
   @Test
-  public void findPurchaseByProductId() {
-    Purchase mockPurchaseReturn = PurchaseTestHelper.generateValidPurchase().GeneratePurchase();
-    mockPurchaseReturn.setId(1L);
-    when(lineItemRepository.findProductsPurchased(activeProduct.getId())).thenReturn(
-        (List<LineItem>) testPurchase);
-    List<LineItem> actual = purchaseServiceImpl.findProductsPurchasedById(1L);
-    assertEquals(testPurchase, actual);
+  public void findAllProductsWithReviewsReturnsNullWhenNoReviewsPresent() {
+    assertNull(lineItemRepository.getProductsOnlyWithReviews());
   }
 
   @Test
-  public void findPurchaseByProductIdThrowsErrorWhenServerError() {
-    when(lineItemRepository.findProductsPurchased(1L)).thenThrow(
-        new DataAccessException("...") {
-        });
-    assertThrows(ServerError.class, () -> purchaseServiceImpl.findProductsPurchasedById(1L));
+  public void findAllProductsInPurchasesReturnsNullWhenNoPurchasesPresent() {
+    assertNull(lineItemRepository.getProductsOnlyInPurchases());
   }
 }

@@ -93,4 +93,10 @@ public class PurchaseApiTest {
     mockMvc.perform(get(PURCHASES_PATH ))
             .andExpect(status().isNotFound());
   }
+
+  @Test
+  public void findAllProductsWithReviewsReturns200() throws Exception {
+    mockMvc.perform(get(PURCHASES_PATH + "/reviews"))
+        .andExpect(status().isOk());
+  }
 }
