@@ -62,11 +62,10 @@ public class PurchaseController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = "/product_id/{product_id}")
-  public static ResponseEntity<List<LineItem>> findProductsPurchasedById(
-      @PathVariable Long product_id) {
-    logger.info("Request received for findProductsPurchasedById: " + product_id);
-    return new ResponseEntity<>(purchaseService.findProductsPurchasedById(product_id),
+  @GetMapping(value = "/reviews")
+  public static ResponseEntity<Object[]> findProductsWithReviews() {
+    logger.info("Request received for findProductsWithReviews");
+    return new ResponseEntity<>(purchaseService.findProductsWithReviews(),
         HttpStatus.OK);
   }
 }

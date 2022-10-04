@@ -12,7 +12,8 @@ public interface PurchaseService {
   ReviewDTO saveReview(ReviewDTO reviewToSave);
 
   List<PurchaseDTO> findAllPurchasesByEmail(String email);
-  List<LineItem> findProductsPurchasedById(Long product_id);
 
   Object[] findProductsPurchased();
+
+  Object[] findProductsWithReviews();
 }

@@ -13,4 +13,7 @@ public interface LineItemRepository extends JpaRepository<LineItem, Long> {
 
   @Query(value = "SELECT product_id FROM line_item", nativeQuery = true)
   Object[] getProductsOnlyInPurchases();
+
+  @Query(value = "SELECT product_id FROM line_item WHERE line_item.id IN (SELECT review_products.products_id FROM review_products)", nativeQuery = true)
+  Object[] getProductsOnlyWithReviews();
 }

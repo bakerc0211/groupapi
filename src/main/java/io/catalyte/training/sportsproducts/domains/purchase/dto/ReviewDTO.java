@@ -9,8 +9,8 @@ import java.util.List;
  * DTO representing a line item
  */
 public class ReviewDTO {
-  private Long id;
 
+  private Long id;
   private List<LineItemDTO> products;
   public List<LineItemDTO> getProducts() {
     return products;
@@ -19,11 +19,13 @@ public class ReviewDTO {
   public void setProducts(List<LineItemDTO> products) {
     this.products = products;
   }
+
   public Double rating;
 
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -61,7 +63,7 @@ public class ReviewDTO {
 
   @Override
   public String toString() {
-    return "LineItem{" +
+    return "Review{" +
         "id=" + id +
         "rating=" + rating +
         '}';

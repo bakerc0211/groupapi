@@ -80,15 +80,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     if (product != null) {
-      if (!Objects.requireNonNull(
-          PurchaseController.findProductsPurchasedById(product.getId()).getBody()).isEmpty()) {
-        logger.info(
-            "Delete by id failed, it is part of a previous purchase and cannot be deleted: " + id);
-        throw new ServerError(
-            "Delete by id failed, it is part of a previous purchase and cannot be deleted: " + id);
-      } else {
         productRepository.deleteProduct(product.getId());
-      }
     } else {
       logger.info("Delete by id failed, it does not exist in the database: " + id);
       throw new ResourceNotFound("Delete by id failed, it does not exist in the database: " + id);

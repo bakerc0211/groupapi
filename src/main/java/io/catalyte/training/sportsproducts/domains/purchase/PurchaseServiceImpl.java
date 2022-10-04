@@ -9,7 +9,6 @@ import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import io.catalyte.training.sportsproducts.exceptions.UnprocessableEntity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,8 +25,8 @@ public class PurchaseServiceImpl implements PurchaseService {
   PurchaseRepository purchaseRepository;
   ProductService productService;
   LineItemRepository lineItemRepository;
-  ReviewRepository reviewRepository;
 
+  ReviewRepository reviewRepository;
   CreditCardValidation creditcardValidator = new CreditCardValidation();
 
   @Autowired
@@ -59,18 +58,20 @@ public class PurchaseServiceImpl implements PurchaseService {
     return resultsDTO;
   }
 
-  public List<LineItem> findProductsPurchasedById(Long product_id) {
+
+  public Object[] findProductsPurchased() {
     try {
-      return lineItemRepository.findProductsPurchased(product_id);
+      return lineItemRepository.getProductsOnlyInPurchases();
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
     }
   }
 
-  public Object[] findProductsPurchased() {
+  @Override
+  public Object[] findProductsWithReviews() {
     try {
-      return lineItemRepository.getProductsOnlyInPurchases();
+      return lineItemRepository.getProductsOnlyWithReviews();
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());

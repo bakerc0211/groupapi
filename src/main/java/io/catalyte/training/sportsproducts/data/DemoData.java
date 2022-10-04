@@ -2,6 +2,7 @@ package io.catalyte.training.sportsproducts.data;
 
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductRepository;
+import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.domains.purchase.BillingAddress;
 import io.catalyte.training.sportsproducts.domains.purchase.CreditCard;
 import io.catalyte.training.sportsproducts.domains.purchase.LineItem;
@@ -10,6 +11,7 @@ import io.catalyte.training.sportsproducts.domains.purchase.PurchaseRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.Review;
 import io.catalyte.training.sportsproducts.domains.purchase.ReviewRepository;
 import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.ReviewDTO;
 import io.catalyte.training.sportsproducts.domains.user.User;
 import io.catalyte.training.sportsproducts.domains.user.UserRepository;
 import java.util.ArrayList;
@@ -89,6 +91,8 @@ public class DemoData implements CommandLineRunner {
     productList.get(1).setActive(true);
     productList.get(2).setActive(false);
     productList.get(3).setActive(false);
+    productList.get(4).setActive(true);
+    productList.get(5).setActive(true);
 
     // Persist them to the database
     logger.info("Loading " + numberOfProducts + " products...");
@@ -140,22 +144,57 @@ public class DemoData implements CommandLineRunner {
 
     purchaseRepository.save(purchase4);
 
+    Purchase purchase5 = new Purchase();
+    BillingAddress billingAddress5 = new BillingAddress();
+    LineItem lineItemsPurchase = new LineItem();
+    lineItemsPurchase.setProduct(productList.get(5));
+    lineItemsPurchase.setQuantity(11);
+    billingAddress5.setEmail("bob@ross.com");
+    purchase5.setBillingAddress(billingAddress);
+    purchase5.setCreditCard(new CreditCard(
+        "4234567812345678",
+        "123",
+        "01/25",
+        "Bob Ross"
+    ));
+    purchase5.setProducts(Collections.singletonList(lineItemsPurchase));
+    purchaseRepository.save(purchase5);
+
+    LineItem lineItem5 = new LineItem();
+    lineItem5.setProduct(productList.get(5));
+    lineItem5.setQuantity(1);
+    Review review5 = new Review();
+    review5.setProducts(Collections.singletonList(lineItem5));
+    review5.setReviewRating(4.3);
+
+    reviewRepository.save(review5);
 
     LineItem lineItems = new LineItem();
     lineItems.setProduct(productList.get(0));
+    lineItems.setQuantity(3);
     Review review1 = new Review();
     review1.setProducts(Collections.singletonList(lineItems));
-    review1.setReviewRating(5.0);
+    review1.setReviewRating(1.6);
 
     reviewRepository.save(review1);
 
     LineItem lineItem = new LineItem();
     lineItem.setProduct(productList.get(1));
+    lineItem.setQuantity(5);
     Review review2 = new Review();
     review2.setProducts(Collections.singletonList(lineItem));
     review2.setReviewRating(5.0);
 
     reviewRepository.save(review2);
+
+    LineItem lineItem3 = new LineItem();
+    lineItem3.setProduct(productList.get(4));
+    lineItem3.setQuantity(1);
+    Review review3 = new Review();
+    review3.setProducts(Collections.singletonList(lineItem3));
+    review3.setReviewRating(3.2);
+
+    reviewRepository.save(review3);
 
   }
 }
