@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ProductController {
   @Autowired
   private ProductService productService;
   @GetMapping("/filter")
-  public ResponseEntity<List<Product>> filterProduct(
+  public ResponseEntity<PagedListHolder> filterProduct(
       @RequestParam(value = "brand", required = false) List<String> brand,
       @RequestParam(value = "category", required = false) List<String> category,
       @RequestParam(value = "demographic", required = false) List<String> demographic,
@@ -47,7 +48,8 @@ public class ProductController {
       @RequestParam(value = "active", required = false) List<String> active,
       @RequestParam(value = "colorCode", required = false) List<String> colorCode,
       @RequestParam(value = "material", required = false) List<String> material,
-      Pageable page) {
+      @RequestParam(value = "page", required = false) int pageNumber,
+      Pageable pageable) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
     query.put("category", category);
@@ -63,7 +65,7 @@ public class ProductController {
     query.put("material", material);
     while (query.values().remove(null));
 
-    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
+    return new ResponseEntity<>(productService.getProductsByFilter(query, pageable, pageNumber), HttpStatus.OK);
   }
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {

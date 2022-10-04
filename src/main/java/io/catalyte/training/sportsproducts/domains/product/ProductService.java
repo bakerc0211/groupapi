@@ -1,5 +1,6 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,6 +24,6 @@ public interface ProductService {
 
   List<String> getDistinctTypes();
 
-  List<Product> getProductsByFilter(HashMap<String, List<String>> filter);
+  PagedListHolder getProductsByFilter(HashMap<String, List<String>> filter, Pageable pageable, int pageNumber);
 
 }
