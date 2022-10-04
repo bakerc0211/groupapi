@@ -85,6 +85,59 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
+   * Updates user given valid credentials
+   *
+   * @param bearerToken        String value in the Authorization property of the header
+   * @param email              Email of the user to update
+   * @param updatedUserByEmail User to update
+   * @return User - Updated user
+   */
+  @Override
+  public User updateUserByEmail(String bearerToken, String email, User updatedUserByEmail) {
+
+    // AUTHENTICATES USER - SAME EMAIL, SAME PERSON
+    boolean isAuthenticated = googleAuthService.authenticateUser(bearerToken, updatedUserByEmail);
+
+    if (!isAuthenticated) {
+      logger.error("Email in the request body does not match email from JWT");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Email in the request body does not match email from JWT Token");
+    }
+
+    // UPDATES USER
+    User existingUser;
+
+    try {
+      existingUser = userRepository.findByEmail(email);
+    } catch (DataAccessException dae) {
+      logger.error(dae.getMessage());
+      throw new ServerError(dae.getMessage());
+    }
+
+    if (existingUser == null) {
+      logger.error("User with email: " + email + " does not exist");
+      throw new ResourceNotFound("User with email: " + email + " does not exist");
+    }
+
+    // TEMPORARY LOGIC TO PREVENT USER FROM UPDATING THEIR ROLE
+    updatedUserByEmail.setRole(existingUser.getRole());
+
+    // GIVE THE USER ID IF NOT SPECIFIED IN BODY TO AVOID DUPLICATE USERS
+    if (updatedUserByEmail.getEmail() == null) {
+      updatedUserByEmail.setEmail(email);
+    }
+
+    try {
+      logger.info("Saved user to");
+      return userRepository.save(updatedUserByEmail);
+    } catch (DataAccessException dae) {
+      logger.error(dae.getMessage());
+      throw new ServerError(dae.getMessage());
+    }
+
+  }
+
+  /**
    * Creates user in the database, given email is not null and not taken
    *
    * @param user User to create
@@ -158,5 +211,4 @@ public class UserServiceImpl implements UserService {
     return user;
 
   }
-
 }

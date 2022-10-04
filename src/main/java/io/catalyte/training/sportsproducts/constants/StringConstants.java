@@ -15,5 +15,5 @@ public class StringConstants {
 
 
   // Google Client ID
-  public static final String GOOGLE_CLIENT_ID = "912899852587-7996nh9mlpvpa2446q0il4f9hj5o492h.apps.googleusercontent.com";
+  public static final String GOOGLE_CLIENT_ID = "219462273083-cl6nltt30p2etov1rdd951uk5n06fl04.apps.googleusercontent.com";
 }
