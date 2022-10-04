@@ -48,7 +48,7 @@ public class ProductController {
       @RequestParam(value = "active", required = false) List<String> active,
       @RequestParam(value = "colorCode", required = false) List<String> colorCode,
       @RequestParam(value = "material", required = false) List<String> material,
-      @RequestParam(value = "page", required = false) int pageNumber,
+      @RequestParam(value = "page", required = false) Integer pageNumber,
       Pageable pageable) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
