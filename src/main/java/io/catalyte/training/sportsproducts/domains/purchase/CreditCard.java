@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.CreditCardDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -81,6 +83,21 @@ public class CreditCard {
         : that.getCardHolder() == null;
   }
 
+  /**
+   * Generate a CreditCardDTO object
+   * @return The CreditCardDTO object
+   */
+  public CreditCardDTO GenerateCreditCardDTO() {
+    CreditCardDTO newCreditCardDTO = new CreditCardDTO();
+
+    newCreditCardDTO.setCardHolder(cardHolder);
+    newCreditCardDTO.setCardNumber(cardNumber);
+    newCreditCardDTO.setExpiration(expiration);
+    newCreditCardDTO.setCvv(cvv);
+
+    return newCreditCardDTO;
+  }
+
   @Override
   public int hashCode() {
     int result = getCardNumber() != null ? getCardNumber().hashCode() : 0;
@@ -88,5 +105,15 @@ public class CreditCard {
     result = 31 * result + (getExpiration() != null ? getExpiration().hashCode() : 0);
     result = 31 * result + (getCardHolder() != null ? getCardHolder().hashCode() : 0);
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "CreditCard{" +
+            "cardHolder='" + cardHolder + '\'' +
+            ", cardNumber='" + cardNumber + '\'' +
+            ", expiration='" + expiration + '\'' +
+            ", cvv='" + cvv + '\'' +
+            '}';
   }
 }
