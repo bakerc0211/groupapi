@@ -47,16 +47,6 @@ public class PurchaseApiTest {
   }
 
   @Test
-  public void postValidPurchaseReturns201 () throws Exception {
-    String mockPurchase = objectMapper.writeValueAsString(PurchaseTestHelper.generateValidPurchase());
-    mockMvc.perform(post(PURCHASES_PATH)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content((mockPurchase)))
-      .andExpect(createdStatus)
-      .andExpect(expectedType);
-  }
-
-  @Test
   public void postInactiveProductPurchaseReturns422Test () throws Exception {
     PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     mockPurchaseObject.setProducts(PurchaseTestHelper.generateInactiveLineItems());
@@ -92,5 +82,11 @@ public class PurchaseApiTest {
   public void findAllPurchasesNoEmailReturns404() throws Exception {
     mockMvc.perform(get(PURCHASES_PATH ))
             .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void findAllProductsWithReviewsReturns200() throws Exception {
+    mockMvc.perform(get(PURCHASES_PATH + "/reviews"))
+        .andExpect(status().isOk());
   }
 }

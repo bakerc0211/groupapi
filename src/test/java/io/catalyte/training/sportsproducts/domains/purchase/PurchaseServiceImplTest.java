@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+
 import io.catalyte.training.sportsproducts.domains.product.Product;
 import io.catalyte.training.sportsproducts.domains.product.ProductService;
 import io.catalyte.training.sportsproducts.domains.purchase.dto.BillingAddressDTO;
@@ -43,7 +44,8 @@ public class PurchaseServiceImplTest {
   @Mock
   private ProductService productService;
 
-  @Mock  private LineItemRepository lineItemRepository;
+  @Mock
+  private LineItemRepository lineItemRepository;
   Purchase testPurchase;
   List<Purchase> testPurchaseList = new ArrayList<>();
 
@@ -72,6 +74,7 @@ public class PurchaseServiceImplTest {
     inactivePurchase.setId(2L);
     inactivePurchase.setProducts(inactiveL);
   }
+
   Purchase activePurchase = new Purchase();
   Purchase inactivePurchase = new Purchase();
   Product activeProduct = new Product();
@@ -99,6 +102,7 @@ public class PurchaseServiceImplTest {
     assertThrows(UnprocessableEntity.class,
         () -> purchaseServiceImpl.savePurchase(mockPurchaseObject));
   }
+
   @Test
   public void invalidCardNumberThrowsBadRequest() {
     PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
@@ -106,7 +110,7 @@ public class PurchaseServiceImplTest {
     invalidCreditCard.setCardNumber("1234123412341234");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
 
   @Test
@@ -116,7 +120,7 @@ public class PurchaseServiceImplTest {
     invalidCreditCard.setCardHolder("!@#%#@$^&#&$*");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
 
   @Test
@@ -126,7 +130,7 @@ public class PurchaseServiceImplTest {
     invalidCreditCard.setCvv("1");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
 
   @Test
@@ -136,7 +140,7 @@ public class PurchaseServiceImplTest {
     invalidCreditCard.setExpiration("1");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
 
   @Test
@@ -146,8 +150,9 @@ public class PurchaseServiceImplTest {
     invalidCreditCard.setExpiration("11/20");
     invalidPurchase.setCreditCard(invalidCreditCard);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
+
   @Test
   public void invalidBillingZipThrowsBadRequest() {
     PurchaseDTO invalidPurchase = PurchaseTestHelper.generateValidPurchase();
@@ -155,7 +160,7 @@ public class PurchaseServiceImplTest {
     invalidBillingAddress.setBillingZip("1");
     invalidPurchase.setBillingAddress(invalidBillingAddress);
     assertThrows(BadRequest.class,
-            () -> purchaseServiceImpl.savePurchase(invalidPurchase));
+        () -> purchaseServiceImpl.savePurchase(invalidPurchase));
   }
 
   @Test
@@ -167,8 +172,18 @@ public class PurchaseServiceImplTest {
 
   @Test
   public void findAllPurchasesByEmailThrowsErrorWhenServerError() {
-    when(purchaseRepository.findByBillingAddressEmail("blah")).thenThrow(new DataAccessException("...") {
-    });
+    when(purchaseRepository.findByBillingAddressEmail("blah")).thenThrow(
+        new DataAccessException("...") {
+        });
     assertThrows(ServerError.class, () -> purchaseServiceImpl.findAllPurchasesByEmail("blah"));
+  }
+  @Test
+  public void findAllProductsWithReviewsReturnsNullWhenNoReviewsPresent() {
+    assertNull(lineItemRepository.getProductsOnlyWithReviews());
+  }
+
+  @Test
+  public void findAllProductsInPurchasesReturnsNullWhenNoPurchasesPresent() {
+    assertNull(lineItemRepository.getProductsOnlyInPurchases());
   }
 }

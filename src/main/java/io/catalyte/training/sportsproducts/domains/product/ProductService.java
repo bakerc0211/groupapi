@@ -8,6 +8,8 @@ import java.util.List;
  */
 public interface ProductService {
 
+  void deleteProductById(Long id);
+
   List<Product> getProducts(Product product);
 
   Product saveProduct(Product productToSave);
@@ -20,4 +22,5 @@ public interface ProductService {
 
   List<Product> getProductsByFilter(HashMap<String, List<String>> filter);
 
+  Product changeProductActiveStatusById(Long id);
 }
