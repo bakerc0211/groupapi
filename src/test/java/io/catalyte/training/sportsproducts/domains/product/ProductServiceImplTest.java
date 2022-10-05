@@ -102,5 +102,16 @@ public class ProductServiceImplTest {
     assertThrows(ServerError.class, () -> productServiceImpl.getDistinctCategories());
   }
 
+  @Test
+  public void deleteProductByIdThrowsErrorWhenNotFound() {
+    when(productRepository.findById(anyLong())).thenReturn(empty());
+    assertThrows(ResourceNotFound.class, () -> productServiceImpl.deleteProductById(1050L));
+  }
 
+  @Test
+  public void deleteProductByIdThrowsErrorWhenServerError() {
+    when(productRepository.findById(anyLong())).thenThrow(new DataAccessException("...") {
+    });
+    assertThrows(ServerError.class, () -> productServiceImpl.deleteProductById(123L));
+  }
 }

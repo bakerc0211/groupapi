@@ -1,9 +1,11 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import io.catalyte.training.sportsproducts.domains.purchase.PurchaseController;
 import io.catalyte.training.sportsproducts.exceptions.ResourceNotFound;
 import io.catalyte.training.sportsproducts.exceptions.ServerError;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
    *
    * @param filter   calls the queries for the specified filter
    * @param pageable
-   * @param page
+   * @param pageNumber
    * @return the list of products matching the criteria
    */
   public PagedListHolder getProductsByFilter(HashMap<String, List<String>> filter, Pageable pageable, int pageNumber) {
@@ -43,6 +45,50 @@ public class ProductServiceImpl implements ProductService {
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
+    }
+  }
+
+  @Override
+  public Product changeProductActiveStatusById(Long id) {
+    Product product;
+    Boolean active;
+    try {
+      product = productRepository.findById(id).orElse(null);
+    } catch (DataAccessException e) {
+
+      throw new ServerError(e.getMessage());
+    }
+    if (product != null) {
+      active = product.getActive();
+      product.setActive(!active);
+      return productRepository.save(product);
+    } else {
+      logger.info("Get by id failed, it does not exist in the database: " + id);
+      throw new ResourceNotFound("Get by id failed, it does not exist in the database: " + id);
+    }
+  }
+
+  /**
+   * Deletes the product with the provided id from the database
+   *
+   * @param id the id of the product to be deleted
+   */
+  @Override
+  public void deleteProductById(Long id) {
+    Product product;
+
+    try {
+      product = productRepository.findById(id).orElse(null);
+    } catch (DataAccessException e) {
+
+      throw new ServerError(e.getMessage());
+    }
+
+    if (product != null) {
+        productRepository.deleteProduct(product.getId());
+    } else {
+      logger.info("Delete by id failed, it does not exist in the database: " + id);
+      throw new ResourceNotFound("Delete by id failed, it does not exist in the database: " + id);
     }
   }
 

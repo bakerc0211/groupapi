@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface ProductService {
 
+  void deleteProductById(Long id);
+
   List<Product> getProducts(Product product);
 
   Page<Product> getPaginatedProducts(Product product, Pageable page);
@@ -26,4 +28,5 @@ public interface ProductService {
 
   PagedListHolder getProductsByFilter(HashMap<String, List<String>> filter, Pageable pageable, int pageNumber);
 
+  Product changeProductActiveStatusById(Long id);
 }

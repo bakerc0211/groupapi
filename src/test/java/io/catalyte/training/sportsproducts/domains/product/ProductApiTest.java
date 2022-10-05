@@ -3,7 +3,9 @@ package io.catalyte.training.sportsproducts.domains.product;
 import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +46,18 @@ public class ProductApiTest {
   @Test
   public void getProductByIdReturnsProductWith200() throws Exception {
     mockMvc.perform(get(PRODUCTS_PATH + "/1"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void deleteProductByIdReturns200() throws Exception {
+    mockMvc.perform(delete(PRODUCTS_PATH + "/12"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void changeProductActiveStatusByIdReturns200() throws Exception {
+    mockMvc.perform(put(PRODUCTS_PATH + "/1"))
         .andExpect(status().isOk());
   }
 

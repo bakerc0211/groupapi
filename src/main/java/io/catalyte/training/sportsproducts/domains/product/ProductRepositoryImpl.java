@@ -14,10 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import static java.util.stream.DoubleStream.of;
-
-public class ProductRepositoryImpl implements ProductRepositoryCustom{
-
+public class ProductRepositoryImpl implements ProductRepositoryCustom {
   @PersistenceContext
   EntityManager entityManager;
   public Float min = 0.0f;

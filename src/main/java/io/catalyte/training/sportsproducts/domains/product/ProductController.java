@@ -4,7 +4,6 @@ import static io.catalyte.training.sportsproducts.constants.Paths.CATEGORIES_PAT
 import static io.catalyte.training.sportsproducts.constants.Paths.PRODUCTS_PATH;
 import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,9 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = PRODUCTS_PATH)
 public class ProductController {
+
   Logger logger = LogManager.getLogger(ProductController.class);
   @Autowired
   private ProductService productService;
+
   @GetMapping("/filter")
   public ResponseEntity<PagedListHolder> filterProduct(
       @RequestParam(value = "brand", required = false) List<String> brand,
@@ -63,10 +66,12 @@ public class ProductController {
     query.put("active", active);
     query.put("colorCode", colorCode);
     query.put("material", material);
-    while (query.values().remove(null));
-
+    while (query.values().remove(null))
+      ;
+    logger.info(query.toString(), pageNumber);
     return new ResponseEntity<>(productService.getProductsByFilter(query, pageable, pageNumber), HttpStatus.OK);
   }
+
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
     logger.info("Request received for getProducts");
@@ -85,12 +90,14 @@ public class ProductController {
 
     return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
   }
+
   @GetMapping(value = CATEGORIES_PATH)
   public ResponseEntity<List<String>> getDistinctCategories() {
     logger.info("Request received for getDistinctCategories");
 
     return new ResponseEntity<>(productService.getDistinctCategories(), HttpStatus.OK);
   }
+
   @GetMapping(value = TYPES_PATH)
   public ResponseEntity<List<String>> getDistinctTypes() {
     logger.info("Request received for getDistinctTypes");
@@ -103,5 +110,21 @@ public class ProductController {
     Product newProduct = productService.saveProduct(product);
     logger.info("Request received for PostProduct");
     return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping(value = "/{id}")
+  @ResponseStatus(value = HttpStatus.OK)
+  public ResponseEntity<Long> deleteProductById(@PathVariable Long id) {
+    productService.deleteProductById(id);
+    logger.info("Request received for deleteProductById: " + id);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @PutMapping(value = "/{id}")
+  @ResponseStatus(value = HttpStatus.OK)
+  public ResponseEntity<Product> changeProductActiveStatusById(@PathVariable Long id) {
+    logger.info("Request received for changeProductActiveStatusById: " + id);
+
+    return new ResponseEntity<>(productService.changeProductActiveStatusById(id), HttpStatus.OK);
   }
 }

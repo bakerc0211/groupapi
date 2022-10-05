@@ -18,18 +18,19 @@ public class LineItem {
 
   @ManyToOne
   private Purchase purchase;
-
+  @ManyToOne
+  private Review review;
   @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
   private Product product;
-
   private int quantity;
 
   public LineItem() {
   }
 
-  public LineItem(Long id, Purchase purchase, Product product, int quantity) {
+  public LineItem(Long id, Purchase purchase, Product product, Review review, int quantity) {
     this.id = id;
     this.purchase = purchase;
+    this.review = review;
     this.product = product;
     this.quantity = quantity;
   }
@@ -66,6 +67,13 @@ public class LineItem {
     this.quantity = quantity;
   }
 
+  public Review getReview() {
+    return review;
+  }
+  public void setReview(Review review) {
+    this.review = review;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -88,6 +96,7 @@ public class LineItem {
 
   /**
    * Generate a LineItemDTO object
+   *
    * @return The LineItemDTO object
    */
   public LineItemDTO GenerateLineItemDTO() {
@@ -103,6 +112,7 @@ public class LineItem {
   public int hashCode() {
     int result = purchase != null ? purchase.hashCode() : 0;
     result = 31 * result + (product != null ? product.hashCode() : 0);
+    result = 31 * result + (review != null ? review.hashCode() : 0);
     result = 31 * result + quantity;
     return result;
   }
