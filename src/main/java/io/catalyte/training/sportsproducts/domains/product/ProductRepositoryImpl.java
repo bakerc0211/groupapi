@@ -1,5 +1,8 @@
 package io.catalyte.training.sportsproducts.domains.product;
 
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +25,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
   /**
    * Construct the predicates and group of predicates to be used in the query
    *
-   * @param filter read the values of the queries
+   * @param filter     read the values of the queries
+   * @param pageable
+   * @param pageNumber
    * @return a result list of products matching the criteria
    */
   @Override
-  public List<Product> filterProduct(HashMap<String, List<String>> filter) {
+  public PagedListHolder filterProduct(HashMap<String, List<String>> filter, Pageable pageable, int pageNumber) {
     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
     Root<Product> root = query.from(Product.class);
@@ -79,6 +84,11 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     Predicate predicate = criteriaBuilder.and(predicateGroups.toArray((new Predicate[0])));
     query.select(root).where(predicate);
-    return entityManager.createQuery(query).getResultList();
+
+    List<Product> list = entityManager.createQuery(query).getResultList();
+    PagedListHolder page = new PagedListHolder(list);
+    page.setPageSize(20); // number of items per page
+    page.setPage(pageNumber);
+    return page;
   }
 }

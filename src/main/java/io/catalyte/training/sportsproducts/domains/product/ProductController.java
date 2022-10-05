@@ -6,10 +6,13 @@ import static io.catalyte.training.sportsproducts.constants.Paths.TYPES_PATH;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +38,7 @@ public class ProductController {
   private ProductService productService;
 
   @GetMapping("/filter")
-  public ResponseEntity<List<Product>> filterProduct(
+  public ResponseEntity<PagedListHolder> filterProduct(
       @RequestParam(value = "brand", required = false) List<String> brand,
       @RequestParam(value = "category", required = false) List<String> category,
       @RequestParam(value = "demographic", required = false) List<String> demographic,
@@ -47,7 +50,9 @@ public class ProductController {
       @RequestParam(value = "secondaryColorCode", required = false) List<String> secondaryColorCode,
       @RequestParam(value = "active", required = false) List<String> active,
       @RequestParam(value = "colorCode", required = false) List<String> colorCode,
-      @RequestParam(value = "material", required = false) List<String> material) {
+      @RequestParam(value = "material", required = false) List<String> material,
+      @RequestParam(value = "page", required = false) Integer pageNumber,
+      Pageable pageable) {
     HashMap<String, List<String>> query = new HashMap<>();
     query.put("brand", brand);
     query.put("category", category);
@@ -63,15 +68,19 @@ public class ProductController {
     query.put("material", material);
     while (query.values().remove(null))
       ;
-
-    return new ResponseEntity<>(productService.getProductsByFilter(query), HttpStatus.OK);
+    logger.info(query.toString(), pageNumber);
+    return new ResponseEntity<>(productService.getProductsByFilter(query, pageable, pageNumber), HttpStatus.OK);
   }
 
   @GetMapping
   public ResponseEntity<List<Product>> getProducts(Product product) {
     logger.info("Request received for getProducts");
-
     return new ResponseEntity<>(productService.getProducts(product), HttpStatus.OK);
+  }
+  @GetMapping("/page")
+  public ResponseEntity<Page<Product>> getPaginatedProducts(Product product, Pageable page) {
+    logger.info("Request received for getPaginatedProducts");
+    return new ResponseEntity<>(productService.getPaginatedProducts(product, page), HttpStatus.OK);
   }
 
   @GetMapping(value = "/{id}")

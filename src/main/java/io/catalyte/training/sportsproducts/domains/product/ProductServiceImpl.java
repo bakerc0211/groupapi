@@ -9,8 +9,11 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,12 +34,14 @@ public class ProductServiceImpl implements ProductService {
   /**
    * Retrieves the group of products for the specified filter
    *
-   * @param filter calls the queries for the specified filter
+   * @param filter   calls the queries for the specified filter
+   * @param pageable
+   * @param pageNumber
    * @return the list of products matching the criteria
    */
-  public List<Product> getProductsByFilter(HashMap<String, List<String>> filter) {
+  public PagedListHolder getProductsByFilter(HashMap<String, List<String>> filter, Pageable pageable, int pageNumber) {
     try {
-      return productRepository.filterProduct(filter);
+      return productRepository.filterProduct(filter, pageable, pageNumber);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
@@ -96,6 +101,22 @@ public class ProductServiceImpl implements ProductService {
   public List<Product> getProducts(Product product) {
     try {
       return productRepository.findAll(Example.of(product));
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage());
+      throw new ServerError(e.getMessage());
+    }
+  }
+
+  /**
+   * Retrieves all products from the database and paginates them
+   *
+   * @param product - an example product to use for querying
+   * @param page - page for pagination
+   * @return - an object of pagination data including products
+   */
+  public Page<Product> getPaginatedProducts(Product product, Pageable page) {
+    try {
+      return productRepository.findAll(Example.of(product), page);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
       throw new ServerError(e.getMessage());
