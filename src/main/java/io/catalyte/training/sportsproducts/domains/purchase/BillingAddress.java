@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.BillingAddressDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -70,6 +72,24 @@ public class BillingAddress {
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  /**
+   * Generate a BillingAddressDTO object
+   * @return The BillingAddressDTO object
+   */
+  public BillingAddressDTO GenerateBillingAddressDTO() {
+    BillingAddressDTO newBillingAddressDTO = new BillingAddressDTO();
+
+    newBillingAddressDTO.setBillingStreet(billingStreet);
+    newBillingAddressDTO.setBillingStreet2(billingStreet2);
+    newBillingAddressDTO.setBillingState(billingState);
+    newBillingAddressDTO.setBillingZip(billingZip);
+    newBillingAddressDTO.setBillingCity(billingCity);
+    newBillingAddressDTO.setEmail(email);
+    newBillingAddressDTO.setPhone(phone);
+
+    return newBillingAddressDTO;
   }
 
   @Override

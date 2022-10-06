@@ -1,5 +1,7 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
+import io.catalyte.training.sportsproducts.domains.purchase.dto.DeliveryAddressDTO;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -70,5 +72,36 @@ public class DeliveryAddress {
 
   public void setDeliveryZip(int deliveryZip) {
     this.deliveryZip = deliveryZip;
+  }
+
+  /**
+   * Generate a DeliveryAddressDTO object
+   * @return The DeliveryAddressDTO object
+   */
+  public DeliveryAddressDTO GenerateDeliveryAddressDTO() {
+    DeliveryAddressDTO newDeliveryAddressDTO = new DeliveryAddressDTO();
+
+    newDeliveryAddressDTO.setFirstName(firstName);
+    newDeliveryAddressDTO.setLastName(lastName);
+    newDeliveryAddressDTO.setDeliveryStreet(deliveryStreet);
+    newDeliveryAddressDTO.setDeliveryStreet2(deliveryStreet2);
+    newDeliveryAddressDTO.setDeliveryState(deliveryState);
+    newDeliveryAddressDTO.setDeliveryZip(deliveryZip);
+    newDeliveryAddressDTO.setDeliveryCity(deliveryCity);
+
+    return newDeliveryAddressDTO;
+  }
+
+  @Override
+  public String toString() {
+    return "DeliveryAddress{" +
+            "deliveryStreet='" + deliveryStreet + '\'' +
+            ", deliveryStreet2='" + deliveryStreet2 + '\'' +
+            ", deliveryCity='" + deliveryCity + '\'' +
+            ", deliveryState='" + deliveryState + '\'' +
+            ", deliveryZip=" + deliveryZip +
+            ", firstName='" + firstName + '\'' +
+            ", lastName=" + lastName +
+            '}';
   }
 }

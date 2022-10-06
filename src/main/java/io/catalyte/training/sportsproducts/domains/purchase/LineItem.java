@@ -1,13 +1,10 @@
 package io.catalyte.training.sportsproducts.domains.purchase;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.catalyte.training.sportsproducts.domains.product.Product;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.LineItemDTO;
+
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Describes one line item of a purchase transaction
@@ -20,21 +17,20 @@ public class LineItem {
   private Long id;
 
   @ManyToOne
-  @JsonIgnoreProperties("products")
   private Purchase purchase;
-
   @ManyToOne
-  @JsonIgnoreProperties("products")
+  private Review review;
+  @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
   private Product product;
-
   private int quantity;
 
   public LineItem() {
   }
 
-  public LineItem(Long id, Purchase purchase, Product product, int quantity) {
+  public LineItem(Long id, Purchase purchase, Product product, Review review, int quantity) {
     this.id = id;
     this.purchase = purchase;
+    this.review = review;
     this.product = product;
     this.quantity = quantity;
   }
@@ -71,6 +67,13 @@ public class LineItem {
     this.quantity = quantity;
   }
 
+  public Review getReview() {
+    return review;
+  }
+  public void setReview(Review review) {
+    this.review = review;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -91,10 +94,25 @@ public class LineItem {
     return Objects.equals(product, lineItem.product);
   }
 
+  /**
+   * Generate a LineItemDTO object
+   *
+   * @return The LineItemDTO object
+   */
+  public LineItemDTO GenerateLineItemDTO() {
+    LineItemDTO newLineItemDTO = new LineItemDTO();
+
+    newLineItemDTO.setId(product.getId());
+    newLineItemDTO.setQuantity(quantity);
+
+    return newLineItemDTO;
+  }
+
   @Override
   public int hashCode() {
     int result = purchase != null ? purchase.hashCode() : 0;
     result = 31 * result + (product != null ? product.hashCode() : 0);
+    result = 31 * result + (review != null ? review.hashCode() : 0);
     result = 31 * result + quantity;
     return result;
   }

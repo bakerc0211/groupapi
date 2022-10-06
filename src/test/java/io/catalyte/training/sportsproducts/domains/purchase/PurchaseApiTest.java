@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.CreditCardDTO;
+import io.catalyte.training.sportsproducts.domains.purchase.dto.PurchaseDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,18 +47,8 @@ public class PurchaseApiTest {
   }
 
   @Test
-  public void postValidPurchaseReturns201 () throws Exception {
-    String mockPurchase = objectMapper.writeValueAsString(PurchaseTestHelper.generateValidPurchase());
-    mockMvc.perform(post(PURCHASES_PATH)
-      .contentType(MediaType.APPLICATION_JSON)
-      .content((mockPurchase)))
-      .andExpect(createdStatus)
-      .andExpect(expectedType);
-  }
-
-  @Test
   public void postInactiveProductPurchaseReturns422Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
     mockPurchaseObject.setProducts(PurchaseTestHelper.generateInactiveLineItems());
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);
     mockMvc.perform(post(PURCHASES_PATH)
@@ -68,8 +60,8 @@ public class PurchaseApiTest {
 
   @Test
   public void postInvalidCreditCardPurchaseReturns400Test () throws Exception {
-    Purchase mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
-    CreditCard mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
+    PurchaseDTO mockPurchaseObject = PurchaseTestHelper.generateValidPurchase();
+    CreditCardDTO mockCreditCardObject = PurchaseTestHelper.generateValidCreditCard();
     mockCreditCardObject.setCardNumber("1");
     mockPurchaseObject.setCreditCard(mockCreditCardObject);
     String mockPurchase = objectMapper.writeValueAsString(mockPurchaseObject);
@@ -90,5 +82,11 @@ public class PurchaseApiTest {
   public void findAllPurchasesNoEmailReturns404() throws Exception {
     mockMvc.perform(get(PURCHASES_PATH ))
             .andExpect(status().isNotFound());
+  }
+
+  @Test
+  public void findAllProductsWithReviewsReturns200() throws Exception {
+    mockMvc.perform(get(PURCHASES_PATH + "/reviews"))
+        .andExpect(status().isOk());
   }
 }
